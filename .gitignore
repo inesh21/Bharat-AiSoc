@@ -1,0 +1,66 @@
+# ==========================================
+# Environments & Python Virtual Envs
+# ==========================================
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+
+# ==========================================
+# Large Datasets & Raw Media
+# ==========================================
+data/*
+!data/.gitkeep
+vision/datasets/
+*.jpg
+*.jpeg
+*.png
+*.zip
+*.tar.gz
+
+# ==========================================
+# Model Checkpoints, Weights & ExecuTorch Artifacts
+# ==========================================
+*.pth
+*.pt
+*.onnx
+*.bin
+*.safetensors
+*.pte
+*.hef
+*.json
+!knowledge/kb_json/*.json
+
+# ==========================================
+# IDEs, Editors & OS Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# ExecuTorch Build Artifacts & Submodule Overrides
+# ==========================================
+executorch/cmake-out/
+executorch/build/
+executorch/third-party/
+
+# ==========================================
+# Logs, Benchmarks & Temporary Files
+# ==========================================
+*.log
+benchmarks/results/*.csv
+!benchmarks/results/.gitkeep
+
+# Local Model Checkpoint Directories
+llm/checkpoints/
+Llama-3.2-1B-Instruct/
+executorch/
