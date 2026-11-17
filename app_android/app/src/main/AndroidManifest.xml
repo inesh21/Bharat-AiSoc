@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- CAMERA for leaf/pest photograph capture -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- RECORD_AUDIO for voice question asking / speech input -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!--
+      CRITICAL CONSTRAINT (AGENTS.md & CONTRACTS.md):
+      Offline at runtime. The app must make ZERO network calls.
+      The Android manifest must NOT declare the INTERNET permission in release builds.
+    -->
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <application
+        android:name=".CropAssistantApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.OfflineCropDiseaseAssistant">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.OfflineCropDiseaseAssistant">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
