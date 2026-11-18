@@ -1,0 +1,108 @@
+# ==============================================================================
+# Clarifying Questions Matrix (Task B5)
+# Used when the top two vision model diagnoses are close in confidence (delta < 0.15)
+# Resolves ambiguity deterministically using field-observable farmer questions.
+# ==============================================================================
+
+pairs:
+  tomato_early_blight_vs_septoria:
+    classes: ["tomato__early_blight", "tomato__septoria_leaf_spot"]
+    questions:
+      - question_id: "q_rings_vs_specks"
+        text:
+          en: "Do the spots have concentric rings like a target board, or tiny black specks in grey centers?"
+          hi: "क्या धब्बों में चक्रनुमा छल्ले (टारगेट बोर्ड की तरह) हैं, या भूरे केंद्र में छोटे काले बिंदु हैं?"
+          te: "మచ్చలు వలయాకారపు చక్రాల వలె ఉన్నాయా లేక మధ్యలో చిన్న నల్లటి చుక్కలు ఉన్నాయా?"
+        options: ["target_rings", "tiny_specks", "not_sure"]
+        weight_adjustments:
+          target_rings:
+            tomato__early_blight: 0.35
+            tomato__septoria_leaf_spot: -0.35
+          tiny_specks:
+            tomato__early_blight: -0.35
+            tomato__septoria_leaf_spot: 0.35
+
+  tomato_early_blight_vs_bacterial_spot:
+    classes: ["tomato__early_blight", "tomato__bacterial_spot"]
+    questions:
+      - question_id: "q_concentric_vs_angular"
+        text:
+          en: "Are the leaf spots large with concentric rings, or small, angular and water-soaked?"
+          hi: "क्या पत्तों पर धब्बे बड़े और छल्लेदार हैं, या छोटे, कोणीय और गीले-काले हैं?"
+          te: "మచ్చలు పెద్దవిగా వలయాలతో ఉన్నాయా లేక చిన్న కోణీయ నీటి మచ్చలుగా ఉన్నాయా?"
+        options: ["concentric_rings", "small_angular", "not_sure"]
+        weight_adjustments:
+          concentric_rings:
+            tomato__early_blight: 0.35
+            tomato__bacterial_spot: -0.35
+          small_angular:
+            tomato__early_blight: -0.35
+            tomato__bacterial_spot: 0.35
+
+  potato_early_blight_vs_late_blight:
+    classes: ["potato__early_blight", "potato__late_blight"]
+    questions:
+      - question_id: "q_underside_mould"
+        text:
+          en: "Is there white cottony fungal growth on the underside of leaves during morning hours?"
+          hi: "क्या सुबह के समय पत्तियों के निचले हिस्से में सफेद रोएंदार फफूंद दिखाई देती है?"
+          te: "ఉదయం పూట ఆకుల అడుగు భాగాన తెల్లటి బూజు లేదా దూది లాంటి శిలీంధ్రం కనిపిస్తుందా?"
+        options: ["yes", "no", "not_sure"]
+        weight_adjustments:
+          yes:
+            potato__late_blight: 0.45
+            potato__early_blight: -0.45
+          no:
+            potato__late_blight: -0.20
+            potato__early_blight: 0.20
+
+  tomato_early_blight_vs_late_blight:
+    classes: ["tomato__early_blight", "tomato__late_blight"]
+    questions:
+      - question_id: "q_underside_mould_tomato"
+        text:
+          en: "Is there white velvety mould on the underside of dark water-soaked patches?"
+          hi: "क्या गहरे गीले धब्बों के नीचे सफेद मखमली फफूंद दिखाई दे रही है?"
+          te: "నల్లటి నీటి మచ్చల కింద తెల్లటి మృదువైన బూజు కనిపిస్తుందా?"
+        options: ["yes", "no", "not_sure"]
+        weight_adjustments:
+          yes:
+            tomato__late_blight: 0.40
+            tomato__early_blight: -0.40
+          no:
+            tomato__late_blight: -0.20
+            tomato__early_blight: 0.20
+
+  rice_blast_vs_brown_spot:
+    classes: ["rice__blast", "rice__brown_spot"]
+    questions:
+      - question_id: "q_spindle_vs_oval"
+        text:
+          en: "Are the spots spindle/diamond-shaped with pointed ends, or evenly scattered circular/oval spots?"
+          hi: "क्या धब्बे नुकीले सिरों वाले तर्कुरूपी (हीरे जैसे) हैं, या गोल/अंडाकार बिखरे हुए हैं?"
+          te: "మచ్చలు కదురు ఆకారంలో (చివరలు సూదిగా) ఉన్నాయా లేక గుండ్రంగా/అండాకారంగా ఉన్నాయా?"
+        options: ["spindle_diamond", "circular_oval", "not_sure"]
+        weight_adjustments:
+          spindle_diamond:
+            rice__blast: 0.35
+            rice__brown_spot: -0.35
+          circular_oval:
+            rice__blast: -0.35
+            rice__brown_spot: 0.35
+
+  maize_rust_vs_northern_blight:
+    classes: ["maize__common_rust", "maize__northern_leaf_blight"]
+    questions:
+      - question_id: "q_pustules_vs_cigar"
+        text:
+          en: "Do you see powdery brown pustules that rub off on fingers, or long cigar-shaped tan lesions?"
+          hi: "क्या पत्तियों पर भूरे चूर्ण जैसे दाने हैं जो उंगली पर लग जाते हैं, या लंबे सिगार जैसे बड़े धब्बे हैं?"
+          te: "వేలికి అంటే గోధుమ రంగు పొడి బొబ్బలు ఉన్నాయా లేక పొడవైన చుట్ట ఆకారపు మచ్చలు ఉన్నాయా?"
+        options: ["powdery_pustules", "cigar_shaped", "not_sure"]
+        weight_adjustments:
+          powdery_pustules:
+            maize__common_rust: 0.40
+            maize__northern_leaf_blight: -0.40
+          cigar_shaped:
+            maize__common_rust: -0.40
+            maize__northern_leaf_blight: 0.40
