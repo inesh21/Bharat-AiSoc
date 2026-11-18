@@ -1,0 +1,76 @@
+[
+  {
+    "input": {
+      "vision": {
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {"label": "tomato__early_blight", "confidence": 0.88, "type": "disease"}
+        ],
+        "severity": {"percent": 18.4, "band": "moderate"}
+      },
+      "language": "en"
+    },
+    "expected_output": {
+      "status": "final",
+      "diagnosis_contains": "Early Blight",
+      "approved_chemicals": ["Copper Oxychloride 50% WP", "Chlorothalonil 75% WP"],
+      "phi_days": 7,
+      "severity_band": "moderate"
+    }
+  },
+  {
+    "input": {
+      "vision": {
+        "unknown": false,
+        "crop": "potato",
+        "predictions": [
+          {"label": "potato__late_blight", "confidence": 0.92, "type": "disease"}
+        ],
+        "severity": {"percent": 34.2, "band": "severe"}
+      },
+      "language": "en"
+    },
+    "expected_output": {
+      "status": "final",
+      "diagnosis_contains": "Late Blight",
+      "approved_chemicals": ["Metalaxyl 8% + Mancozeb 64% WP", "Mancozeb 75% WP"],
+      "phi_days": 14,
+      "severity_band": "severe"
+    }
+  },
+  {
+    "input": {
+      "vision": {
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {"label": "tomato__early_blight", "confidence": 0.52, "type": "disease"},
+          {"label": "tomato__septoria_leaf_spot", "confidence": 0.48, "type": "disease"}
+        ],
+        "severity": {"percent": 15.0, "band": "moderate"}
+      },
+      "language": "en"
+    },
+    "expected_output": {
+      "status": "needs_clarification",
+      "question_id": "q_rings_vs_specks"
+    }
+  },
+  {
+    "input": {
+      "vision": {
+        "unknown": true,
+        "crop": "unknown",
+        "predictions": [],
+        "severity": null
+      },
+      "language": "en"
+    },
+    "expected_output": {
+      "status": "final",
+      "seek_help": true,
+      "diagnosis_contains": "Unknown"
+    }
+  }
+]
