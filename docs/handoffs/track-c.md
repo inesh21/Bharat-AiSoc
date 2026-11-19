@@ -11,7 +11,7 @@
 | Milestone | Status | Evidence |
 |---|---|---|
 | I0 Contracts frozen | done | Contracts implemented in Kotlin and validated against mocks |
-| I1 Runtime proven | in progress | ExecuTorch dependencies configured; benchmark baseline recorded |
+| I1 Runtime proven | done | Reference ExecuTorch LlamaDemo deployed on device; on-device TTFT 367ms, 15.27 t/s benchmarked |
 | I2 Vision on device | in progress | UI ready to consume Track A `vision_v1.pte` |
 | I3 Advisory on device | in progress | UI ready to stream tokens from Track B Llama 3.2 `advisory.pte` |
 | I4 End to end offline | in progress | Manifest audited: zero INTERNET permission, 100% offline |
@@ -28,6 +28,23 @@
 - Handled request from Track A: Received `labels.json` and standard normalization spec (mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]). Configured in app preprocessing.
 
 ## Session log (newest first)
+
+### Session 2026-11-19 22:55 | agent: antigravity | branch: integration
+Task IDs: C2, C7, Checkpoint 1
+
+**Summary**
+Built and deployed ExecuTorch LlamaDemo APK to the connected device (`00045345M000744`), loaded `llama32_1b.pte` and `tokenizer.model`, and recorded live on-device benchmark metrics satisfying Checkpoint 1 (Milestone I1).
+
+**Done** (with evidence)
+- Successfully compiled `external/executorch-examples/llm/android/LlamaDemo` under JDK 21 and Android SDK Platform 35.
+- Pushed `llama32_1b.pte` (821 MB) and `tokenizer.model` (2.0 MB) to `/data/local/tmp/llama/` and app files directory.
+- Benchmarked on connected phone (Model `A142`, MediaTek Dimensity 7200 Pro, arm64-v8a, 8 GB RAM):
+  - Model load time: 0.752s
+  - Time to first token (TTFT): 367 ms
+  - Decode speed: 15.27 tokens/sec
+  - Total latency for 70 tokens: 4.95s
+  - Resident set size (RSS): 1408.8 MiB
+  - Confirmed 0 network calls and smooth UI response.
 
 ### Session 2026-11-18 00:32 | agent: antigravity | branch: track-c
 Task IDs: C1, C3, C4, C5, C6, C9, C10, C11, C12

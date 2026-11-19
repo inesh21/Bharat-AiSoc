@@ -19,13 +19,11 @@ Everything here is pinned across all machines and the app. Change only through a
 
 ### Llama export
 ```bash
-# ExecuTorch Llama export command (ExecuTorch 1.4.0)
-python -m executorch.examples.models.llama.export_llama \
-  --checkpoint models_src/llama32_1b/consolidated.00.pth \
-  --params models_src/llama32_1b/params.json \
-  --output_dir models/ \
-  --quantization 8da4w \
-  --max_seq_length 1024
+# ExecuTorch Llama export command (ExecuTorch 1.6.0 on Python 3.12)
+# Config: llm/export/llama32_1b_xnnpack.yaml
+.\.venv-et\Scripts\python.exe llm/export/run_export.py --config llm/export/llama32_1b_xnnpack.yaml
+# Output: models/llama32_1b.pte (821 MB, 8da4w_xnnpack, context length: 1024)
+# SHA-256: 2b25c581c9894bfed83a2f23385be33e977850c186caf276f2bdc53a43d06f6f
 ```
 
 ### Vision export

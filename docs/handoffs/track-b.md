@@ -11,7 +11,7 @@
 | Milestone | Status | Evidence |
 |---|---|---|
 | I0 Contracts frozen | done | Rules engine, KB, and Contract 3 advisory pipeline implemented |
-| I1 Runtime proven | in progress | ExecuTorch Llama export spec documented; prompt templates built |
+| I1 Runtime proven | done | Exported Llama 3.2 1B (8da4w_xnnpack) to `models/llama32_1b.pte`; verified on connected phone (15.27 t/s, TTFT: 367ms) |
 | I2 Vision on device | in progress | |
 | I3 Advisory on device | in progress | Advisory pipeline & fallback ready for ExecuTorch integration |
 | I4 End to end offline | in progress | 100% offline knowledge retrieval and validation |
@@ -28,6 +28,26 @@
 - Handled request from Track A: Grounded all 19 taxonomy classes in `knowledge/kb.json` with accredited citations from ICAR, TNAU, and IRRI.
 
 ## Session log (newest first)
+
+### Session 2026-11-19 22:55 | agent: antigravity | branch: integration
+Task IDs: B1, B11, Checkpoint 1
+
+**Summary**
+Exported Llama 3.2 1B-Instruct to ExecuTorch `.pte` with 8da4w XNNPACK quantization, validated laptop loading, recorded integrity hash in `models/manifest.json`, and proved offline on-device inference on physical Android phone for Checkpoint 1 (Milestone I1).
+
+**Done** (with evidence)
+- Fixed Windows DLL path resolution and `flatc` discovery in `llm/export/run_export.py`.
+- Exported `models/llama32_1b.pte` (821 MB, SHA-256: `2b25c581c9894bfed83a2f23385be33e977850c186caf276f2bdc53a43d06f6f`).
+- Recorded manifest entry in `models/manifest.json`.
+- Verified ExecuTorch portable C++ runtime loader on laptop.
+- Pushed model and `tokenizer.model` to target phone (`A142`, 8 GB RAM, Android 15 / arm64-v8a).
+- Executed on-device inference via ExecuTorch Llama reference demo app on the phone:
+  - Model Load Time: 0.752s
+  - Time to first token (TTFT): 0.367s (367 ms)
+  - Prompt evaluation rate: 46.32 tokens/second
+  - Generation rate: 15.27 tokens/second (70 tokens generated in 4.583s)
+  - Peak RSS memory footprint: 1408.8 MiB
+  - Result verified in UI with 0 network calls (Airplane mode / local offline runtime).
 
 ### Session 2026-11-19 00:30 | agent: antigravity | branch: track-b
 Task IDs: B2, B3, B4, B5, B6, B7, B8, B9, B10

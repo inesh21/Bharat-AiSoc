@@ -14,3 +14,8 @@ backend:
   xnnpack:
     enabled: True
     extended_ops: True
+export:
+  max_seq_length: 1024
+  max_context_length: 1024
+  output_dir: models
+  output_name: llama32_1b.pte

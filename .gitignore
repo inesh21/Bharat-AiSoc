@@ -3,6 +3,7 @@
 # ==========================================
 .venv/
 venv/
+.venv-et
 env/
 ENV/
 build/
@@ -64,3 +65,8 @@ benchmarks/results/*.csv
 llm/checkpoints/
 Llama-3.2-1B-Instruct/
 executorch/
+external/
+models_src/
+outputs/
+*.pte
+
