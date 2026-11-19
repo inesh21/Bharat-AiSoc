@@ -17,7 +17,7 @@ import csv
 from typing import List, Dict, Any
 
 
-def run_benchmark(iterations: int = 10, output_csv: str = "benchmarks/results.csv") -> List[Dict[str, Any]]:
+def run_benchmark(iterations: int = 10, output_csv: str = "benchmarks/laptop_mock_results.csv") -> List[Dict[str, Any]]:
     """Runs simulated or live benchmark suite over specified iterations."""
     os.makedirs(os.path.dirname(os.path.abspath(output_csv)), exist_ok=True)
 

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "status": "final",
+  "clarification": null,
+  "diagnosis": "Tomato - Early Blight",
+  "severity_band": "moderate",
+  "actions_now": [
+    "Prune lower infected leaves up to 30 cm from ground.",
+    "Spray Copper Oxychloride 50% WP @ 2.5 g/L water or Chlorothalonil 75% WP @ 2.0 g/L."
+  ],
+  "prevention": [
+    "Practice 3-year crop rotation avoiding Solanaceous crops (potato, brinjal, chilli).",
+    "Ensure proper plant spacing (60 x 45 cm) for adequate air circulation.",
+    "Mulch soil around plants to prevent soil-splash pathogen transmission.",
+    "Water crops early morning using drip irrigation rather than overhead sprinklers."
+  ],
+  "seek_help": false,
+  "source_ids": [
+    "kb:tomato__early_blight"
+  ],
+  "used_fallback": true,
+  "language": "en",
+  "text": "Diagnosis: Tomato - Early Blight. Severity: Moderate. Immediate action: Prune lower infected leaves up to 30 cm from ground."
+}

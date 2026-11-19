@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "status": "final",
+  "clarification": null,
+  "diagnosis": "Condition Unknown or Inconclusive",
+  "severity_band": "none",
+  "actions_now": [
+    "Do not apply unverified chemical sprays.",
+    "Collect a fresh physical leaf sample in a clean paper bag.",
+    "Consult your nearest Krishi Vigyan Kendra (KVK) or State Agricultural Department officer."
+  ],
+  "prevention": [
+    "Inspect surrounding plants and maintain general field sanitation."
+  ],
+  "seek_help": true,
+  "source_ids": [
+    "kb:unknown"
+  ],
+  "used_fallback": true,
+  "language": "en",
+  "text": "The condition could not be conclusively identified. Please consult your local agricultural extension officer."
+}

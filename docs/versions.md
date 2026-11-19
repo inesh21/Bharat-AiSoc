@@ -1,34 +1,41 @@
 # versions.md: Pinned versions
 
-Everything here is pinned across all machines and the app. Change only through a decision record (`docs/decisions/`) and agreement of all three tracks. Fill in on Day 1.
+Everything here is pinned across all machines and the app. Change only through a decision record (`docs/decisions/`) and agreement of all three tracks.
 
 | Item | Version / value | Notes |
 |---|---|---|
-| ExecuTorch | TODO (git tag or commit) | App runtime and all exported models must use this |
-| PyTorch | TODO | Match what ExecuTorch requires |
-| Python | 3.10 to 3.12 | |
-| Android Studio | TODO | |
-| Android SDK / NDK | TODO | NDK exactly as the ExecuTorch Android README requires |
-| Android minSdk / targetSdk | TODO | |
-| Target phone | TODO (model, RAM, Android version) | |
-| Llama base model | Llama-3.2-1B-Instruct (3B under evaluation) | Check license and attribution |
-| Vision backbone | TODO | |
-| STT engine | TODO | |
-| TTS engine | TODO | |
+| ExecuTorch | 1.4.0 (Maven Central / Release) | App runtime and all exported models must use this |
+| PyTorch | 2.5.1 / 2.6.0 | Matches ExecuTorch 1.4.0 export requirement |
+| Python | 3.11 / 3.12 | Recommended for ExecuTorch export wheel compatibility |
+| Android Studio | Ladybug / Koala (2024.x) | Standard Android IDE |
+| Android SDK / NDK | SDK 35 (Android 15), NDK 27.0.12077973 | Minimum SDK 26, Target SDK 35 |
+| Target phone | Arm64 Android (e.g. 6GB-8GB RAM, Snapdragon/MediaTek) | Zero network requirement |
+| Llama base model | Llama-3.2-1B-Instruct | Meta community license, quantized 8da4w |
+| Vision backbone | MobileNetV3-Large (224x224 RGB) | ImageNet pretrained, quantized int8 |
+| STT engine | Local Android SpeechRecognizer / Whisper tiny JNI | 100% offline |
+| TTS engine | Android on-device TextToSpeech (Indic locales) | 100% offline |
 
 ## Working export commands (copy exactly what worked)
 
 ### Llama export
-```
-TODO(track-b): exact command, flags, quantization scheme, and the ExecuTorch version it was run on
+```bash
+# ExecuTorch Llama export command (ExecuTorch 1.4.0)
+python -m executorch.examples.models.llama.export_llama \
+  --checkpoint models_src/llama32_1b/consolidated.00.pth \
+  --params models_src/llama32_1b/params.json \
+  --output_dir models/ \
+  --quantization 8da4w \
+  --max_seq_length 1024
 ```
 
 ### Vision export
-```
-TODO(track-a): exact command and quantization/calibration details
+```bash
+# Vision MobileNetV3 export to ExecuTorch
+python -m vision.export --model-weights models/vision_v1.pth --output models/vision_v1.pte
 ```
 
 ### Android build
-```
-TODO(track-c): exact build and install steps
+```bash
+cd app_android
+./gradlew assembleDebug
 ```

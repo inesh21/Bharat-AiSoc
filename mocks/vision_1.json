@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "image_id": "mock_vis_1",
+  "model_version": "vision_v1",
+  "quality": {
+    "ok": true,
+    "issues": []
+  },
+  "unknown": false,
+  "crop": "tomato",
+  "predictions": [
+    {
+      "label": "tomato__early_blight",
+      "type": "disease",
+      "confidence": 0.88
+    }
+  ],
+  "severity": {
+    "percent": 18.4,
+    "band": "moderate"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "image_id": "mock_vis_4",
+  "model_version": "vision_v1",
+  "quality": {
+    "ok": true,
+    "issues": []
+  },
+  "unknown": false,
+  "crop": "maize",
+  "predictions": [
+    {
+      "label": "pest__fall_armyworm",
+      "type": "pest",
+      "confidence": 0.86
+    }
+  ],
+  "severity": null
+}

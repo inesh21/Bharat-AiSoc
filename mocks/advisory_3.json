@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "status": "final",
+  "clarification": null,
+  "diagnosis": "Rice - Blast",
+  "severity_band": "mild",
+  "actions_now": [
+    "Avoid further top-dressing of nitrogen fertilizer.",
+    "Apply Pseudomonas fluorescens @ 5 g/L water foliar spray."
+  ],
+  "prevention": [
+    "Seed treatment with Tricyclazole 75% WP @ 2 g/kg seed or Pseudomonas @ 10 g/kg seed.",
+    "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series).",
+    "Split nitrogen fertilizer doses into 3-4 applications rather than heavy single doses."
+  ],
+  "seek_help": false,
+  "source_ids": [
+    "kb:rice__blast"
+  ],
+  "used_fallback": true,
+  "language": "en",
+  "text": "Diagnosis: Rice - Blast. Severity: Mild. Immediate action: Avoid further top-dressing of nitrogen fertilizer."
+}
