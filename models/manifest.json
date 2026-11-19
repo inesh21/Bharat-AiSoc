@@ -1,0 +1,14 @@
+{
+  "models": {
+    "llama32_1b": {
+      "path": "models/llama32_1b.pte",
+      "format": "executorch_pte",
+      "quantization": "8da4w_xnnpack",
+      "group_size": 32,
+      "max_seq_length": 1024,
+      "size_bytes": 860420352,
+      "sha256": "2b25c581c9894bfed83a2f23385be33e977850c186caf276f2bdc53a43d06f6f",
+      "tokenizer": "models_src/llama32_1b/tokenizer.model"
+    }
+  }
+}
