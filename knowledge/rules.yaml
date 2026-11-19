@@ -19,8 +19,8 @@ chemicals:
     dose: "2.5 g/L water"
     phi_days: 7
     safety: "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist."
-    approved_targets: ["tomato__early_blight", "potato__early_blight", "cotton__bacterial_blight", "tomato__bacterial_spot"]
-    source: "TNAU AgriTech Portal & CIBRC Approved Uses"
+    approved_targets: ["tomato__early_blight", "potato__early_blight", "cotton__bacterial_blight", "tomato__bacterial_spot", "rice__bacterial_blight"]
+    source: "TNAU AgriTech Portal & CIBRC Approved Uses; ICAR-CRRI Rice Bacterial Blight Management"
 
   mancozeb:
     trade_names: ["Dithane M-45", "Indofil M-45"]

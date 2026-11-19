@@ -1,0 +1,37 @@
+{
+  "hi": {
+    "diagnosis_prefix": "निदान (रोग पहचान):",
+    "actions_prefix": "तुरंत किए जाने वाले उपाय:",
+    "prevention_prefix": "दीर्घकालिक रोकथाम:",
+    "unknown_warning": "यह लक्षण स्पष्ट नहीं है। कृपया नजदीकी कृषि विज्ञान केंद्र (KVK) के अधिकारी से संपर्क करें।",
+    "healthy_msg": "आपकी फसल स्वस्थ दिखाई दे रही है। नियमित देखभाल जारी रखें।"
+  },
+  "te": {
+    "diagnosis_prefix": "వ్యాధి నిర్ధారణ:",
+    "actions_prefix": "తక్షణ నివారణ చర్యలు:",
+    "prevention_prefix": "దీర్ఘకాలిక జాగ్రత్తలు:",
+    "unknown_warning": "లక్షణాలు ఖచ్చితంగా గుర్తించబడలేదు. దయచేసి స్థానిక వ్యవసాయ అధికారి లేదా కేవీకేను సంప్రదించండి.",
+    "healthy_msg": "మీ పంట ఆరోగ్యంగా ఉంది. సాధారణ యాజమాన్య పద్ధతులను కొనసాగించండి."
+  },
+  "ta": {
+    "diagnosis_prefix": "நோய் கண்டறிதல்:",
+    "actions_prefix": "உடனடி மேலாண்மை முறைகள்:",
+    "prevention_prefix": "நீண்ட கால தடுப்பு நடவடிக்கைகள்:",
+    "unknown_warning": "அறிகுறிகள் தெளிவாக கண்டறியப்படவில்லை. அருகில் உள்ள வேளாண்மை அறிவியல் மையத்தை அணுகவும்.",
+    "healthy_msg": "பயிர் ஆரோக்கியமாக உள்ளது. வழக்கமான பராமரிப்பை தொடரவும்."
+  },
+  "kn": {
+    "diagnosis_prefix": "ರೋಗ ಪತ್ತೆ:",
+    "actions_prefix": "ತಕ್ಷಣದ ಕ್ರಮಗಳು:",
+    "prevention_prefix": "ದೀರ್ಘಕಾಲೀನ ಮುನ್ನೆಚ್ಚರಿಕೆಗಳು:",
+    "unknown_warning": "ರೋಗಲಕ್ಷಣಗಳು ಸ್ಪಷ್ಟವಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಕೃಷಿ ವಿಜ್ಞಾನ ಕೇಂದ್ರದ ಅಧಿಕಾರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+    "healthy_msg": "ಬೆಳೆ ಆರೋಗ್ಯಕರವಾಗಿದೆ. ಸಾಮಾನ್ಯ ಪೋಷಣೆಯನ್ನು ಮುಂದುವರಿಸಿ."
+  },
+  "en": {
+    "diagnosis_prefix": "Diagnosis:",
+    "actions_prefix": "Immediate actions:",
+    "prevention_prefix": "Long-term prevention:",
+    "unknown_warning": "The condition could not be identified. Please consult your local agricultural extension officer (KVK).",
+    "healthy_msg": "Your crop appears healthy. Continue routine care."
+  }
+}

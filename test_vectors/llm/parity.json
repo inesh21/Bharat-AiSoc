@@ -1,0 +1,1664 @@
+[
+  {
+    "id": "fallback_tomato__early_blight_moderate",
+    "description": "Fallback advisory for tomato__early_blight at moderate severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Early Blight",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Prune lower infected leaves up to 30 cm from ground.",
+        "Spray Copper Oxychloride 50% WP @ 2.5 g/L water or Chlorothalonil 75% WP @ 2.0 g/L."
+      ],
+      "prevention": [
+        "Practice 3-year crop rotation avoiding Solanaceous crops (potato, brinjal, chilli).",
+        "Ensure proper plant spacing (60 x 45 cm) for adequate air circulation.",
+        "Mulch soil around plants to prevent soil-splash pathogen transmission.",
+        "Water crops early morning using drip irrigation rather than overhead sprinklers."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__early_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Early Blight. Severity: Moderate. Immediate action: Prune lower infected leaves up to 30 cm from ground."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Tomato",
+        "moderate"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_tomato__late_blight_severe",
+    "description": "Fallback advisory for tomato__late_blight at severe severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--late-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__late_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "severe"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Late Blight",
+      "severity_band": "severe",
+      "actions_now": [
+        "Immediate emergency application of Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.",
+        "Remove and safely bury heavily blighted haulms outside the field.",
+        "Strictly adhere to 14-day pre-harvest interval."
+      ],
+      "prevention": [
+        "Plant certified blight-tolerant hybrids.",
+        "Avoid planting adjacent to potato fields.",
+        "Destroy volunteer tomato and potato plants near field perimeters.",
+        "Promote rapid canopy drying with wider row spacing."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__late_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Late Blight. Severity: Severe. Immediate action: Immediate emergency application of Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Tomato",
+        "severe"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_tomato__septoria_leaf_spot_mild",
+    "description": "Fallback advisory for tomato__septoria_leaf_spot at mild severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--septoria-leaf-spot",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__septoria_leaf_spot",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "mild"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Septoria Leaf Spot",
+      "severity_band": "mild",
+      "actions_now": [
+        "Prune bottom 25 cm of leaves."
+      ],
+      "prevention": [
+        "Two-year rotation with non-solanaceous crops.",
+        "Use clean disease-free certified seeds.",
+        "Eliminate horse-nettle and nightshade weeds."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__septoria_leaf_spot"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Septoria Leaf Spot. Severity: Mild. Immediate action: Prune bottom 25 cm of leaves."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Tomato",
+        "mild"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_tomato__bacterial_spot_moderate",
+    "description": "Fallback advisory for tomato__bacterial_spot at moderate severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--bacterial-spot",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__bacterial_spot",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Bacterial Spot",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Copper Oxychloride 50% WP (2.5 g/L) + Streptomycin sulphate 90% (0.1 g/L).",
+        "Sterilize pruning tools with 70% alcohol."
+      ],
+      "prevention": [
+        "Use hot water treated certified seeds (50°C for 25 mins).",
+        "Avoid overhead sprinkler irrigation.",
+        "Sanitize stakes and trellis wires between crops."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__bacterial_spot"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Bacterial Spot. Severity: Moderate. Immediate action: Spray Copper Oxychloride 50% WP (2.5 g/L) + Streptomycin sulphate 90% (0.1 g/L)."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Tomato",
+        "moderate"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_potato__early_blight_mild",
+    "description": "Fallback advisory for potato__early_blight at mild severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-potato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "potato",
+        "predictions": [
+          {
+            "label": "potato__early_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "potato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "mild"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Potato - Early Blight",
+      "severity_band": "mild",
+      "actions_now": [
+        "Prune lower infected foliage and apply Trichoderma viride (5 g/L).",
+        "Maintain steady soil moisture to reduce plant stress."
+      ],
+      "prevention": [
+        "Crop rotation with non-host crops (maize, pulses).",
+        "Avoid excess nitrogen which delays maturity, or nutrient stress which predisposes plants.",
+        "Use healthy certified seed tubers."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:potato__early_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Potato - Early Blight. Severity: Mild. Immediate action: Prune lower infected foliage and apply Trichoderma viride (5 g/L)."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Potato",
+        "mild"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_potato__late_blight_severe",
+    "description": "Fallback advisory for potato__late_blight at severe severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-potato--late-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "potato",
+        "predictions": [
+          {
+            "label": "potato__late_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "potato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "severe"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Potato - Late Blight",
+      "severity_band": "severe",
+      "actions_now": [
+        "Immediate emergency application of Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.",
+        "Kill haulms (dehaulming) 10-15 days before harvest to prevent tuber infection.",
+        "Adhere strictly to 14-day pre-harvest interval."
+      ],
+      "prevention": [
+        "Always use certified disease-free seed tubers.",
+        "Proper earthing up to provide a thick soil barrier over developing tubers.",
+        "Adopt late blight resistant varieties (e.g. Kufri Girdhari, Kufri Himalini)."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:potato__late_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Potato - Late Blight. Severity: Severe. Immediate action: Immediate emergency application of Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Potato",
+        "severe"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_rice__blast_moderate",
+    "description": "Fallback advisory for rice__blast at moderate severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-rice--blast",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "rice",
+        "predictions": [
+          {
+            "label": "rice__blast",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "rice__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Rice - Blast",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Tricyclazole 75% WP @ 0.6 g/L water early morning.",
+        "Maintain 2-3 cm standing water in paddy fields."
+      ],
+      "prevention": [
+        "Seed treatment with Tricyclazole 75% WP @ 2 g/kg seed or Pseudomonas @ 10 g/kg seed.",
+        "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series).",
+        "Split nitrogen fertilizer doses into 3-4 applications rather than heavy single doses."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:rice__blast"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Rice - Blast. Severity: Moderate. Immediate action: Spray Tricyclazole 75% WP @ 0.6 g/L water early morning."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Rice",
+        "moderate"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_rice__brown_spot_moderate",
+    "description": "Fallback advisory for rice__brown_spot at moderate severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-rice--brown-spot",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "rice",
+        "predictions": [
+          {
+            "label": "rice__brown_spot",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "rice__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Rice - Brown Spot",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Propiconazole 25% EC @ 1.0 mL/L water.",
+        "Improve drainage and correct micronutrient deficiency."
+      ],
+      "prevention": [
+        "Soil application of recommended potassium and silicon fertilizers.",
+        "Seed soaking in hot water at 53-54°C for 10-12 minutes.",
+        "Deep summer ploughing to destroy stubble and volunteer hosts."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:rice__brown_spot"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Rice - Brown Spot. Severity: Moderate. Immediate action: Spray Propiconazole 25% EC @ 1.0 mL/L water."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Rice",
+        "moderate"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_rice__bacterial_blight_severe",
+    "description": "Fallback advisory for rice__bacterial_blight at severe severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-rice--bacterial-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "rice",
+        "predictions": [
+          {
+            "label": "rice__bacterial_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "rice__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "severe"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Rice - Bacterial Blight",
+      "severity_band": "severe",
+      "actions_now": [
+        "Apply Streptomycin sulphate 90% (0.1 g/L) + Copper Oxychloride (2.5 g/L).",
+        "Consult local Krishi Vigyan Kendra (KVK) extension officer.",
+        "Observe 15-day pre-harvest interval."
+      ],
+      "prevention": [
+        "Plant resistant paddy varieties (e.g. Improved Samba Mahsuri, PR-121).",
+        "Avoid clipping seedling tips during transplanting.",
+        "Ensure balance between Nitrogen, Phosphorus, and Potassium (avoid excess N)."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:rice__bacterial_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Rice - Bacterial Blight. Severity: Severe. Immediate action: Apply Streptomycin sulphate 90% (0.1 g/L) + Copper Oxychloride (2.5 g/L)."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Rice",
+        "severe"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "fallback_maize__common_rust_moderate",
+    "description": "Fallback advisory for maize__common_rust at moderate severity",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-maize--common-rust",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "maize",
+        "predictions": [
+          {
+            "label": "maize__common_rust",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "maize__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Maize - Common Rust",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Mancozeb 75% WP @ 2.0 g/L water or Propiconazole 25% EC @ 1.0 mL/L."
+      ],
+      "prevention": [
+        "Plant rust-resistant commercial maize hybrids.",
+        "Early planting to avoid cooler late-season rust infection windows.",
+        "Destroy alternative weed hosts (Oxalis species) in surrounding bunds."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:maize__common_rust"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Maize - Common Rust. Severity: Moderate. Immediate action: Spray Mancozeb 75% WP @ 2.0 g/L water or Propiconazole 25% EC @ 1.0 mL/L."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "Maize",
+        "moderate"
+      ]
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "clarification_tomato__early_blight_vs_tomato__septoria_leaf_spot",
+    "description": "Ambiguity trigger for tomato__early_blight vs tomato__septoria_leaf_spot",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.52
+          },
+          {
+            "label": "tomato__septoria_leaf_spot",
+            "type": "disease",
+            "confidence": 0.47
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "needs_clarification",
+      "clarification": {
+        "question_id": "q_rings_vs_specks",
+        "text": "Do the spots have concentric rings like a target board, or tiny black specks in grey centers?",
+        "options": [
+          "target_rings",
+          "tiny_specks",
+          "not_sure"
+        ]
+      },
+      "diagnosis": "Ambiguous between tomato__early_blight and tomato__septoria_leaf_spot",
+      "severity_band": "moderate",
+      "actions_now": [],
+      "prevention": [],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__early_blight",
+        "kb:tomato__septoria_leaf_spot"
+      ],
+      "used_fallback": false,
+      "language": "en",
+      "text": "Do the spots have concentric rings like a target board, or tiny black specks in grey centers?"
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "clarification_answered_tomato__early_blight_vs_tomato__septoria_leaf_spot_target_rings",
+    "description": "After answer 'target_rings' for tomato__early_blight vs tomato__septoria_leaf_spot",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.52
+          },
+          {
+            "label": "tomato__septoria_leaf_spot",
+            "type": "disease",
+            "confidence": 0.47
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": [
+        {
+          "question_id": "q_rings_vs_specks",
+          "answer": "target_rings"
+        }
+      ]
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Early Blight",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Prune lower infected leaves up to 30 cm from ground.",
+        "Spray Copper Oxychloride 50% WP @ 2.5 g/L water or Chlorothalonil 75% WP @ 2.0 g/L."
+      ],
+      "prevention": [
+        "Practice 3-year crop rotation avoiding Solanaceous crops (potato, brinjal, chilli).",
+        "Ensure proper plant spacing (60 x 45 cm) for adequate air circulation.",
+        "Mulch soil around plants to prevent soil-splash pathogen transmission.",
+        "Water crops early morning using drip irrigation rather than overhead sprinklers."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__early_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Early Blight. Severity: Moderate. Immediate action: Prune lower infected leaves up to 30 cm from ground."
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "clarification_tomato__early_blight_vs_tomato__bacterial_spot",
+    "description": "Ambiguity trigger for tomato__early_blight vs tomato__bacterial_spot",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.52
+          },
+          {
+            "label": "tomato__bacterial_spot",
+            "type": "disease",
+            "confidence": 0.47
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "needs_clarification",
+      "clarification": {
+        "question_id": "q_concentric_vs_angular",
+        "text": "Are the leaf spots large with concentric rings, or small, angular and water-soaked?",
+        "options": [
+          "concentric_rings",
+          "small_angular",
+          "not_sure"
+        ]
+      },
+      "diagnosis": "Ambiguous between tomato__early_blight and tomato__bacterial_spot",
+      "severity_band": "moderate",
+      "actions_now": [],
+      "prevention": [],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__early_blight",
+        "kb:tomato__bacterial_spot"
+      ],
+      "used_fallback": false,
+      "language": "en",
+      "text": "Are the leaf spots large with concentric rings, or small, angular and water-soaked?"
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "clarification_answered_tomato__early_blight_vs_tomato__bacterial_spot_small_angular",
+    "description": "After answer 'small_angular' for tomato__early_blight vs tomato__bacterial_spot",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.52
+          },
+          {
+            "label": "tomato__bacterial_spot",
+            "type": "disease",
+            "confidence": 0.47
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": [
+        {
+          "question_id": "q_concentric_vs_angular",
+          "answer": "small_angular"
+        }
+      ]
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Bacterial Spot",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Copper Oxychloride 50% WP (2.5 g/L) + Streptomycin sulphate 90% (0.1 g/L).",
+        "Sterilize pruning tools with 70% alcohol."
+      ],
+      "prevention": [
+        "Use hot water treated certified seeds (50°C for 25 mins).",
+        "Avoid overhead sprinkler irrigation.",
+        "Sanitize stakes and trellis wires between crops."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__bacterial_spot"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Bacterial Spot. Severity: Moderate. Immediate action: Spray Copper Oxychloride 50% WP (2.5 g/L) + Streptomycin sulphate 90% (0.1 g/L)."
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "clarification_potato__early_blight_vs_potato__late_blight",
+    "description": "Ambiguity trigger for potato__early_blight vs potato__late_blight",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-potato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "potato",
+        "predictions": [
+          {
+            "label": "potato__early_blight",
+            "type": "disease",
+            "confidence": 0.52
+          },
+          {
+            "label": "potato__late_blight",
+            "type": "disease",
+            "confidence": 0.47
+          },
+          {
+            "label": "potato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "needs_clarification",
+      "clarification": {
+        "question_id": "q_underside_mould",
+        "text": "Is there white cottony fungal growth on the underside of leaves during morning hours?",
+        "options": [
+          "yes",
+          "no",
+          "not_sure"
+        ]
+      },
+      "diagnosis": "Ambiguous between potato__early_blight and potato__late_blight",
+      "severity_band": "moderate",
+      "actions_now": [],
+      "prevention": [],
+      "seek_help": false,
+      "source_ids": [
+        "kb:potato__early_blight",
+        "kb:potato__late_blight"
+      ],
+      "used_fallback": false,
+      "language": "en",
+      "text": "Is there white cottony fungal growth on the underside of leaves during morning hours?"
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "early_exit_bad_quality",
+    "description": "Bad quality image → early exit with unknown fallback",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": false,
+          "issues": [
+            "blurry"
+          ]
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "tomato__early_blight_v2",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Condition Unknown or Inconclusive",
+      "severity_band": "none",
+      "actions_now": [
+        "Do not apply unverified chemical sprays.",
+        "Collect a fresh physical leaf sample in a clean paper bag.",
+        "Consult your nearest Krishi Vigyan Kendra (KVK) or State Agricultural Department officer."
+      ],
+      "prevention": [
+        "Inspect surrounding plants and maintain general field sanitation."
+      ],
+      "seek_help": true,
+      "source_ids": [
+        "kb:unknown"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "The condition could not be conclusively identified. Please consult your local agricultural extension officer."
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "early_exit_unknown",
+    "description": "Unknown flag set → early exit with seek_help advisory",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-unknown",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": true,
+        "crop": "unknown",
+        "predictions": [
+          {
+            "label": "unknown",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "unknown_v2",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "unknown__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Condition Unknown or Inconclusive",
+      "severity_band": "none",
+      "actions_now": [
+        "Do not apply unverified chemical sprays.",
+        "Collect a fresh physical leaf sample in a clean paper bag.",
+        "Consult your nearest Krishi Vigyan Kendra (KVK) or State Agricultural Department officer."
+      ],
+      "prevention": [
+        "Inspect surrounding plants and maintain general field sanitation."
+      ],
+      "seek_help": true,
+      "source_ids": [
+        "kb:unknown"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "The condition could not be conclusively identified. Please consult your local agricultural extension officer."
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "validator_cases_batch",
+    "description": "Validator check: good output, missing section, restricted chemical, unapproved target, severity mismatch, non-JSON",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-tomato--early-blight",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "tomato",
+        "predictions": [
+          {
+            "label": "tomato__early_blight",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "tomato__early_blight_v2",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "tomato__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Tomato - Early Blight",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Prune lower infected leaves up to 30 cm from ground.",
+        "Spray Copper Oxychloride 50% WP @ 2.5 g/L water or Chlorothalonil 75% WP @ 2.0 g/L."
+      ],
+      "prevention": [
+        "Practice 3-year crop rotation avoiding Solanaceous crops (potato, brinjal, chilli).",
+        "Ensure proper plant spacing (60 x 45 cm) for adequate air circulation.",
+        "Mulch soil around plants to prevent soil-splash pathogen transmission.",
+        "Water crops early morning using drip irrigation rather than overhead sprinklers."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:tomato__early_blight"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Tomato - Early Blight. Severity: Moderate. Immediate action: Prune lower infected leaves up to 30 cm from ground."
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": [
+      {
+        "llm_output": "{\"diagnosis\": \"Tomato Early Blight\", \"actions_now\": [\"Remove infected lower leaves and dispose off-field.\"], \"prevention\": [\"Avoid overhead irrigation.\"], \"summary_text\": \"Your tomato crop has early blight. Remove diseased leaves.\"}",
+        "condition_id": "tomato__early_blight",
+        "severity_band": "moderate",
+        "expected_valid": true,
+        "expected_reason_contains": "",
+        "actual_valid": true,
+        "actual_reasons": []
+      },
+      {
+        "llm_output": "{\"diagnosis\": \"Tomato Early Blight\", \"actions_now\": [\"Remove infected leaves.\"], \"summary_text\": \"Some text.\"}",
+        "condition_id": "tomato__early_blight",
+        "severity_band": "moderate",
+        "expected_valid": false,
+        "expected_reason_contains": "prevention",
+        "actual_valid": false,
+        "actual_reasons": [
+          "Missing or empty required field: 'prevention'"
+        ]
+      },
+      {
+        "llm_output": "{\"diagnosis\": \"Late Blight\", \"actions_now\": [\"Apply endosulfan spray.\"], \"prevention\": [\"Scout fields.\"], \"summary_text\": \"Use endosulfan for late blight.\"}",
+        "condition_id": "potato__late_blight",
+        "severity_band": "severe",
+        "expected_valid": false,
+        "expected_reason_contains": "endosulfan",
+        "actual_valid": false,
+        "actual_reasons": [
+          "Restricted/banned chemical detected: 'endosulfan'"
+        ]
+      },
+      {
+        "llm_output": "{\"diagnosis\": \"Rice Brown Spot\", \"actions_now\": [\"Apply Blitox copper oxychloride spray.\"], \"prevention\": [\"Scout fields.\"], \"summary_text\": \"Use copper oxychloride.\"}",
+        "condition_id": "rice__brown_spot",
+        "severity_band": "moderate",
+        "expected_valid": false,
+        "expected_reason_contains": "rice__brown_spot",
+        "actual_valid": false,
+        "actual_reasons": [
+          "Chemical 'copper oxychloride' is not an approved target for 'rice__brown_spot'.",
+          "Chemical 'blitox' is not an approved target for 'rice__brown_spot'."
+        ]
+      },
+      {
+        "llm_output": "{\"diagnosis\": \"Tomato Early Blight (mild)\", \"actions_now\": [\"Spray chlorothalonil at 2g/L.\"], \"prevention\": [\"Rotate crops.\"], \"summary_text\": \"Use chlorothalonil for mild early blight.\"}",
+        "condition_id": "tomato__early_blight",
+        "severity_band": "mild",
+        "expected_valid": false,
+        "expected_reason_contains": "mild",
+        "actual_valid": false,
+        "actual_reasons": [
+          "Chemical 'chlorothalonil' prescribed when severity is 'mild' (chemicals not permitted)."
+        ]
+      },
+      {
+        "llm_output": "Here is my advice: remove all leaves and spray everything.",
+        "condition_id": "tomato__early_blight",
+        "severity_band": "moderate",
+        "expected_valid": false,
+        "expected_reason_contains": "JSON parsing",
+        "actual_valid": false,
+        "actual_reasons": [
+          "JSON parsing error: Expecting value: line 1 column 1 (char 0)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "localisation_hi",
+    "description": "Response for rice blast in language 'hi'",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-rice--blast",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "rice",
+        "predictions": [
+          {
+            "label": "rice__blast",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "rice__blast_v2",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "rice__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "hi",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Rice - Blast",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Tricyclazole 75% WP @ 0.6 g/L water early morning.",
+        "Maintain 2-3 cm standing water in paddy fields."
+      ],
+      "prevention": [
+        "Seed treatment with Tricyclazole 75% WP @ 2 g/kg seed or Pseudomonas @ 10 g/kg seed.",
+        "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series).",
+        "Split nitrogen fertilizer doses into 3-4 applications rather than heavy single doses."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:rice__blast"
+      ],
+      "used_fallback": true,
+      "language": "hi",
+      "text": "निदान (रोग पहचान): Rice - Blast. तुरंत किए जाने वाले उपाय: Spray Tricyclazole 75% WP @ 0.6 g/L water early morning. "
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "localisation_te",
+    "description": "Response for rice blast in language 'te'",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-rice--blast",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "rice",
+        "predictions": [
+          {
+            "label": "rice__blast",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "rice__blast_v2",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "rice__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "te",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Rice - Blast",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Tricyclazole 75% WP @ 0.6 g/L water early morning.",
+        "Maintain 2-3 cm standing water in paddy fields."
+      ],
+      "prevention": [
+        "Seed treatment with Tricyclazole 75% WP @ 2 g/kg seed or Pseudomonas @ 10 g/kg seed.",
+        "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series).",
+        "Split nitrogen fertilizer doses into 3-4 applications rather than heavy single doses."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:rice__blast"
+      ],
+      "used_fallback": true,
+      "language": "te",
+      "text": "వ్యాధి నిర్ధారణ: Rice - Blast. తక్షణ నివారణ చర్యలు: Spray Tricyclazole 75% WP @ 0.6 g/L water early morning. "
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "localisation_ta",
+    "description": "Response for rice blast in language 'ta'",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-rice--blast",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "rice",
+        "predictions": [
+          {
+            "label": "rice__blast",
+            "type": "disease",
+            "confidence": 0.93
+          },
+          {
+            "label": "rice__blast_v2",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "rice__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "moderate"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "ta",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Rice - Blast",
+      "severity_band": "moderate",
+      "actions_now": [
+        "Spray Tricyclazole 75% WP @ 0.6 g/L water early morning.",
+        "Maintain 2-3 cm standing water in paddy fields."
+      ],
+      "prevention": [
+        "Seed treatment with Tricyclazole 75% WP @ 2 g/kg seed or Pseudomonas @ 10 g/kg seed.",
+        "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series).",
+        "Split nitrogen fertilizer doses into 3-4 applications rather than heavy single doses."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:rice__blast"
+      ],
+      "used_fallback": true,
+      "language": "ta",
+      "text": "நோய் கண்டறிதல்: Rice - Blast. உடனடி மேலாண்மை முறைகள்: Spray Tricyclazole 75% WP @ 0.6 g/L water early morning. "
+    },
+    "prompt_check": {
+      "must_contain": []
+    },
+    "validator_cases": []
+  },
+  {
+    "id": "pest_fall_armyworm_severe",
+    "description": "Fall armyworm severe – chemical chlorantraniliprole allowed",
+    "input": {
+      "schema_version": "1.0",
+      "vision": {
+        "schema_version": "1.0",
+        "image_id": "test-uuid-pest--fall-armyworm",
+        "model_version": "vision_v1",
+        "quality": {
+          "ok": true,
+          "issues": []
+        },
+        "unknown": false,
+        "crop": "pest",
+        "predictions": [
+          {
+            "label": "pest__fall_armyworm",
+            "type": "pest",
+            "confidence": 0.93
+          },
+          {
+            "label": "maize__healthy",
+            "type": "disease",
+            "confidence": 0.05
+          },
+          {
+            "label": "pest__healthy",
+            "type": "healthy",
+            "confidence": 0.02
+          }
+        ],
+        "severity": {
+          "percent": 18.0,
+          "band": "severe"
+        }
+      },
+      "region": "in_pan_india",
+      "language": "en",
+      "growth_stage": "vegetative",
+      "answers": []
+    },
+    "expected": {
+      "schema_version": "1.0",
+      "status": "final",
+      "clarification": null,
+      "diagnosis": "Pest - Fall Armyworm",
+      "severity_band": "severe",
+      "actions_now": [
+        "Targeted whorl application of Emamectin Benzoate 5% SG @ 0.4 g/L or Chlorantraniliprole 18.5% SC @ 0.4 mL/L.",
+        "Strictly adhere to 5-day (Emamectin) or 7-day (Chlorantraniliprole) pre-harvest interval.",
+        "Wear personal protective gear and avoid spraying during high wind."
+      ],
+      "prevention": [
+        "Intercrop maize with legume crops (e.g. cowpea, pigeonpea, or desmodium).",
+        "Synchronize planting dates within the farming community.",
+        "Conserve natural predators such as predatory stink bugs, earwigs, and trichogramma egg parasitoids.",
+        "Apply dry sand/sawdust mixed with lime or ash into whorls to kill early instar larvae physically."
+      ],
+      "seek_help": false,
+      "source_ids": [
+        "kb:pest__fall_armyworm"
+      ],
+      "used_fallback": true,
+      "language": "en",
+      "text": "Diagnosis: Pest - Fall Armyworm. Severity: Severe. Immediate action: Targeted whorl application of Emamectin Benzoate 5% SG @ 0.4 g/L or Chlorantraniliprole 18.5% SC @ 0.4 mL/L."
+    },
+    "prompt_check": {
+      "must_contain": [
+        "fall_armyworm",
+        "severe"
+      ]
+    },
+    "validator_cases": []
+  }
+]

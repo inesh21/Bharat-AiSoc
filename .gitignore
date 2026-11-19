@@ -18,9 +18,10 @@ __pycache__/
 data/*
 !data/.gitkeep
 vision/datasets/
-*.jpg
-*.jpeg
-*.png
+# Ignore raw dataset images (not app resources)
+data/raw/**/*.jpg
+data/raw/**/*.jpeg
+data/raw/**/*.png
 *.zip
 *.tar.gz
 
@@ -34,8 +35,8 @@ vision/datasets/
 *.safetensors
 *.pte
 *.hef
-*.json
-!knowledge/kb_json/*.json
+# Only ignore JSON inside models_src/ (weight sidecars)
+models_src/*.json
 
 # ==========================================
 # IDEs, Editors & OS Files

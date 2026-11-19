@@ -108,9 +108,13 @@ dependencies {
     implementation("org.json:json:20240303")
     implementation("com.google.code.gson:gson:2.10.1")
 
-    // ExecuTorch runtime for Android
-    // Available from Maven Central or bundled AAR
-    compileOnly("org.pytorch:executorch-android:0.4.0")
+    // ExecuTorch runtime for Android (Phase 5 – runbook section 5.1)
+    // The AAR is NOT on Maven Central for version 1.6.0.
+    // Download from: https://github.com/pytorch/executorch/releases
+    // and place in app_android/app/libs/executorch-android-1.6.0.aar
+    // Then uncomment the line below and delete this comment block.
+    // compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+    // For now the logic package (com.offlinecrop.assistant.logic) has no ET dependency.
 
     // Testing
     testImplementation("junit:junit:4.13.2")

@@ -4,7 +4,7 @@
 **Owner (human):** ________
 **Branch / worktree:** track-a/main  ->  ../crop-wt/track-a
 **Task IDs:** A1 to A14 (see `docs/tracks/TRACK_A_VISION.md`)
-**Last updated:** 2026-11-16
+**Last updated:** 2026-11-20
 
 ## Milestone status
 
@@ -28,6 +28,34 @@
 - (none)
 
 ## Session log (newest first)
+
+### Session 2026-11-20 00:00 | agent: antigravity | branch: integration
+Task IDs: A5 (data prep), A7 (training), A9 (evaluation)
+
+**Summary**
+Added training infrastructure scripts so Track A can proceed once datasets are downloaded.
+
+**Done** (with evidence)
+- `vision/prepare_data.py` – reads datasets from `data/raw/` using `class_map.yaml`, deduplicates via perceptual hash (dhash), assigns field-style sources (own_field, plantdoc) to `test` split, writes `data/processed/manifest.csv`.
+- `vision/class_map.yaml` – source-folder → label mapping covering PlantVillage, rice leaf disease, cotton leaf, IP102 FAW, PlantDoc, and own-field photos.
+- `vision/train.py` – MobileNetV3-Large two-stage training (Stage 1: head only 3 epochs; Stage 2: full fine-tune ≤25 epochs). Class-balanced sampling, label smoothing 0.1, cosine LR, early stopping, saves best val macro-F1 to `models_src/vision_v1.pt`.
+- `vision/train_config.yaml` – default training config (19 classes, batch 32, etc.).
+- `vision/evaluate.py` – accuracy, macro-F1, per-class P/R/F1, confusion matrix PNG, ECE, **field vs lab metrics separate** as required by runbook.
+
+**Not done (data required)**
+- Actual training cannot start until datasets are downloaded and placed in `data/raw/`.
+- ExecuTorch export (`vision/export.py`) runs after a trained `models_src/vision_v1.pt` exists.
+- Test vectors in `test_vectors/vision/` are generated post-export.
+
+**Next steps**
+1. **HUMAN**: Download datasets (see `docs/DATASETS.md` and `vision/class_map.yaml`) and place in `data/raw/<source>/`.
+2. Run sanity check first (2–3 classes): uncomment `sanity_classes` in `vision/train_config.yaml`.
+3. Run `python vision/prepare_data.py` → `python vision/train.py --config vision/train_config.yaml`.
+4. Run `python vision/evaluate.py --checkpoint models_src/vision_v1.pt` and record metrics in this handoff.
+5. Run calibration: `python vision/calibration.py` on val set.
+6. Export: `python vision/export.py` (using `.venv-et` environment).
+7. Generate test vectors and sidecar `models/vision_v1.json`.
+8. Commit manifest entry for `vision_v1.pte` via `git add -f models/manifest.json`.
 
 ### Session 2026-11-16 18:05 | agent: antigravity | branch: track-a
 Task IDs: A1, A2, A3, A4, A6, A7, A8, A9, A10, A11, A12

@@ -4,7 +4,7 @@
 **Owner (human):** ________
 **Branch / worktree:** track-c/main  ->  ../crop-wt/track-c
 **Task IDs:** C1 to C13 (see `docs/tracks/TRACK_C_APP.md`)
-**Last updated:** 2026-11-18
+**Last updated:** 2026-11-20
 
 ## Milestone status
 
@@ -12,8 +12,8 @@
 |---|---|---|
 | I0 Contracts frozen | done | Contracts implemented in Kotlin and validated against mocks |
 | I1 Runtime proven | done | Reference ExecuTorch LlamaDemo deployed on device; on-device TTFT 367ms, 15.27 t/s benchmarked |
-| I2 Vision on device | in progress | UI ready to consume Track A `vision_v1.pte` |
-| I3 Advisory on device | in progress | UI ready to stream tokens from Track B Llama 3.2 `advisory.pte` |
+| I2 Vision on device | in progress | UI ready; `ExecuTorchVisionEngine` stub needed (Phase 5.3) |
+| I3 Advisory on device | in progress | Kotlin advisory logic ported; `ExecuTorchAdvisoryEngine` stub needed (Phase 5.4) |
 | I4 End to end offline | in progress | Manifest audited: zero INTERNET permission, 100% offline |
 | I5 Voice and clarifications | in progress | Clarification UI loop and Android SpeechEngine implemented |
 | I6 Freeze and polish | not started | |
@@ -28,6 +28,39 @@
 - Handled request from Track A: Received `labels.json` and standard normalization spec (mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]). Configured in app preprocessing.
 
 ## Session log (newest first)
+
+### Session 2026-11-20 00:00 | agent: antigravity | branch: integration
+Task IDs: C8 (Kotlin logic port), Phase 4.1–4.4
+
+**Summary**
+Phase 4.1 and 4.2 completed. Android assets exported, Kotlin logic package fully ported from Python,
+parity test suite passes. Build infrastructure fixed (gradle.properties, missing icons, ExecuTorch AAR stub).
+
+**Done** (with evidence)
+- `app_android/app/src/main/assets/` – 5 JSON assets exported (`kb.json`, `rules.json`, `clarifications.json`, `phrases.json`, `labels.json`) via `tools/export_for_android.py`.
+- `app_android/app/src/main/java/com/offlinecrop/assistant/logic/` – 6 Kotlin classes ported (no Android dependencies, JVM-testable):
+  - `KnowledgeRepository` (port of `knowledge/retrieval.py`)
+  - `ClarificationEngine` (port of `knowledge/clarifications.py`)
+  - `PromptBuilder` (port of `llm/prompts.py`)
+  - `AdvisoryValidator` (port of `llm/validator.py`)
+  - `LanguageLayer` (port of `llm/language_layer.py`)
+  - `AdvisoryPipeline` (port of `llm/pipeline.py`)
+- `app_android/app/src/test/java/com/offlinecrop/assistant/logic/ParityTest.kt` – 3 test methods, 33 total assertions; `BUILD SUCCESSFUL` confirmed.
+- `app_android/gradle.properties` – created (was missing); `android.useAndroidX=true` fixes AndroidX detection.
+- `app_android/app/build.gradle.kts` – removed `org.pytorch:executorch-android:0.4.0` placeholder (artifact doesn't exist); documented Phase 5 AAR path.
+- `app_android/app/libs/.gitkeep` – stub directory for ExecuTorch 1.6.0 AAR (Phase 5).
+- `app_android/app/src/main/res/mipmap-*/` – placeholder launcher icons so app builds.
+
+**Requests to other tracks (open)**
+- Track A: Need `models/vision_v1.pte` + `models/vision_v1.json` sidecar + `test_vectors/vision/` to build `ExecuTorchVisionEngine` (Phase 5.3).
+- Track B: When Llama integration is needed in-app, the ExecuTorch 1.6.0 AAR must be placed in `app_android/app/libs/`. Confirm the correct AAR download URL for 1.6.0.
+
+**Next steps**
+1. Phase 5.1: Download ExecuTorch 1.6.0 AAR → place in `app_android/app/libs/` → uncomment line in `build.gradle.kts`.
+2. Phase 5.3: `ExecuTorchVisionEngine.kt` — awaiting Track A `vision_v1.pte`.
+3. Phase 5.4: `ExecuTorchAdvisoryEngine.kt` using `LlmModule`, `LlmCallback`, `LlmGenerationConfig`.
+4. Phase 5.5: Wire `ClarificationEngine` and `AdvisoryPipeline` into the main scan flow; implement all failure-path screens.
+5. Phase 5.7: Set `USE_MOCKS=false` in release build after real engines pass on-device test vectors.
 
 ### Session 2026-11-19 22:55 | agent: antigravity | branch: integration
 Task IDs: C2, C7, Checkpoint 1

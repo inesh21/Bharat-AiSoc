@@ -1,0 +1,220 @@
+{
+  "version": "1.0",
+  "region_scope": "in_pan_india",
+  "chemicals": {
+    "copper_oxychloride": {
+      "trade_names": [
+        "Blitox",
+        "Fytolan",
+        "Blue Copper"
+      ],
+      "active_ingredient": "Copper Oxychloride 50% WP",
+      "dose": "2.5 g/L water",
+      "phi_days": 7,
+      "safety": "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist.",
+      "approved_targets": [
+        "tomato__early_blight",
+        "potato__early_blight",
+        "cotton__bacterial_blight",
+        "tomato__bacterial_spot"
+      ],
+      "source": "TNAU AgriTech Portal & CIBRC Approved Uses"
+    },
+    "mancozeb": {
+      "trade_names": [
+        "Dithane M-45",
+        "Indofil M-45"
+      ],
+      "active_ingredient": "Mancozeb 75% WP",
+      "dose": "2.0 g/L water",
+      "phi_days": 14,
+      "safety": "Wear protective clothing, goggles and mask. Toxic to aquatic organisms; keep away from water bodies.",
+      "approved_targets": [
+        "potato__late_blight",
+        "tomato__late_blight",
+        "maize__common_rust",
+        "maize__northern_leaf_blight"
+      ],
+      "source": "ICAR-CPRI / TNAU Crop Protection Guide"
+    },
+    "chlorothalonil": {
+      "trade_names": [
+        "Kavach"
+      ],
+      "active_ingredient": "Chlorothalonil 75% WP",
+      "dose": "2.0 g/L water",
+      "phi_days": 7,
+      "safety": "Severe eye irritant. Wear eye goggles and impermeable gloves.",
+      "approved_targets": [
+        "tomato__septoria_leaf_spot",
+        "tomato__early_blight",
+        "potato__early_blight"
+      ],
+      "source": "CIBRC Guidelines"
+    },
+    "metalaxyl_mancozeb": {
+      "trade_names": [
+        "Ridomil Gold",
+        "Krilaxyl"
+      ],
+      "active_ingredient": "Metalaxyl 8% + Mancozeb 64% WP",
+      "dose": "2.5 g/L water",
+      "phi_days": 14,
+      "safety": "Protective equipment mandatory. Avoid contact with skin and eyes.",
+      "approved_targets": [
+        "potato__late_blight",
+        "tomato__late_blight"
+      ],
+      "source": "ICAR Potato Protection Manual"
+    },
+    "tricyclazole": {
+      "trade_names": [
+        "Beam",
+        "Baan",
+        "Sivic"
+      ],
+      "active_ingredient": "Tricyclazole 75% WP",
+      "dose": "0.6 g/L water",
+      "phi_days": 21,
+      "safety": "Wash hands and face with soap and water after spraying. Keep away from livestock feeds.",
+      "approved_targets": [
+        "rice__blast"
+      ],
+      "source": "ICAR-NRRI Cuttack Rice Disease Management"
+    },
+    "propiconazole": {
+      "trade_names": [
+        "Tilt",
+        "Radar"
+      ],
+      "active_ingredient": "Propiconazole 25% EC",
+      "dose": "1.0 mL/L water",
+      "phi_days": 30,
+      "safety": "Skin irritant. Wear respirator mask and protective rubber gloves.",
+      "approved_targets": [
+        "rice__brown_spot",
+        "maize__common_rust"
+      ],
+      "source": "IRRI / TNAU Rice Doctor"
+    },
+    "streptocycline_copper": {
+      "trade_names": [
+        "Streptocycline",
+        "Agrimycin"
+      ],
+      "active_ingredient": "Streptomycin sulphate 90% + Tetracycline hydrochloride 10% SP",
+      "dose": "0.1 g/L water (combined with Copper Oxychloride 2.5 g/L)",
+      "phi_days": 15,
+      "safety": "Use antibiotic sprays strictly according to label. Wear full personal protective equipment.",
+      "approved_targets": [
+        "rice__bacterial_blight",
+        "cotton__bacterial_blight",
+        "tomato__bacterial_spot"
+      ],
+      "source": "ICAR-IARI Plant Bacteriology Guidelines"
+    },
+    "emamectin_benzoate": {
+      "trade_names": [
+        "Proclaim",
+        "EM-1"
+      ],
+      "active_ingredient": "Emamectin Benzoate 5% SG",
+      "dose": "0.4 g/L water",
+      "phi_days": 5,
+      "safety": "Wear rubber gloves, goggles and safety mask during handling and spray application.",
+      "approved_targets": [
+        "pest__fall_armyworm"
+      ],
+      "source": "ICAR-IIMR Maize Pest Advisory for Fall Armyworm"
+    },
+    "chlorantraniliprole": {
+      "trade_names": [
+        "Coragen"
+      ],
+      "active_ingredient": "Chlorantraniliprole 18.5% SC",
+      "dose": "0.4 mL/L water",
+      "phi_days": 7,
+      "safety": "Avoid skin contact and inhalation. Keep children and pets away from treated field for 24 hours.",
+      "approved_targets": [
+        "pest__fall_armyworm"
+      ],
+      "source": "ICAR-NBAIR Fall Armyworm Management Protocol"
+    }
+  },
+  "organic_options": {
+    "neem_oil": {
+      "name": "Neem Seed Kernel Extract (NSKE) 5% or Neem Oil (10,000 ppm)",
+      "dose": "5.0 mL/L water with liquid soap (1 mL/L)",
+      "safety": "Eco-friendly, safe to beneficial pollinators when sprayed in late evening.",
+      "approved_targets": [
+        "tomato__early_blight",
+        "pest__fall_armyworm",
+        "rice__brown_spot",
+        "cotton__bacterial_blight"
+      ],
+      "source": "NIPHM Organic IPM Handbook"
+    },
+    "trichoderma": {
+      "name": "Trichoderma viride or T. harzianum (Bio-fungicide)",
+      "dose": "5.0 g/L water foliar spray or 2.5 kg/ha soil enrichment with FYM",
+      "safety": "Non-toxic biological agent. Store in cool shade away from chemical fungicides.",
+      "approved_targets": [
+        "tomato__early_blight",
+        "potato__late_blight",
+        "rice__brown_spot"
+      ],
+      "source": "ICAR Organic Crop Production Standards"
+    },
+    "pseudomonas_fluorescens": {
+      "name": "Pseudomonas fluorescens (Bio-bactericide & bio-fungicide)",
+      "dose": "5.0 g/L water",
+      "safety": "Non-hazardous biological formulation. Do not mix with chemical bactericides.",
+      "approved_targets": [
+        "rice__bacterial_blight",
+        "rice__blast",
+        "cotton__bacterial_blight",
+        "tomato__bacterial_spot"
+      ],
+      "source": "TNAU Bio-fertilizers & Bio-control Guide"
+    },
+    "bacillus_thuringiensis": {
+      "name": "Bacillus thuringiensis kurstaki (Bt)",
+      "dose": "2.0 g/L water",
+      "safety": "Target-specific biological insecticide safe to honeybees and natural parasites.",
+      "approved_targets": [
+        "pest__fall_armyworm"
+      ],
+      "source": "ICAR-NBAIR Biological Pest Control"
+    }
+  },
+  "severity_thresholds": {
+    "mild": {
+      "strategy": "Prioritize organic treatments, cultural sanitation, pruning lower diseased leaves.",
+      "chemical_allowed": false
+    },
+    "moderate": {
+      "strategy": "Combine organic biopesticides with targeted single protective chemical spray if lesions expand.",
+      "chemical_allowed": true
+    },
+    "severe": {
+      "strategy": "Apply systemic/protective approved chemical spray immediately with safety gear; isolate infected zone.",
+      "chemical_allowed": true
+    },
+    "none": {
+      "strategy": "No chemical or bio-fungicide intervention required. Continue routine scouting and nutrition.",
+      "chemical_allowed": false
+    }
+  },
+  "restricted_chemicals": [
+    "monocrotophos",
+    "endosulfan",
+    "paraquat",
+    "carbofuran"
+  ],
+  "extension_officer_triggers": [
+    "unknown_condition",
+    "severe_bacterial_outbreak",
+    "uncontrolled_pest_infestation_above_etl",
+    "conflicting_symptoms"
+  ]
+}
