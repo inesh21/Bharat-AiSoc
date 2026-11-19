@@ -1,0 +1,16 @@
+base:
+  model_class: llama3_2
+  checkpoint: models_src/llama32_1b/consolidated.00.pth
+  params: models_src/llama32_1b/params.json
+  metadata: '{"get_bos_id":128000, "get_eos_ids":[128009, 128001]}'
+model:
+  use_kv_cache: True
+  use_sdpa_with_kv_cache: True
+quantization:
+  embedding_quantize: 4,32
+  qmode: 8da4w
+  group_size: 32
+backend:
+  xnnpack:
+    enabled: True
+    extended_ops: True
