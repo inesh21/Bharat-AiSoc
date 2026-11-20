@@ -11,23 +11,24 @@ This file documents all training, validation, and benchmark datasets used in the
 | **Rice Leaf Disease (Lab)** | Prajapati et al. (2017) / Kaggle (`https://www.kaggle.com/datasets/vbookshelf/rice-leaf-diseases`) | CC0: Public Domain | Lab classification of rice diseases (`bacterial_blight`, `blast`, `brown_spot`) | 85% train / 15% val (deduplicated & capped) | 1,365 images (1,161 train, 204 val) |
 | **RiceLeafBD** | Rahman et al. (2020) / Kaggle (`Original Images.zip`) | CC BY 4.0 | Field-level rice disease test (`bacterial_blight`, `brown_spot`, `healthy`) + healthy train/val | Healthy: 70% train/val (`riceleafbd_train`), 30% test (`riceleafbd`). Diseases: 100% test | 945 images (150 train, 26 val, 769 test) |
 | **Cotton Leaf Disease (Lab)** | Janmejay Bhoi / Kaggle (`https://www.kaggle.com/datasets/janmejaybhoi/cotton-disease-dataset`) | CC BY-SA 4.0 | Lab cotton classification (`cotton__bacterial_blight`, `cotton__healthy`) | 85% train / 15% val (deduplicated & capped) | 363 images (310 train, 53 val) |
-| **SAR-CLD-2024** | SAR-CLD dataset (field cotton) | CC BY 4.0 | Field cotton evaluation (`bacterial_blight`, `healthy`) | 100% test | *Pending archive download* |
-| **Field Maize Leaf 8 / MLD** | Field maize dataset | CC BY 4.0 | Field evaluation of maize & pest (`pest__fall_armyworm`) | 100% test / lab | *Pending FAW dataset* |
-| **Unknown / Background Collection** | Real-world mobile photos (phone camera captures) | CC0 (Project internal) | In-field calibration, OOD detection, `unknown` class | 85% train / 15% val / locked test | *Pending user capture* |
+| **SAR-CLD-2024** | SAR-CLD dataset / Kaggle (`Original Dataset.zip`) | CC BY 4.0 | Field cotton evaluation (`cotton__bacterial_blight`, `cotton__healthy`) | 100% test (dedicated field holdout) | 505 images (test) |
+| **Unknown Collection** | Real-world mobile photos & background textures | CC0 (Project internal) | In-field calibration, OOD detection, `unknown` class | `unknown` @ 256px -> 85% train / 15% val; `unknown_test` @ 512px -> 100% test | 446 images (254 train, 44 val, 148 test) |
+| **IP102 / Fall Armyworm** | Wu et al. (2019), CVPR / Pest Recognition | CC BY-NC-SA 4.0 | Pest classification (`pest__fall_armyworm`) | *Excluded/deferred from current training phase due to archive size constraints* | 0 images (active: 18 of 19 classes) |
 
 ## 2. Ingested Dataset Summary (Current `manifest.csv`)
 
-Total images in `data/processed/manifest.csv`: **9,531**
-- **Train:** 6,851 images
-- **Val:** 1,205 images
-- **Test:** 1,475 images (100% field condition holdout)
+Total images in `data/processed/manifest.csv`: **10,482**
+- **Train:** 7,105 images
+- **Val:** 1,249 images
+- **Test:** 2,128 images (100% field condition holdout)
+- **Active Classes:** **18 of 19** (`pest__fall_armyworm` deferred)
 
-### Per-Class & Split Breakdown (17/19 classes populated)
+### Per-Class & Split Breakdown (18 active classes)
 
 | Label | Train | Val | Test (Field) | Total |
 |---|---|---|---|---|
-| `cotton__bacterial_blight` | 164 | 28 | 0 | 192 |
-| `cotton__healthy` | 146 | 25 | 0 | 171 |
+| `cotton__bacterial_blight` | 164 | 28 | 250 | 442 |
+| `cotton__healthy` | 146 | 25 | 255 | 426 |
 | `maize__common_rust` | 510 | 90 | 112 | 712 |
 | `maize__healthy` | 510 | 90 | 0 | 600 |
 | `maize__northern_leaf_blight` | 510 | 90 | 184 | 784 |
@@ -43,7 +44,8 @@ Total images in `data/processed/manifest.csv`: **9,531**
 | `tomato__healthy` | 510 | 90 | 0 | 600 |
 | `tomato__late_blight` | 510 | 90 | 0 | 600 |
 | `tomato__septoria_leaf_spot` | 510 | 90 | 0 | 600 |
-| **All Classes** | **6,851** | **1,205** | **1,475** | **9,531** |
+| `unknown` | 254 | 44 | 148 | 446 |
+| **All Active Classes** | **7,105** | **1,249** | **2,128** | **10,482** |
 
 ### Source Split Leakage Verification
 
@@ -53,16 +55,20 @@ Total images in `data/processed/manifest.csv`: **9,531**
 | `plantvillage` | 5,230 | 922 | 0 | 6,152 |
 | `rice_lab` | 1,161 | 204 | 0 | 1,365 |
 | `riceleafbd_train` | 150 | 26 | 0 | 176 |
+| `unknown` | 254 | 44 | 0 | 298 |
 | `plantdoc` | 0 | 0 | 706 | 706 |
 | `riceleafbd` | 0 | 0 | 769 | 769 |
+| `sar_cld_2024` | 0 | 0 | 505 | 505 |
+| `unknown_test` | 0 | 0 | 148 | 148 |
+| **Total** | **7,105** | **1,249** | **2,128** | **10,482** |
 
-*Zero cross-split leakage: all training sources are strictly contained in train/val; field sources (`plantdoc`, `riceleafbd`) are strictly isolated in test.*
+*Zero cross-split leakage: all training sources are strictly contained in train/val; field sources (`plantdoc`, `riceleafbd`, `sar_cld_2024`, `unknown_test`) are strictly isolated in test.*
 
 ## 3. Leakage Prevention and Splitting Rules (Task A4)
 
 1. **No random per-image split on PlantVillage:** PlantVillage contains multiple camera shots of the exact same leaf specimen under identical lighting. Random splitting results in synthetic near-duplicate data leakage between train and test sets.
 2. **Perceptual Hash Deduplication:** During ingestion via `vision/prepare_data.py`, difference hashing (dhash) with Hamming distance threshold ≤ 4 is applied to purge duplicate or near-duplicate frames.
-3. **Dedicated Field Holdout:** In-field datasets (`plantdoc`, `riceleafbd`, `sar_cld_2024`, `own_field`) route 100% of samples to `test`, guaranteeing evaluation reflects real mobile camera conditions under varying natural illumination.
+3. **Dedicated Field Holdout:** In-field datasets (`plantdoc`, `riceleafbd`, `sar_cld_2024`, `unknown_test`, `own_field`) route 100% of samples to `test`, guaranteeing evaluation reflects real mobile camera conditions under varying natural illumination.
 4. **Per-Split Group Capping:** Ingestion enforces `--max-per-class` independently per split group (`train_val` vs `test`), preventing field test sets from being blocked when training quotas are reached.
 
 ## 4. Unknown & Out-of-Distribution Strategy (Task A5 & A8)

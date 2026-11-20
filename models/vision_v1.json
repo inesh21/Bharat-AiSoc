@@ -1,0 +1,81 @@
+{
+  "model_name": "vision_v1",
+  "backbone": "mobilenet_v3_large",
+  "image_size": [
+    224,
+    224
+  ],
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "num_classes": 18,
+  "labels": [
+    "tomato__healthy",
+    "tomato__early_blight",
+    "tomato__late_blight",
+    "tomato__septoria_leaf_spot",
+    "tomato__bacterial_spot",
+    "potato__healthy",
+    "potato__early_blight",
+    "potato__late_blight",
+    "rice__healthy",
+    "rice__blast",
+    "rice__brown_spot",
+    "rice__bacterial_blight",
+    "maize__healthy",
+    "maize__common_rust",
+    "maize__northern_leaf_blight",
+    "cotton__healthy",
+    "cotton__bacterial_blight",
+    "unknown"
+  ],
+  "label_to_idx": {
+    "tomato__healthy": 0,
+    "tomato__early_blight": 1,
+    "tomato__late_blight": 2,
+    "tomato__septoria_leaf_spot": 3,
+    "tomato__bacterial_spot": 4,
+    "potato__healthy": 5,
+    "potato__early_blight": 6,
+    "potato__late_blight": 7,
+    "rice__healthy": 8,
+    "rice__blast": 9,
+    "rice__brown_spot": 10,
+    "rice__bacterial_blight": 11,
+    "maize__healthy": 12,
+    "maize__common_rust": 13,
+    "maize__northern_leaf_blight": 14,
+    "cotton__healthy": 15,
+    "cotton__bacterial_blight": 16,
+    "unknown": 17
+  },
+  "temperature": 1.0219,
+  "ece_validation": 0.0977,
+  "ood_threshold": 0.8226,
+  "best_val_macro_f1": 0.9975,
+  "torchscript_file": "models/vision_v1_torchscript.pt",
+  "torchscript_sha256": "d46882fe589e59d26464f1d46dea6bf6b8b23dd8a364f19ef716231bdf60a590",
+  "torchscript_size_bytes": 13426269,
+  "torchscript_parity_max_diff": 0.0,
+  "export_torch_version": "2.15.0.dev20261005+cpu",
+  "export_input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "target_runtime": "executorch-xnnpack",
+  "pte_exported": true,
+  "pte_file": "models/vision_v1.pte",
+  "pte_sha256": "a288ac81cf683a5a6124fbb6e8cf5759f0c18fdb4f24b9e03505bc8be3cd5649",
+  "pte_size_bytes": 13074296
+}

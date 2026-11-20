@@ -4,8 +4,9 @@ Everything here is pinned across all machines and the app. Change only through a
 
 | Item | Version / value | Notes |
 |---|---|---|
-| ExecuTorch | 1.4.0 (Maven Central / Release) | App runtime and all exported models must use this |
-| PyTorch | 2.5.1 / 2.6.0 | Matches ExecuTorch 1.4.0 export requirement |
+| ExecuTorch | 1.6.0 (Python wheel, source tree in executorch/) | App runtime and all exported models must use this |
+| PyTorch (export env) | 2.15.0.dev20261005+cpu (nightly) | Required for executorch==1.6.0; install with `--index-url https://download.pytorch.org/whl/nightly/cpu` |
+| PyTorch (train env) | 2.6.0+cu124 (or 2.5.x+cpu) | CUDA not needed for export; use a separate env or reinstall for export |
 | Python | 3.11 / 3.12 | Recommended for ExecuTorch export wheel compatibility |
 | Android Studio | Ladybug / Koala (2024.x) | Standard Android IDE |
 | Android SDK / NDK | SDK 35 (Android 15), NDK 27.0.12077973 | Minimum SDK 26, Target SDK 35 |
@@ -27,9 +28,17 @@ Everything here is pinned across all machines and the app. Change only through a
 ```
 
 ### Vision export
-```bash
-# Vision MobileNetV3 export to ExecuTorch
-python -m vision.export --model-weights models/vision_v1.pth --output models/vision_v1.pte
+```powershell
+# Vision MobileNetV3-Large export to ExecuTorch .pte (run from project root)
+# Requires: torch==2.15.0.dev20261005+cpu + torchvision==0.30.0.dev20261005+cpu + executorch==1.6.0
+# Install torch nightly first:
+#   .\.venv-et\Scripts\python.exe -m pip install "torch==2.15.0.dev20261005+cpu" "torchvision==0.30.0.dev20261005+cpu" --index-url https://download.pytorch.org/whl/nightly/cpu
+.\.venv-et\Scripts\python.exe vision\export_pte.py
+# Output: models/vision_v1.pte (13.1 MB, executorch-xnnpack, 18 classes, 224x224 RGB)
+# SHA-256: a288ac81cf683a5a6124fbb6e8cf5759f0c18fdb4f24b9e03505bc8be3cd5649
+# Parity test:
+.\.venv-et\Scripts\python.exe vision\parity_test.py
+# → max_abs_diff=5.96e-06, all 50 top-1 predictions match between PT and ET
 ```
 
 ### Android build

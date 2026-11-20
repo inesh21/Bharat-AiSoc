@@ -4,7 +4,7 @@
 # Data
 manifest_csv: "data/processed/manifest.csv"
 labels_json: "labels.json"
-num_workers: 4
+num_workers: 0
 
 # Model
 backbone: "mobilenet_v3_large"

@@ -54,6 +54,7 @@ cotton_lab/Healthy Leaf:                       cotton__healthy
 # SAR-CLD-2024 (cotton field test: sar_cld_2024)
 # ------------------------------------------------------------------
 sar_cld_2024/Bacterial Blight:                 cotton__bacterial_blight
+sar_cld_2024/Healthy Leaf:                     cotton__healthy
 sar_cld_2024/Healthy:                          cotton__healthy
 
 # ------------------------------------------------------------------
@@ -116,3 +117,5 @@ own_field/pest__fall_armyworm:                 pest__fall_armyworm
 # Place in: data/raw/unknown/
 # ------------------------------------------------------------------
 unknown/images:                                unknown
+
+unknown_test/images:                           unknown

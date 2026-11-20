@@ -142,6 +142,10 @@ def build_dataset(manifest_csv: str, split: str, cfg: TrainConfig):
         all_labels = json.load(f)
     if cfg.sanity_classes:
         all_labels = cfg.sanity_classes
+    else:
+        # Exclude labels not present in the manifest (e.g. pest__fall_armyworm)
+        present_labels = sorted(list(set(r["label"] for r in rows)))
+        all_labels = [l for l in all_labels if l in present_labels]
     label_to_idx = {l: i for i, l in enumerate(all_labels)}
 
     # Cap samples per class
@@ -241,6 +245,7 @@ def train(cfg: TrainConfig) -> None:
                             num_workers=cfg.num_workers, pin_memory=True)
 
     # Model
+    cfg.num_classes = n_classes
     model = build_model(cfg)
     model.num_classes = n_classes  # attach for reference
     model.to(device)

@@ -10,5 +10,43 @@
       "sha256": "2b25c581c9894bfed83a2f23385be33e977850c186caf276f2bdc53a43d06f6f",
       "tokenizer": "models_src/llama32_1b/tokenizer.model"
     }
+  },
+  "vision_v1": {
+    "sha256": "d46882fe589e59d26464f1d46dea6bf6b8b23dd8a364f19ef716231bdf60a590",
+    "size_bytes": 13426269,
+    "format": "torchscript",
+    "num_classes": 18,
+    "input_shape": [
+      1,
+      3,
+      224,
+      224
+    ],
+    "target_runtime": "executorch-xnnpack",
+    "best_val_macro_f1": 0.9975,
+    "label_to_idx": {
+      "tomato__healthy": 0,
+      "tomato__early_blight": 1,
+      "tomato__late_blight": 2,
+      "tomato__septoria_leaf_spot": 3,
+      "tomato__bacterial_spot": 4,
+      "potato__healthy": 5,
+      "potato__early_blight": 6,
+      "potato__late_blight": 7,
+      "rice__healthy": 8,
+      "rice__blast": 9,
+      "rice__brown_spot": 10,
+      "rice__bacterial_blight": 11,
+      "maize__healthy": 12,
+      "maize__common_rust": 13,
+      "maize__northern_leaf_blight": 14,
+      "cotton__healthy": 15,
+      "cotton__bacterial_blight": 16,
+      "unknown": 17
+    },
+    "pte_blocker": null,
+    "pte_sha256": "a288ac81cf683a5a6124fbb6e8cf5759f0c18fdb4f24b9e03505bc8be3cd5649",
+    "pte_format": "executorch_pte",
+    "pte_size_bytes": 13074296
   }
 }
