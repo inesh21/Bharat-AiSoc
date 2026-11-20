@@ -30,23 +30,46 @@ plantvillage/Corn_(maize)___Northern_Leaf_Blight: maize__northern_leaf_blight
 plantvillage/Corn_(maize)___healthy:           maize__healthy
 
 # ------------------------------------------------------------------
-# Rice Leaf Disease Dataset (lab-style)
-# Download from: https://www.kaggle.com/datasets/vbookshelf/rice-leaf-diseases
-# Place in: data/raw/rice_leaf/
-# Adjust subfolder names to match what you download.
+# Rice Leaf Disease Dataset (lab-style: rice_lab)
 # ------------------------------------------------------------------
-rice_leaf/blast:                               rice__blast
-rice_leaf/brownspot:                           rice__brown_spot
-rice_leaf/bacterial_blight:                    rice__bacterial_blight
-rice_leaf/healthy:                             rice__healthy
+rice_lab/Bacterialblight:                      rice__bacterial_blight
+rice_lab/Blast:                                rice__blast
+rice_lab/Brownspot:                            rice__brown_spot
 
 # ------------------------------------------------------------------
-# Cotton Leaf Disease Dataset (lab-style)
-# Download from: https://www.kaggle.com/datasets/janmejaybhoi/cotton-disease-dataset
-# Place in: data/raw/cotton_leaf/
+# RiceLeafBD (field-style test & healthy train_val)
 # ------------------------------------------------------------------
-cotton_leaf/diseased:                          cotton__bacterial_blight
-cotton_leaf/healthy:                           cotton__healthy
+riceleafbd_train/Healthy Leaf:                 rice__healthy
+riceleafbd/Bacterial Leaf Blight:              rice__bacterial_blight
+riceleafbd/Brown Spot:                         rice__brown_spot
+riceleafbd/Healthy Leaf:                       rice__healthy
+
+# ------------------------------------------------------------------
+# Cotton Leaf Disease Dataset (lab-style: cotton_lab)
+# ------------------------------------------------------------------
+cotton_lab/Bacterial Blight:                   cotton__bacterial_blight
+cotton_lab/Healthy Leaf:                       cotton__healthy
+
+# ------------------------------------------------------------------
+# SAR-CLD-2024 (cotton field test: sar_cld_2024)
+# ------------------------------------------------------------------
+sar_cld_2024/Bacterial Blight:                 cotton__bacterial_blight
+sar_cld_2024/Healthy:                          cotton__healthy
+
+# ------------------------------------------------------------------
+# Maize / Blight / Rust / Healthy (mld_maize lab-style)
+# ------------------------------------------------------------------
+mld_maize/Blight:                              maize__northern_leaf_blight
+mld_maize/Common_Rust:                         maize__common_rust
+mld_maize/Healthy:                             maize__healthy
+
+# ------------------------------------------------------------------
+# Field Maize Leaf 8 (field-style test)
+# ------------------------------------------------------------------
+field_maize_8/Blight:                          maize__northern_leaf_blight
+field_maize_8/Common_Rust:                     maize__common_rust
+field_maize_8/Healthy:                         maize__healthy
+field_maize_8/Fall_Armyworm:                   pest__fall_armyworm
 
 # ------------------------------------------------------------------
 # IP102 / Fall Armyworm subset (lab-style)

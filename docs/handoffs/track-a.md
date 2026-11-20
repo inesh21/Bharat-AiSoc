@@ -29,6 +29,40 @@
 
 ## Session log (newest first)
 
+### Session 2026-11-20 17:50 | agent: antigravity | branch: integration
+Task IDs: A4 (leakage prevention), A5 (data prep), dataset.md completion
+
+**Summary**
+Completed ingestion, deduplication, and preprocessing of all available dataset archives in `data/raw/` per `dataset.md`. Updated `vision/prepare_data.py`, `vision/class_map.yaml`, `docs/DATASETS.md`, and validated manifest with zero cross-split leakage.
+
+**Done** (with evidence)
+- `vision/prepare_data.py`: Updated with `--max-per-class` capping per split group (`train_val` vs `test`), and updated `FIELD_SOURCES` to ensure 100% field images route to the `test` split.
+- `vision/class_map.yaml`: Mapped `rice_lab`, `riceleafbd_train`, `riceleafbd`, `cotton_lab`, and `mld_maize` subfolders to canonical taxonomy labels.
+- Ingested Rice datasets:
+  - `rice_lab`: Added 1,365 lab images (`rice__bacterial_blight`, `rice__blast`, `rice__brown_spot`). Deduplication eliminated near-duplicates; raw files and 7z cleaned up.
+  - `riceleafbd`: Added 176 images to `riceleafbd_train` (`rice__healthy` in train/val) and 769 images to `riceleafbd` (test split: `rice__bacterial_blight`, `rice__brown_spot`, `rice__healthy`). Raw zip and folders cleaned up.
+- Ingested Cotton dataset:
+  - `cotton_lab`: Added 363 images (`cotton__bacterial_blight`, `cotton__healthy`) to train/val. Deduplicated and raw archive cleaned up.
+- Ingested Maize dataset:
+  - `mld_maize`: Extracted from `archive (1).zip`. Verified existing manifest already contains 600/class cap for maize train_val (`maize__northern_leaf_blight`, `maize__common_rust`, `maize__healthy`); raw archive and folders cleaned up.
+- Verified `data/processed/manifest.csv`:
+  - Total records: **9,531** (`train`: 6,851, `val`: 1,205, `test`: 1,475).
+  - 17 of 19 classes populated. Zero leakage confirmed across sources (`plantvillage`, `rice_lab`, `riceleafbd_train`, `cotton_lab` only in train/val; `plantdoc`, `riceleafbd` strictly in test).
+- Updated `docs/DATASETS.md` with full breakdown, licensing, and leakage prevention rules.
+
+**Not done (data required)**
+- Remaining 2 classes missing images: `pest__fall_armyworm` and `unknown` (non-plant images).
+- `sar_cld_2024` (field cotton) was not present in `data/raw/`.
+
+**Blockers**
+- Need archives/images for `pest__fall_armyworm` (e.g. IP102 subset or Field Maize Leaf 8) and `unknown` (non-plant background captures).
+- GPU environment: System has NVIDIA GeForce RTX 3050 Laptop GPU with CUDA 13.1 driver, and `C:\Python314\python.exe` has PyTorch 2.15.0+cu132, whereas `.venv-et` has CPU-only PyTorch. Full training should be launched using the CUDA Python environment or after installing CUDA PyTorch into a dedicated vision venv.
+
+**Requests to other tracks / human**
+- User/Human: Please provide images or archive for `pest__fall_armyworm` and `unknown` (non-leaf/random photos) to complete the 19-class training set.
+
+---
+
 ### Session 2026-11-20 00:00 | agent: antigravity | branch: integration
 Task IDs: A5 (data prep), A7 (training), A9 (evaluation)
 
