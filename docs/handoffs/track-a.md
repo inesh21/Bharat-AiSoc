@@ -2,9 +2,9 @@
 
 **Active agent:** none
 **Owner (human):** ________
-**Branch / worktree:** track-a/main  ->  ../crop-wt/track-a
+**Branch / worktree:** track-a/device-vectors
 **Task IDs:** A1 to A14 (see `docs/tracks/TRACK_A_VISION.md`)
-**Last updated:** 2026-11-21 04:39 UTC
+**Last updated:** 2026-11-21 09:11 UTC
 
 ## Milestone status
 
@@ -28,6 +28,30 @@
 - (none)
 
 ## Session log (newest first)
+
+### Session 2026-11-21 | agent: codex | branch: track-a/device-vectors
+Task ID: A13
+
+**Summary**
+Generated 50 Android parity cases from the processed test manifest using seed 42.
+
+**Done**
+- Host PyTorch vs ExecuTorch 1.6.0 | run from integration checkout: .\.venv-et\Scripts\python.exe -I "$env:TEMP\AiSoc-track-work\track-a\vision\make_device_vectors.py" --root . | 50/50 top predictions match, max absolute error 6.68e-06, recorded tolerance 1e-4.
+- The gitignored test_vectors/vision/device_vectors.zip contains lossless model-size PNGs, little-endian NCHW float32 tensors, and reference logits. Cases include all five crop groups and eight unknowns.
+
+**Next steps**
+1. Use Track C's Device self-test screen and its CSV to record Android tensor and image parity.
+
+**Decisions made**
+- Used the training evaluation resize and saved lossless images so JPEG recompression cannot change the reference input.
+- The model sidecar has no verification object. The generator uses the existing parity JSON tolerance as a fallback.
+- Keep the vector archive out of Git because it contains dataset images.
+
+**Files touched**
+- vision/make_device_vectors.py
+
+**Requests to other tracks**
+- To Track C: Record device logits against the generated bundle | CONTRACTS.md section 7 | I2 | status: open
 
 ### Session 2026-11-21 00:21 | agent: antigravity | branch: integration
 Task IDs: A5 (data pipeline), A6 (training), A7 (evaluation), A8 (calibration), A9 (export), A10 (parity test)
