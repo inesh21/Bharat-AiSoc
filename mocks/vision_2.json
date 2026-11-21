@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "image_id": "mock_vis_2",
+  "model_version": "vision_v1",
+  "quality": {
+    "ok": true,
+    "issues": []
+  },
+  "unknown": false,
+  "crop": "potato",
+  "predictions": [
+    {
+      "label": "potato__healthy",
+      "type": "healthy",
+      "confidence": 0.95
+    }
+  ],
+  "severity": {
+    "percent": 0.0,
+    "band": "none"
+  }
+}

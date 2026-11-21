@@ -1,0 +1,72 @@
+[
+  {
+    "id": "eval_001",
+    "crop": "tomato",
+    "condition": "tomato__early_blight",
+    "severity": "moderate",
+    "expected_diagnosis": "Early Blight",
+    "expected_action_contains": ["Copper Oxychloride", "2.5 g/L", "Prune"],
+    "prohibited_chemicals": ["monocrotophos", "endosulfan", "miraclegrow"],
+    "expected_prevention": ["crop rotation", "mulch"]
+  },
+  {
+    "id": "eval_002",
+    "crop": "potato",
+    "condition": "potato__late_blight",
+    "severity": "severe",
+    "expected_diagnosis": "Late Blight",
+    "expected_action_contains": ["Metalaxyl", "Mancozeb", "2.5 g/L", "14"],
+    "prohibited_chemicals": ["monocrotophos", "endosulfan"],
+    "expected_prevention": ["certified", "seed"]
+  },
+  {
+    "id": "eval_003",
+    "crop": "rice",
+    "condition": "rice__blast",
+    "severity": "mild",
+    "expected_diagnosis": "Blast",
+    "expected_action_contains": ["nitrogen", "Pseudomonas"],
+    "prohibited_chemicals": ["Tricyclazole", "monocrotophos"],
+    "expected_prevention": ["resistant varieties"]
+  },
+  {
+    "id": "eval_004",
+    "crop": "maize",
+    "condition": "pest__fall_armyworm",
+    "severity": "moderate",
+    "expected_diagnosis": "Fall Armyworm",
+    "expected_action_contains": ["Emamectin", "Bacillus thuringiensis", "whorl"],
+    "prohibited_chemicals": ["monocrotophos", "carbofuran"],
+    "expected_prevention": ["intercrop", "pheromone"]
+  },
+  {
+    "id": "eval_005",
+    "crop": "cotton",
+    "condition": "cotton__bacterial_blight",
+    "severity": "severe",
+    "expected_diagnosis": "Bacterial Blight",
+    "expected_action_contains": ["Copper Oxychloride", "Streptomycin", "15"],
+    "prohibited_chemicals": ["monocrotophos"],
+    "expected_prevention": ["delinting", "acid"]
+  },
+  {
+    "id": "eval_006",
+    "crop": "tomato",
+    "condition": "tomato__healthy",
+    "severity": "none",
+    "expected_diagnosis": "Healthy",
+    "expected_action_contains": ["No pesticide", "routine"],
+    "prohibited_chemicals": ["Copper", "Mancozeb", "Chlorothalonil"],
+    "expected_prevention": ["scouting"]
+  },
+  {
+    "id": "eval_007",
+    "crop": "unknown",
+    "condition": "unknown",
+    "severity": "none",
+    "expected_diagnosis": "Unknown",
+    "expected_action_contains": ["Krishi Vigyan Kendra", "extension officer"],
+    "prohibited_chemicals": ["Copper", "Mancozeb", "Emamectin"],
+    "expected_prevention": ["sanitation"]
+  }
+]

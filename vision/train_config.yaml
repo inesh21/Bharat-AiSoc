@@ -1,0 +1,37 @@
+# vision/train_config.yaml – Training configuration for MobileNetV3 vision model
+# Used by vision/train.py
+
+# Data
+manifest_csv: "data/processed/manifest.csv"
+labels_json: "labels.json"
+num_workers: 0
+
+# Model
+backbone: "mobilenet_v3_large"
+pretrained: true
+num_classes: 19
+
+# Training
+seed: 42
+image_size: 224
+batch_size: 32
+stage1_epochs: 3
+stage2_epochs: 25
+lr_head: 0.001
+lr_backbone: 0.0001
+weight_decay: 0.0001
+label_smoothing: 0.1
+early_stopping_patience: 5
+
+# Output
+output_dir: "models_src"
+output_name: "vision_v1.pt"
+run_dir: "vision/runs"
+
+# Quick sanity run: comment out to use all classes
+# sanity_classes:
+#   - "tomato__early_blight"
+#   - "tomato__late_blight"
+#   - "tomato__healthy"
+#   - "unknown"
+# max_samples_per_class: 200

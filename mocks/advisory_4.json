@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "status": "final",
+  "clarification": null,
+  "diagnosis": "Pest - Fall Armyworm",
+  "severity_band": "moderate",
+  "actions_now": [
+    "Apply Bacillus thuringiensis (2.0 g/L) or Emamectin Benzoate 5% SG @ 0.4 g/L into leaf whorls.",
+    "Direct the spray nozzle straight down into the central whorl of each plant."
+  ],
+  "prevention": [
+    "Intercrop maize with legume crops (e.g. cowpea, pigeonpea, or desmodium).",
+    "Synchronize planting dates within the farming community.",
+    "Conserve natural predators such as predatory stink bugs, earwigs, and trichogramma egg parasitoids.",
+    "Apply dry sand/sawdust mixed with lime or ash into whorls to kill early instar larvae physically."
+  ],
+  "seek_help": false,
+  "source_ids": [
+    "kb:pest__fall_armyworm"
+  ],
+  "used_fallback": true,
+  "language": "en",
+  "text": "Diagnosis: Pest - Fall Armyworm. Severity: Moderate. Immediate action: Apply Bacillus thuringiensis (2.0 g/L) or Emamectin Benzoate 5% SG @ 0.4 g/L into leaf whorls."
+}

@@ -1,0 +1,21 @@
+[
+  "tomato__healthy",
+  "tomato__early_blight",
+  "tomato__late_blight",
+  "tomato__septoria_leaf_spot",
+  "tomato__bacterial_spot",
+  "potato__healthy",
+  "potato__early_blight",
+  "potato__late_blight",
+  "rice__healthy",
+  "rice__blast",
+  "rice__brown_spot",
+  "rice__bacterial_blight",
+  "maize__healthy",
+  "maize__common_rust",
+  "maize__northern_leaf_blight",
+  "cotton__healthy",
+  "cotton__bacterial_blight",
+  "pest__fall_armyworm",
+  "unknown"
+]

@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "status": "final",
+  "clarification": null,
+  "diagnosis": "Potato - Healthy",
+  "severity_band": "none",
+  "actions_now": [
+    "No intervention necessary. Maintain uniform earthing up."
+  ],
+  "prevention": [
+    "Scout lower canopy leaves regularly for early blight or late blight emergence.",
+    "Maintain adequate soil moisture during tuber formation."
+  ],
+  "seek_help": false,
+  "source_ids": [
+    "kb:potato__healthy"
+  ],
+  "used_fallback": true,
+  "language": "en",
+  "text": "Diagnosis: Potato - Healthy. Severity: None. Immediate action: No intervention necessary. Maintain uniform earthing up."
+}

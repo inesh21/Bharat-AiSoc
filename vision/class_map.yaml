@@ -1,0 +1,121 @@
+# vision/class_map.yaml – Source folder to class label mapping
+#
+# Format:
+#   <source_name>/<subfolder_path>: <label>
+#
+# source_name must match a directory under data/raw/.
+# label must be one of the IDs in labels.json.
+#
+# Sources in FIELD_SOURCES (own_field, plantdoc) → always assigned to test split.
+# All others → 85% train, 15% val.
+#
+# Fill this in after downloading datasets (see docs/DATASETS.md, runbook 2.2).
+# Run: python vision/prepare_data.py
+
+# ------------------------------------------------------------------
+# PlantVillage (lab-style)
+# Download from: https://www.kaggle.com/datasets/emmarex/plantdisease
+# Place in: data/raw/plantvillage/
+# ------------------------------------------------------------------
+plantvillage/Tomato___Early_blight:            tomato__early_blight
+plantvillage/Tomato___Late_blight:             tomato__late_blight
+plantvillage/Tomato___Septoria_leaf_spot:      tomato__septoria_leaf_spot
+plantvillage/Tomato___Bacterial_spot:          tomato__bacterial_spot
+plantvillage/Tomato___healthy:                 tomato__healthy
+plantvillage/Potato___Early_blight:            potato__early_blight
+plantvillage/Potato___Late_blight:             potato__late_blight
+plantvillage/Potato___healthy:                 potato__healthy
+plantvillage/Corn_(maize)___Common_rust_:      maize__common_rust
+plantvillage/Corn_(maize)___Northern_Leaf_Blight: maize__northern_leaf_blight
+plantvillage/Corn_(maize)___healthy:           maize__healthy
+
+# ------------------------------------------------------------------
+# Rice Leaf Disease Dataset (lab-style: rice_lab)
+# ------------------------------------------------------------------
+rice_lab/Bacterialblight:                      rice__bacterial_blight
+rice_lab/Blast:                                rice__blast
+rice_lab/Brownspot:                            rice__brown_spot
+
+# ------------------------------------------------------------------
+# RiceLeafBD (field-style test & healthy train_val)
+# ------------------------------------------------------------------
+riceleafbd_train/Healthy Leaf:                 rice__healthy
+riceleafbd/Bacterial Leaf Blight:              rice__bacterial_blight
+riceleafbd/Brown Spot:                         rice__brown_spot
+riceleafbd/Healthy Leaf:                       rice__healthy
+
+# ------------------------------------------------------------------
+# Cotton Leaf Disease Dataset (lab-style: cotton_lab)
+# ------------------------------------------------------------------
+cotton_lab/Bacterial Blight:                   cotton__bacterial_blight
+cotton_lab/Healthy Leaf:                       cotton__healthy
+
+# ------------------------------------------------------------------
+# SAR-CLD-2024 (cotton field test: sar_cld_2024)
+# ------------------------------------------------------------------
+sar_cld_2024/Bacterial Blight:                 cotton__bacterial_blight
+sar_cld_2024/Healthy Leaf:                     cotton__healthy
+sar_cld_2024/Healthy:                          cotton__healthy
+
+# ------------------------------------------------------------------
+# Maize / Blight / Rust / Healthy (mld_maize lab-style)
+# ------------------------------------------------------------------
+mld_maize/Blight:                              maize__northern_leaf_blight
+mld_maize/Common_Rust:                         maize__common_rust
+mld_maize/Healthy:                             maize__healthy
+
+# ------------------------------------------------------------------
+# Field Maize Leaf 8 (field-style test)
+# ------------------------------------------------------------------
+field_maize_8/Blight:                          maize__northern_leaf_blight
+field_maize_8/Common_Rust:                     maize__common_rust
+field_maize_8/Healthy:                         maize__healthy
+field_maize_8/Fall_Armyworm:                   pest__fall_armyworm
+
+# ------------------------------------------------------------------
+# IP102 / Fall Armyworm subset (lab-style)
+# Download from: https://github.com/xpwu95/IP102 or Kaggle
+# Place in: data/raw/ip102_faw/
+# Only the Fall Armyworm class (Spodoptera frugiperda) is used.
+# ------------------------------------------------------------------
+ip102_faw/fall_armyworm:                       pest__fall_armyworm
+
+# ------------------------------------------------------------------
+# PlantDoc (field-style) → always goes to test split
+# Download from: https://github.com/pratikkayal/PlantDoc-Dataset
+# Place in: data/raw/plantdoc/
+# ------------------------------------------------------------------
+plantdoc/Tomato Early blight leaf:             tomato__early_blight
+plantdoc/Tomato Late blight leaf:              tomato__late_blight
+plantdoc/Tomato leaf bacterial spot:           tomato__bacterial_spot
+plantdoc/Potato leaf early blight:             potato__early_blight
+plantdoc/Potato leaf late blight:              potato__late_blight
+plantdoc/Corn leaf blight:                     maize__northern_leaf_blight
+plantdoc/Corn rust leaf:                       maize__common_rust
+
+# ------------------------------------------------------------------
+# Own field photos (field-style) → always goes to test split
+# Take photos yourself per runbook section 2.3b.
+# Place in: data/raw/own_field/<label>/
+# ------------------------------------------------------------------
+own_field/tomato__early_blight:                tomato__early_blight
+own_field/tomato__late_blight:                 tomato__late_blight
+own_field/tomato__bacterial_spot:              tomato__bacterial_spot
+own_field/potato__early_blight:                potato__early_blight
+own_field/potato__late_blight:                 potato__late_blight
+own_field/rice__blast:                         rice__blast
+own_field/rice__brown_spot:                    rice__brown_spot
+own_field/rice__bacterial_blight:              rice__bacterial_blight
+own_field/maize__common_rust:                  maize__common_rust
+own_field/maize__northern_leaf_blight:         maize__northern_leaf_blight
+own_field/cotton__bacterial_blight:            cotton__bacterial_blight
+own_field/pest__fall_armyworm:                 pest__fall_armyworm
+
+# ------------------------------------------------------------------
+# Unknown class (non-plant images)
+# 300–1000 images of soil, hands, random objects, other plants.
+# Place in: data/raw/unknown/
+# ------------------------------------------------------------------
+unknown/images:                                unknown
+
+unknown_test/images:                           unknown

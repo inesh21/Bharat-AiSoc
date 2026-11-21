@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "image_id": "mock_vis_3",
+  "model_version": "vision_v1",
+  "quality": {
+    "ok": true,
+    "issues": []
+  },
+  "unknown": false,
+  "crop": "rice",
+  "predictions": [
+    {
+      "label": "rice__blast",
+      "type": "disease",
+      "confidence": 0.82
+    }
+  ],
+  "severity": {
+    "percent": 8.5,
+    "band": "mild"
+  }
+}

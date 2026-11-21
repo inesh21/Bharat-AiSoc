@@ -1,0 +1,905 @@
+[
+  {
+    "id": "tomato__early_blight",
+    "crop": "tomato",
+    "type": "disease",
+    "symptoms": [
+      "Concentric dark brown rings resembling a target board on older leaves.",
+      "Yellow chlorotic halos surrounding lesions.",
+      "Premature leaf drop from the bottom of the plant upwards."
+    ],
+    "conditions_favoring": [
+      "Warm temperatures (24-29°C) with high humidity or frequent rains.",
+      "Overhead sprinkler irrigation creating prolonged wet foliage."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Prune and destroy infected lower foliage immediately.",
+        "Apply Neem Seed Kernel Extract (NSKE 5%) or Trichoderma viride foliar spray."
+      ],
+      "moderate": [
+        "Prune lower infected leaves up to 30 cm from ground.",
+        "Spray Copper Oxychloride 50% WP @ 2.5 g/L water or Chlorothalonil 75% WP @ 2.0 g/L."
+      ],
+      "severe": [
+        "Rake and remove all fallen diseased leaves to stop sporulation.",
+        "Apply Copper Oxychloride 50% WP @ 2.5 g/L water or Chlorothalonil 75% WP @ 2.0 g/L.",
+        "Observe 7-day pre-harvest interval before harvesting fruits."
+      ]
+    },
+    "organic_options": [
+      "Neem Seed Kernel Extract (NSKE 5%) spray",
+      "Trichoderma viride bio-fungicide (5 g/L)"
+    ],
+    "chemical_options": [
+      {
+        "name": "Copper Oxychloride 50% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 7,
+        "safety": "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist."
+      },
+      {
+        "name": "Chlorothalonil 75% WP",
+        "dose": "2.0 g/L water",
+        "phi_days": 7,
+        "safety": "Severe eye irritant. Wear eye goggles and impermeable gloves."
+      }
+    ],
+    "prevention": [
+      "Practice 3-year crop rotation avoiding Solanaceous crops (potato, brinjal, chilli).",
+      "Ensure proper plant spacing (60 x 45 cm) for adequate air circulation.",
+      "Mulch soil around plants to prevent soil-splash pathogen transmission.",
+      "Water crops early morning using drip irrigation rather than overhead sprinklers."
+    ],
+    "regions": [
+      "in_pan_india",
+      "in_south",
+      "in_north"
+    ],
+    "sources": [
+      "ICAR-IIHR Tomato Disease Management Guidelines (2023)",
+      "TNAU AgriTech Crop Protection: Tomato Early Blight"
+    ]
+  },
+  {
+    "id": "tomato__late_blight",
+    "crop": "tomato",
+    "type": "disease",
+    "symptoms": [
+      "Large, irregular water-soaked pale green lesions on leaves rapidly turning purplish-brown.",
+      "White fungal downy growth on the underside of leaves during cool, humid mornings.",
+      "Greasy brown sunken lesions on green fruits."
+    ],
+    "conditions_favoring": [
+      "Cool temperatures (15-20°C) with persistent cloud cover and relative humidity > 90%."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Isolate infected plants and rogue out initial foci of infection.",
+        "Apply preventative spray of Mancozeb 75% WP @ 2.0 g/L."
+      ],
+      "moderate": [
+        "Spray Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L water thoroughly.",
+        "Reduce irrigation frequency to limit canopy moisture."
+      ],
+      "severe": [
+        "Immediate emergency application of Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.",
+        "Remove and safely bury heavily blighted haulms outside the field.",
+        "Strictly adhere to 14-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Bordeaux mixture 1% preventative spray",
+      "Trichoderma harzianum soil and foliar enrichment"
+    ],
+    "chemical_options": [
+      {
+        "name": "Metalaxyl 8% + Mancozeb 64% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 14,
+        "safety": "Protective equipment mandatory. Avoid contact with skin and eyes."
+      },
+      {
+        "name": "Mancozeb 75% WP",
+        "dose": "2.0 g/L water",
+        "phi_days": 14,
+        "safety": "Wear protective clothing, goggles and mask. Toxic to aquatic organisms; keep away from water bodies."
+      }
+    ],
+    "prevention": [
+      "Plant certified blight-tolerant hybrids.",
+      "Avoid planting adjacent to potato fields.",
+      "Destroy volunteer tomato and potato plants near field perimeters.",
+      "Promote rapid canopy drying with wider row spacing."
+    ],
+    "regions": [
+      "in_pan_india",
+      "in_hilly",
+      "in_north"
+    ],
+    "sources": [
+      "ICAR-CPRI / IIHR Late Blight Warning Bulletin",
+      "FAO Crop Protection Compendium: Phytophthora infestans"
+    ]
+  },
+  {
+    "id": "tomato__septoria_leaf_spot",
+    "crop": "tomato",
+    "type": "disease",
+    "symptoms": [
+      "Numerous small circular spots (1.5 - 3 mm) with dark brown margins and sunken grayish-white centers.",
+      "Tiny black specks (pycnidia) visible inside older lesion centers.",
+      "Severe defoliation starting from base, exposing fruit to sunscald."
+    ],
+    "conditions_favoring": [
+      "Moderate warmth (20-25°C) and extended wet periods from rain or dew."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Prune bottom 25 cm of leaves.",
+        "Spray Chlorothalonil 75% WP @ 2.0 g/L water."
+      ],
+      "moderate": [
+        "Spray Chlorothalonil 75% WP @ 2.0 g/L or Copper Oxychloride @ 2.5 g/L.",
+        "Mulch bed with clean paddy straw to prevent rain-splash."
+      ],
+      "severe": [
+        "Spray Chlorothalonil 75% WP @ 2.0 g/L with complete coverage.",
+        "Collect and burn all dropped foliage."
+      ]
+    },
+    "organic_options": [
+      "Copper hydroxide bio-compatible spray",
+      "Neem seed kernel extract 5%"
+    ],
+    "chemical_options": [
+      {
+        "name": "Chlorothalonil 75% WP",
+        "dose": "2.0 g/L water",
+        "phi_days": 7,
+        "safety": "Severe eye irritant. Wear eye goggles and impermeable gloves."
+      }
+    ],
+    "prevention": [
+      "Two-year rotation with non-solanaceous crops.",
+      "Use clean disease-free certified seeds.",
+      "Eliminate horse-nettle and nightshade weeds."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "TNAU Agritech Portal: Septoria Leaf Spot of Tomato",
+      "Purdue Extension Vegetable Diseases"
+    ]
+  },
+  {
+    "id": "tomato__bacterial_spot",
+    "crop": "tomato",
+    "type": "disease",
+    "symptoms": [
+      "Small, angular dark brown or black water-soaked spots on leaves.",
+      "Spots remain small and do not develop concentric rings.",
+      "Raised scab-like black blisters on green tomato fruits."
+    ],
+    "conditions_favoring": [
+      "High temperatures (25-30°C) with driving rains or overhead irrigation."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Spray Pseudomonas fluorescens @ 5 g/L water.",
+        "Avoid touching or cultivating plants while foliage is wet."
+      ],
+      "moderate": [
+        "Spray Copper Oxychloride 50% WP (2.5 g/L) + Streptomycin sulphate 90% (0.1 g/L).",
+        "Sterilize pruning tools with 70% alcohol."
+      ],
+      "severe": [
+        "Apply combined Copper Oxychloride (2.5 g/L) + Streptomycin sulphate (0.1 g/L).",
+        "Rogue out severely collapsed plants."
+      ]
+    },
+    "organic_options": [
+      "Pseudomonas fluorescens (5 g/L foliar spray)",
+      "Bacillus subtilis biological bactericide"
+    ],
+    "chemical_options": [
+      {
+        "name": "Copper Oxychloride 50% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 7,
+        "safety": "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist."
+      },
+      {
+        "name": "Streptomycin sulphate 90% + Tetracycline hydrochloride 10% SP",
+        "dose": "0.1 g/L water (combined with Copper Oxychloride 2.5 g/L)",
+        "phi_days": 15,
+        "safety": "Use antibiotic sprays strictly according to label. Wear full personal protective equipment."
+      }
+    ],
+    "prevention": [
+      "Use hot water treated certified seeds (50°C for 25 mins).",
+      "Avoid overhead sprinkler irrigation.",
+      "Sanitize stakes and trellis wires between crops."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IARI Plant Pathology Advisory on Xanthomonas",
+      "UC IPM Tomato Bacterial Spot Pest Management Guidelines"
+    ]
+  },
+  {
+    "id": "tomato__healthy",
+    "crop": "tomato",
+    "type": "healthy",
+    "symptoms": [
+      "Vibrant green leaves with crisp margins and no chlorosis or necrosis.",
+      "Uniform healthy leaf surface without spots, curling, or insect chewing."
+    ],
+    "conditions_favoring": [
+      "Balanced sunlight, optimal moisture, healthy soil microbiota."
+    ],
+    "severity_actions": {
+      "none": [
+        "No pesticide or bio-fungicide treatment required.",
+        "Maintain routine fertilization and drip irrigation schedule."
+      ]
+    },
+    "organic_options": [
+      "Panchagavya 3% or Vermiwash as periodic growth tonic."
+    ],
+    "chemical_options": [],
+    "prevention": [
+      "Continue regular crop scouting twice a week.",
+      "Ensure proper staking and balanced NPK nutrition."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IIHR Good Agronomic Practices for Tomato (2024)"
+    ]
+  },
+  {
+    "id": "potato__healthy",
+    "crop": "potato",
+    "type": "healthy",
+    "symptoms": [
+      "Lush dark-green foliage without lesions, mottling, or wilt.",
+      "Stems are firm and erect with normal vegetative vigour."
+    ],
+    "conditions_favoring": [
+      "Cool temperate climate, well-drained loam soil, moderate moisture."
+    ],
+    "severity_actions": {
+      "none": [
+        "No intervention necessary. Maintain uniform earthing up."
+      ]
+    },
+    "organic_options": [],
+    "chemical_options": [],
+    "prevention": [
+      "Scout lower canopy leaves regularly for early blight or late blight emergence.",
+      "Maintain adequate soil moisture during tuber formation."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-CPRI Shimla Potato Cultivation Manual"
+    ]
+  },
+  {
+    "id": "potato__early_blight",
+    "crop": "potato",
+    "type": "disease",
+    "symptoms": [
+      "Dark brown to black spots with concentric rings on potato leaves.",
+      "Target-like spots primarily affecting older lower foliage.",
+      "Leaves become leathery, turn yellow around spots, and dry out."
+    ],
+    "conditions_favoring": [
+      "Alternating dry and wet periods with temperatures of 24-30°C."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Prune lower infected foliage and apply Trichoderma viride (5 g/L).",
+        "Maintain steady soil moisture to reduce plant stress."
+      ],
+      "moderate": [
+        "Spray Copper Oxychloride 50% WP @ 2.5 g/L or Chlorothalonil 75% WP @ 2.0 g/L."
+      ],
+      "severe": [
+        "Apply Copper Oxychloride 50% WP @ 2.5 g/L with thorough coverage.",
+        "Observe 7-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Trichoderma viride bio-fungicide (5 g/L)",
+      "Neem oil 10,000 ppm (5 mL/L)"
+    ],
+    "chemical_options": [
+      {
+        "name": "Copper Oxychloride 50% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 7,
+        "safety": "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist."
+      }
+    ],
+    "prevention": [
+      "Crop rotation with non-host crops (maize, pulses).",
+      "Avoid excess nitrogen which delays maturity, or nutrient stress which predisposes plants.",
+      "Use healthy certified seed tubers."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-CPRI Disease Bulletin: Alternaria solani on Potato"
+    ]
+  },
+  {
+    "id": "potato__late_blight",
+    "crop": "potato",
+    "type": "disease",
+    "symptoms": [
+      "Water-soaked lesions on leaf tips or margins turning brown-black rapidly.",
+      "White powdery / cottony mildew on the lower leaf surface in morning dew.",
+      "Brownish dry rot with metallic sheen on potato tubers."
+    ],
+    "conditions_favoring": [
+      "Cool, moist weather (10-21°C) with RH > 90%."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Prophylactic spray of Mancozeb 75% WP @ 2.0 g/L water.",
+        "Monitor fields daily; halt furrow irrigation."
+      ],
+      "moderate": [
+        "Apply Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L water.",
+        "Ensure spray penetrates under the canopy foliage."
+      ],
+      "severe": [
+        "Immediate emergency application of Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.",
+        "Kill haulms (dehaulming) 10-15 days before harvest to prevent tuber infection.",
+        "Adhere strictly to 14-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Bordeaux mixture 1% preventative spray",
+      "Copper soap spray"
+    ],
+    "chemical_options": [
+      {
+        "name": "Metalaxyl 8% + Mancozeb 64% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 14,
+        "safety": "Protective equipment mandatory. Avoid contact with skin and eyes."
+      },
+      {
+        "name": "Mancozeb 75% WP",
+        "dose": "2.0 g/L water",
+        "phi_days": 14,
+        "safety": "Wear protective clothing, goggles and mask. Toxic to aquatic organisms; keep away from water bodies."
+      }
+    ],
+    "prevention": [
+      "Always use certified disease-free seed tubers.",
+      "Proper earthing up to provide a thick soil barrier over developing tubers.",
+      "Adopt late blight resistant varieties (e.g. Kufri Girdhari, Kufri Himalini)."
+    ],
+    "regions": [
+      "in_pan_india",
+      "in_hilly",
+      "in_north"
+    ],
+    "sources": [
+      "ICAR-CPRI Technical Bulletin: Late Blight of Potato",
+      "CABI Invasive Species Compendium: Phytophthora infestans"
+    ]
+  },
+  {
+    "id": "rice__healthy",
+    "crop": "rice",
+    "type": "healthy",
+    "symptoms": [
+      "Clean upright green tillers with uniform chlorophyll distribution.",
+      "No blast lesions, brown spots, or leaf streaks present."
+    ],
+    "conditions_favoring": [
+      "Optimal nursery and field transplanting, regulated water level."
+    ],
+    "severity_actions": {
+      "none": [
+        "Continue standard water regime and recommended N-P-K splits."
+      ]
+    },
+    "organic_options": [],
+    "chemical_options": [],
+    "prevention": [
+      "Scout leaf collars and nodes weekly for early blast symptoms."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-NRRI Cuttack: Good Agricultural Practices for Paddy (2023)"
+    ]
+  },
+  {
+    "id": "rice__blast",
+    "crop": "rice",
+    "type": "disease",
+    "symptoms": [
+      "Spindle-shaped / diamond-shaped lesions with pointed ends on leaves.",
+      "Lesions have whitish to grey centers with dark brown or reddish borders.",
+      "Rotting at the neck of the panicle leading to unfilled chaffy grains (neck blast)."
+    ],
+    "conditions_favoring": [
+      "High relative humidity (> 93%), night temperatures between 18-24°C, overcast skies.",
+      "Excessive nitrogen fertilizer top-dressing."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Avoid further top-dressing of nitrogen fertilizer.",
+        "Apply Pseudomonas fluorescens @ 5 g/L water foliar spray."
+      ],
+      "moderate": [
+        "Spray Tricyclazole 75% WP @ 0.6 g/L water early morning.",
+        "Maintain 2-3 cm standing water in paddy fields."
+      ],
+      "severe": [
+        "Apply Tricyclazole 75% WP @ 0.6 g/L water immediately to protect panicle necks.",
+        "Repeat spray at panicle emergence if conditions remain overcast.",
+        "Strictly adhere to 21-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Pseudomonas fluorescens (5 g/L)",
+      "Neem cake soil application (150 kg/ha)"
+    ],
+    "chemical_options": [
+      {
+        "name": "Tricyclazole 75% WP",
+        "dose": "0.6 g/L water",
+        "phi_days": 21,
+        "safety": "Wash hands and face with soap and water after spraying. Keep away from livestock feeds."
+      }
+    ],
+    "prevention": [
+      "Seed treatment with Tricyclazole 75% WP @ 2 g/kg seed or Pseudomonas @ 10 g/kg seed.",
+      "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series).",
+      "Split nitrogen fertilizer doses into 3-4 applications rather than heavy single doses."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-NRRI Rice Doctor / Blast Advisory",
+      "IRRI Rice Knowledge Bank: Blast (Pyricularia oryzae)"
+    ]
+  },
+  {
+    "id": "rice__brown_spot",
+    "crop": "rice",
+    "type": "disease",
+    "symptoms": [
+      "Circular to oval dark brown spots evenly scattered over leaf blades.",
+      "Older lesions show light brown or dirty white centers with dark reddish-brown margins.",
+      "Infected grains show brown to black discolouration."
+    ],
+    "conditions_favoring": [
+      "High humidity (86-100%), temperature around 25-30°C.",
+      "Poorly drained, nutrient-deficient (especially potassium & silicon deficient) soils."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Apply potassium fertilizer (MOP) top-dressing to boost plant resistance.",
+        "Spray Neem oil 10,000 ppm @ 5 mL/L."
+      ],
+      "moderate": [
+        "Spray Propiconazole 25% EC @ 1.0 mL/L water.",
+        "Improve drainage and correct micronutrient deficiency."
+      ],
+      "severe": [
+        "Apply Propiconazole 25% EC @ 1.0 mL/L water.",
+        "Adhere to 30-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Neem oil 10,000 ppm (5 mL/L)",
+      "Trichoderma viride foliar spray (5 g/L)"
+    ],
+    "chemical_options": [
+      {
+        "name": "Propiconazole 25% EC",
+        "dose": "1.0 mL/L water",
+        "phi_days": 30,
+        "safety": "Skin irritant. Wear respirator mask and protective rubber gloves."
+      }
+    ],
+    "prevention": [
+      "Soil application of recommended potassium and silicon fertilizers.",
+      "Seed soaking in hot water at 53-54°C for 10-12 minutes.",
+      "Deep summer ploughing to destroy stubble and volunteer hosts."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-NRRI Technical Manual: Brown Spot Management",
+      "TNAU Agritech Portal Rice Diseases"
+    ]
+  },
+  {
+    "id": "rice__bacterial_blight",
+    "crop": "rice",
+    "type": "disease",
+    "symptoms": [
+      "Water-soaked stripes starting from leaf tips and margins, expanding along veins.",
+      "Lesions turn straw-yellow with wavy irregular margins.",
+      "Milky bacterial ooze droplets visible on young lesions in early morning dew."
+    ],
+    "conditions_favoring": [
+      "Warm temperatures (25-34°C) with strong winds, torrential rains, and deep water submergence."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Drain field water and stop nitrogen application immediately.",
+        "Foliar spray with Pseudomonas fluorescens @ 5 g/L."
+      ],
+      "moderate": [
+        "Spray Streptomycin sulphate 90% (0.1 g/L) combined with Copper Oxychloride 50% WP (2.5 g/L).",
+        "Withhold nitrogen until new disease-free leaves emerge."
+      ],
+      "severe": [
+        "Apply Streptomycin sulphate 90% (0.1 g/L) + Copper Oxychloride (2.5 g/L).",
+        "Consult local Krishi Vigyan Kendra (KVK) extension officer.",
+        "Observe 15-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Pseudomonas fluorescens bio-agent (5 g/L)",
+      "Cow dung supernatant spray (20%) traditional bio-formulation"
+    ],
+    "chemical_options": [
+      {
+        "name": "Streptomycin sulphate 90% + Tetracycline hydrochloride 10% SP",
+        "dose": "0.1 g/L water (combined with Copper Oxychloride 2.5 g/L)",
+        "phi_days": 15,
+        "safety": "Use antibiotic sprays strictly according to label. Wear full personal protective equipment."
+      },
+      {
+        "name": "Copper Oxychloride 50% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 7,
+        "safety": "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist."
+      }
+    ],
+    "prevention": [
+      "Plant resistant paddy varieties (e.g. Improved Samba Mahsuri, PR-121).",
+      "Avoid clipping seedling tips during transplanting.",
+      "Ensure balance between Nitrogen, Phosphorus, and Potassium (avoid excess N)."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IIRR Hyderabad Bacterial Leaf Blight Advisory",
+      "IRRI Knowledge Bank: Bacterial Blight"
+    ]
+  },
+  {
+    "id": "maize__healthy",
+    "crop": "maize",
+    "type": "healthy",
+    "symptoms": [
+      "Vigorous broad deep-green leaves with clean margins and no rust pustules or blight streaks.",
+      "Central whorl is tightly rolled and free of chewed frass or caterpillars."
+    ],
+    "conditions_favoring": [
+      "Full sunlight, well-aerated fertile soils, warm temperatures."
+    ],
+    "severity_actions": {
+      "none": [
+        "Continue balanced soil nutrition and regular moisture monitoring."
+      ]
+    },
+    "organic_options": [],
+    "chemical_options": [],
+    "prevention": [
+      "Scout leaf whorls weekly for fall armyworm eggs or early instars."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IIMR Ludhiana Maize Agronomy Manual (2023)"
+    ]
+  },
+  {
+    "id": "maize__common_rust",
+    "crop": "maize",
+    "type": "disease",
+    "symptoms": [
+      "Small, powdery, oval to elongate cinnamon-brown pustules scattered over both leaf surfaces.",
+      "Pustules rupture the epidermis, releasing brownish-red powdery urediniospores.",
+      "In severe cases, leaf tissues yellow and desiccate."
+    ],
+    "conditions_favoring": [
+      "Cool, moist weather (16-25°C) with high relative humidity and dew."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Monitor disease progression; if pustules remain confined to lower leaves, no spray is needed.",
+        "Maintain balanced fertilization."
+      ],
+      "moderate": [
+        "Spray Mancozeb 75% WP @ 2.0 g/L water or Propiconazole 25% EC @ 1.0 mL/L."
+      ],
+      "severe": [
+        "Apply Propiconazole 25% EC @ 1.0 mL/L water or Mancozeb @ 2.0 g/L.",
+        "Observe 30-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Wettable sulfur spray (3 g/L)",
+      "Neem oil 10,000 ppm (5 mL/L)"
+    ],
+    "chemical_options": [
+      {
+        "name": "Mancozeb 75% WP",
+        "dose": "2.0 g/L water",
+        "phi_days": 14,
+        "safety": "Wear protective clothing, goggles and mask. Toxic to aquatic organisms; keep away from water bodies."
+      },
+      {
+        "name": "Propiconazole 25% EC",
+        "dose": "1.0 mL/L water",
+        "phi_days": 30,
+        "safety": "Skin irritant. Wear respirator mask and protective rubber gloves."
+      }
+    ],
+    "prevention": [
+      "Plant rust-resistant commercial maize hybrids.",
+      "Early planting to avoid cooler late-season rust infection windows.",
+      "Destroy alternative weed hosts (Oxalis species) in surrounding bunds."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IIMR Maize Protection Guide",
+      "CIMMYT Maize Diseases Identification and Field Guide"
+    ]
+  },
+  {
+    "id": "maize__northern_leaf_blight",
+    "crop": "maize",
+    "type": "disease",
+    "symptoms": [
+      "Long, elliptical, grayish-green or tan lesions (2.5 - 15 cm long) shaped like cigars.",
+      "Dark olive to black velvety fungal sporulation on lesion surfaces during damp weather.",
+      "Lesions merge, causing extensive blighting of entire leaves."
+    ],
+    "conditions_favoring": [
+      "Moderate temperatures (18-27°C) and heavy dew or high humidity."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Remove and burn blighted bottom leaves.",
+        "Ensure field is not over-irrigated."
+      ],
+      "moderate": [
+        "Spray Mancozeb 75% WP @ 2.0 g/L water."
+      ],
+      "severe": [
+        "Apply Mancozeb 75% WP @ 2.0 g/L water with thorough canopy penetration.",
+        "Observe 14-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Trichoderma viride foliar spray (5 g/L)",
+      "Neem seed kernel extract 5%"
+    ],
+    "chemical_options": [
+      {
+        "name": "Mancozeb 75% WP",
+        "dose": "2.0 g/L water",
+        "phi_days": 14,
+        "safety": "Wear protective clothing, goggles and mask. Toxic to aquatic organisms; keep away from water bodies."
+      }
+    ],
+    "prevention": [
+      "Grow tolerant hybrids recommended for your agro-climatic zone.",
+      "Deep ploughing of infected stubble post-harvest.",
+      "Rotate with non-grass crops such as soybean, groundnut, or chickpea."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IIMR Maize Pathology Handbook",
+      "Purdue Field Crop Disease: Northern Corn Leaf Blight"
+    ]
+  },
+  {
+    "id": "cotton__healthy",
+    "crop": "cotton",
+    "type": "healthy",
+    "symptoms": [
+      "Broad, vibrant green leaves with lobed margins and healthy red/green veins.",
+      "Squares (flower buds) and bolls developing normally without bollworm perforations."
+    ],
+    "conditions_favoring": [
+      "Warm sunny days, regulated irrigation, fertile deep soils."
+    ],
+    "severity_actions": {
+      "none": [
+        "Continue regular scouting and balanced fertilizer application."
+      ]
+    },
+    "organic_options": [],
+    "chemical_options": [],
+    "prevention": [
+      "Scout leaf undersides and squares twice weekly for pests and bacterial spots."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-CICR Nagpur: Integrated Cotton Management (2023)"
+    ]
+  },
+  {
+    "id": "cotton__bacterial_blight",
+    "crop": "cotton",
+    "type": "disease",
+    "symptoms": [
+      "Angular water-soaked spots bounded by leaf veins on leaf blades (angular leaf spot).",
+      "Blackening of leaf veins extending along main veins (vein blight).",
+      "Black lesions girdling main stems and branches (black arm stage).",
+      "Water-soaked circular spots on developing bolls."
+    ],
+    "conditions_favoring": [
+      "Warm, humid conditions (28-32°C) with intermittent rain and windy storms."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Spray Pseudomonas fluorescens @ 5 g/L water.",
+        "Avoid mechanical operations when plants are wet to prevent spreading bacteria."
+      ],
+      "moderate": [
+        "Spray Copper Oxychloride 50% WP @ 2.5 g/L + Streptomycin sulphate @ 0.1 g/L.",
+        "Prune and burn black-arm branches."
+      ],
+      "severe": [
+        "Combined spray of Copper Oxychloride (2.5 g/L) + Streptomycin sulphate (0.1 g/L).",
+        "Observe 15-day pre-harvest interval."
+      ]
+    },
+    "organic_options": [
+      "Pseudomonas fluorescens (5 g/L)",
+      "Neem oil 10,000 ppm (5 mL/L)"
+    ],
+    "chemical_options": [
+      {
+        "name": "Copper Oxychloride 50% WP",
+        "dose": "2.5 g/L water",
+        "phi_days": 7,
+        "safety": "Wear gloves and face mask during preparation and spraying. Do not inhale spray mist."
+      },
+      {
+        "name": "Streptomycin sulphate 90% + Tetracycline hydrochloride 10% SP",
+        "dose": "0.1 g/L water (combined with Copper Oxychloride 2.5 g/L)",
+        "phi_days": 15,
+        "safety": "Use antibiotic sprays strictly according to label. Wear full personal protective equipment."
+      }
+    ],
+    "prevention": [
+      "Acid delinting of cotton seeds with concentrated sulfuric acid (100 mL/kg seed).",
+      "Seed treatment with Streptocycline (1 g/kg seed) or Pseudomonas fluorescens (10 g/kg).",
+      "Plant bacterial blight resistant Bt cotton hybrids.",
+      "Eradicate infected crop residues after harvest."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-CICR Nagpur Bacterial Blight Management Bulletin",
+      "TNAU Cotton Pathology Doctor"
+    ]
+  },
+  {
+    "id": "pest__fall_armyworm",
+    "crop": "maize",
+    "type": "pest",
+    "symptoms": [
+      "Extensive ragged 'windowpane' leaf feeding on young maize leaves.",
+      "Large quantities of sawdust-like brown frass packed deep inside the central leaf whorl.",
+      "Caterpillars with inverted 'Y' mark on head and 4 raised dots on 8th abdominal segment."
+    ],
+    "conditions_favoring": [
+      "Warm temperatures (25-30°C), continuous maize cropping, staggered sowings."
+    ],
+    "severity_actions": {
+      "mild": [
+        "Handpick egg masses and visible young larvae in small holdings.",
+        "Apply 5% Neem Seed Kernel Extract (NSKE) or Bacillus thuringiensis (Bt) @ 2 g/L into whorls.",
+        "Erect pheromone traps @ 5 per acre for monitoring."
+      ],
+      "moderate": [
+        "Apply Bacillus thuringiensis (2.0 g/L) or Emamectin Benzoate 5% SG @ 0.4 g/L into leaf whorls.",
+        "Direct the spray nozzle straight down into the central whorl of each plant."
+      ],
+      "severe": [
+        "Targeted whorl application of Emamectin Benzoate 5% SG @ 0.4 g/L or Chlorantraniliprole 18.5% SC @ 0.4 mL/L.",
+        "Strictly adhere to 5-day (Emamectin) or 7-day (Chlorantraniliprole) pre-harvest interval.",
+        "Wear personal protective gear and avoid spraying during high wind."
+      ]
+    },
+    "organic_options": [
+      "Neem Seed Kernel Extract (NSKE 5%) whorl application",
+      "Bacillus thuringiensis kurstaki (Bt) formulation (2.0 g/L)",
+      "Nomuraea rileyi or Metarhizium anisopliae bio-insecticide"
+    ],
+    "chemical_options": [
+      {
+        "name": "Emamectin Benzoate 5% SG",
+        "dose": "0.4 g/L water",
+        "phi_days": 5,
+        "safety": "Wear rubber gloves, goggles and safety mask during handling and spray application."
+      },
+      {
+        "name": "Chlorantraniliprole 18.5% SC",
+        "dose": "0.4 mL/L water",
+        "phi_days": 7,
+        "safety": "Avoid skin contact and inhalation. Keep children and pets away from treated field for 24 hours."
+      }
+    ],
+    "prevention": [
+      "Intercrop maize with legume crops (e.g. cowpea, pigeonpea, or desmodium).",
+      "Synchronize planting dates within the farming community.",
+      "Conserve natural predators such as predatory stink bugs, earwigs, and trichogramma egg parasitoids.",
+      "Apply dry sand/sawdust mixed with lime or ash into whorls to kill early instar larvae physically."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "ICAR-IIMR & NBAIR Fall Armyworm Management Protocol in India (2023)",
+      "CABI Invasive Species Compendium: Spodoptera frugiperda"
+    ]
+  },
+  {
+    "id": "unknown",
+    "crop": "unknown",
+    "type": "unknown",
+    "symptoms": [
+      "Symptoms do not match known training classes or photographic quality is insufficient."
+    ],
+    "conditions_favoring": [
+      "Out-of-distribution subject, non-crop photo, or novel pathogen."
+    ],
+    "severity_actions": {
+      "none": [
+        "Do not apply unverified chemical fungicides or insecticides.",
+        "Collect a fresh physical leaf sample in a clean paper bag.",
+        "Visit your nearest Krishi Vigyan Kendra (KVK) or State Agricultural Department office."
+      ]
+    },
+    "organic_options": [],
+    "chemical_options": [],
+    "prevention": [
+      "Maintain general crop sanitation and inspect surrounding plants for similar lesions."
+    ],
+    "regions": [
+      "in_pan_india"
+    ],
+    "sources": [
+      "National Institute of Agricultural Extension Management (MANAGE) Guidelines"
+    ]
+  }
+]

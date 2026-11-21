@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "image_id": "mock_vis_5",
+  "model_version": "vision_v1",
+  "quality": {
+    "ok": false,
+    "issues": [
+      "blurry",
+      "too_dark"
+    ]
+  },
+  "unknown": true,
+  "crop": "unknown",
+  "predictions": [],
+  "severity": null
+}
