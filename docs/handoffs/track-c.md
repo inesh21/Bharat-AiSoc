@@ -4,7 +4,7 @@
 **Owner (human):** ________
 **Branch / worktree:** integration
 **Task IDs:** C1 to C13 (see `docs/tracks/TRACK_C_APP.md`)
-**Last updated:** 2026-11-21 06:51 UTC
+**Last updated:** 2026-11-21 07:13 UTC
 
 ## Milestone status
 
@@ -12,9 +12,9 @@
 |---|---|---|
 | I0 Contracts frozen | done | Contracts implemented in Kotlin and validated against mocks |
 | I1 Runtime proven | done | Reference ExecuTorch LlamaDemo deployed on device; on-device TTFT 367ms, 15.27 t/s benchmarked |
-| I2 Vision on device | **WORKS** | Vision model loads successfully on device in release build (13.1 MB .pte); logcat shows "✓ Vision engine loaded successfully" |
-| I3 Advisory on device | blocked | LLM model loads but crashes on missing assets (kb.json, rules.json not packaged in APK) |
-| I4 End to end offline | blocked | Vision works; blocked on I3 asset packaging issue |
+| I2 Vision on device | **in progress** | Model loads successfully, but 50-vector parity test NOT run (needs test infrastructure) |
+| I3 Advisory on device | **in progress** | Model loads successfully, but generation NOT tested (needs test infrastructure) |
+| I4 End to end offline | blocked | Both engines load; blocked on I2/I3 verification |
 | I5 Voice and clarifications | done | Clarification UI loop and Android SpeechEngine implemented |
 | I6 Freeze and polish | not started | |
 
@@ -28,6 +28,65 @@
 - Handled request from Track A: Received `labels.json` and standard normalization spec (mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]). Configured in app preprocessing.
 
 ## Session log (newest first)
+
+### Session 2026-11-21 07:13 | agent: claude | branch: integration
+Task IDs: C7, C8 (Asset path fix and honest I2/I3 assessment)
+
+**Summary**
+Fixed LLM asset loading error by correcting AssetManager paths. Both vision and LLM engines now load successfully in release build. However, I2 and I3 milestones are NOT complete - only model loading works, actual on-device verification tests (50-vector parity, LLM generation) were not run due to missing test infrastructure.
+
+**Done** (with evidence)
+- **Fixed asset loading bug**: Changed `context.assets.open("assets/kb.json")` to `context.assets.open("kb.json")` - AssetManager.open() already looks in assets/ directory, so the prefix caused FileNotFoundException | verified: all 4 asset files now load correctly
+- **Fixed .gitignore**: Changed `executorch/` to `/executorch/` so it only ignores root-level executorch directory, not app code in `engine/executorch/` | verified: ExecuTorchAdvisoryEngine.kt is now tracked by git
+- **Verified asset packaging**: All 5 asset files (kb.json, rules.json, clarifications.json, phrases.json, labels.json) exist in app/src/main/assets/, tracked by git, and packaged in release APK | verified: `unzip -l app-release.apk | grep assets/` shows all 5 files
+- **Unit tests still pass**: ParityTest 22/22 cases passed after asset path fix | verified: `./gradlew testDebugUnitTest` output shows "ParityTest: 22 / 22 cases passed"
+- **Both engines load on device**: Release APK now loads both vision (13.1 MB) and LLM (821 MB) successfully | verified: logcat shows "✓ Vision engine loaded successfully", "✓ Advisory engine loaded successfully", "✓ All models loaded successfully"
+- **ExecuTorch metadata verified**: LLM model shows max_seq_len=1024, max_context_len=1024, kv_cache enabled | verified: logcat ExecuTorch output
+
+**Blocking items**
+- **I2 (Vision parity test)**: Test vectors in `test_vectors/vision/parity_test_vectors.json` reference 50 image files with absolute Windows paths not on device. Cannot run 50-vector parity test without either: (a) copying all 50 images to device + building instrumented test, OR (b) Track A providing preprocessed tensor binaries
+- **I3 (LLM generation test)**: No instrumented test infrastructure exists to run 5 prompts and measure TTFT/tokens-per-second. Would require building test harness or manual UI interaction
+- **Camera preview**: Placeholder viewfinder still shows mock icon, needs real CameraX preview implementation
+
+**NOT done (honest assessment)**
+- ❌ 50-vector vision parity test: NOT run (no test infrastructure, images not on device)
+- ❌ Vision logits comparison: NOT run (requires instrumented test)
+- ❌ LLM prompt testing: NOT run (requires test infrastructure)
+- ❌ TTFT/tokens-per-second measurement: NOT run
+- ❌ LLM output validation test: NOT run
+
+**Next steps** (ordered, concrete)
+1. **Build vision parity test infrastructure**: Create instrumented test that loads test_vectors/vision/parity_test_vectors.json, runs 50 cases through ExecuTorchVisionEngine, compares logits. Requires either pushing images to device OR getting preprocessed tensor binaries from Track A
+2. **Build LLM test infrastructure**: Create instrumented test or debug screen that runs 5 prompts, measures TTFT, tokens/s, validator pass rate
+3. **Implement real CameraX preview**: Replace mock viewfinder Icon with actual camera feed
+4. **Test I4 end-to-end**: 20 real photos in airplane mode after I2/I3 verification complete
+
+**Files touched (this session)**
+- `.gitignore` (modified: changed `executorch/` to `/executorch/`)
+- `app_android/app/src/main/java/com/offlinecrop/assistant/engine/executorch/ExecuTorchAdvisoryEngine.kt` (modified: removed "assets/" prefix from 4 file paths, lines 40-43)
+- `docs/handoffs/track-c.md` (this file)
+
+**How to verify**
+- Assets load correctly: `adb logcat -s ET | grep "Advisory engine loaded"` → "✓ Advisory engine loaded successfully"
+- Both engines load: `adb logcat -s ET | grep "All models"` → "✓ All models loaded successfully"
+- Unit tests pass: `cd app_android && ./gradlew testDebugUnitTest --tests "*ParityTest*"` → output contains "ParityTest: 22 / 22 cases passed"
+- Assets in APK: `unzip -l app_android/app/build/outputs/apk/release/app-release.apk | grep "assets/.*\.json"` → shows kb.json, rules.json, clarifications.json, phrases.json, labels.json
+
+**R8 minification fix (from previous session, now documented)**
+- **Root cause**: R8 stripped ExecuTorch/fbjni/soloader classes that libexecutorch_jni.so looks up via JNI reflection
+- **Fix**: Created `app/proguard-rules.pro` with keep rules for `org.pytorch.executorch.**`, `com.facebook.jni.**`, `com.facebook.soloader.**`, native methods, and `-dontwarn javax.annotation.**`
+- **Result**: Release build no longer crashes in Module.initHybrid native method
+
+**Decisions made**
+- Keep I2/I3 status as "in progress" until actual parity tests run - loading is necessary but not sufficient
+- Do not claim 50-vector or LLM generation verification without actually running it
+- Document test infrastructure gap as blocker
+
+**Assumptions / could not verify**
+- Vision model correctness: Model loads but logits not compared to test vectors (no on-device parity test)
+- LLM generation quality: Model loads but never generated text on device (no test infrastructure)
+- Preprocessing correctness: Implemented per vision_v1.json but not verified against test vectors
+- Max sequence length handling: Model metadata shows 1024 but prompt length handling not tested
 
 ### Session 2026-11-21 06:52 | agent: claude | branch: integration
 Task IDs: C7, C8 (Native crash diagnosis and ProGuard fix - COMPLETE)
