@@ -139,7 +139,9 @@ internal suspend fun runDeviceSelfTest(
                 }
             }
 
-            for ((index, name) in eligible.take(BENCHMARK_COUNT).withIndex()) {
+            val benchmarkInputs = if (eligible.isEmpty()) emptyList() else
+                List(BENCHMARK_COUNT) { eligible[it % eligible.size] }
+            for ((index, name) in benchmarkInputs.withIndex()) {
                 currentCoroutineContext().ensureActive()
                 val start = SystemClock.elapsedRealtime()
                 val bitmap = zip.decode(name)

@@ -21,7 +21,9 @@ Pull the result after the summary appears:
 
     adb pull /sdcard/Android/data/com.offlinecrop.assistant/files/self-test.csv benchmarks/results.csv
 
-The CSV includes ten available image-to-advisory runs. Pipeline wall time
+The CSV includes ten image-to-advisory runs when at least one image passes
+quality and confidence checks. Inputs cycle if fewer than ten qualify.
+Pipeline wall time
 starts at PNG decode and includes loading both models on demand. Vision
 parity timings cover the raw tensor forward pass. First-token wall time
 includes lazy Llama loading when required. Decode throughput is from
