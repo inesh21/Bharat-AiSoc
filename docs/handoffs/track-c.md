@@ -1,10 +1,10 @@
 # Handoff: Track C: App, Voice and Integration
 
-**Active agent:** claude
+**Active agent:** none
 **Owner (human):** ________
-**Branch / worktree:** integration
+**Branch / worktree:** track-c/offline-demo
 **Task IDs:** C1 to C13 (see `docs/tracks/TRACK_C_APP.md`)
-**Last updated:** 2026-11-21 07:13 UTC
+**Last updated:** 2026-11-21 10:21 UTC
 
 ## Milestone status
 
@@ -12,11 +12,11 @@
 |---|---|---|
 | I0 Contracts frozen | done | Contracts implemented in Kotlin and validated against mocks |
 | I1 Runtime proven | done | Reference ExecuTorch LlamaDemo deployed on device; on-device TTFT 367ms, 15.27 t/s benchmarked |
-| I2 Vision on device | **in progress** | Model loads successfully, but 50-vector parity test NOT run (needs test infrastructure) |
-| I3 Advisory on device | **in progress** | Model loads successfully, but generation NOT tested (needs test infrastructure) |
-| I4 End to end offline | blocked | Both engines load; blocked on I2/I3 verification |
-| I5 Voice and clarifications | done | Clarification UI loop and Android SpeechEngine implemented |
-| I6 Freeze and polish | not started | |
+| I2 Vision on device | passed | 50/50 tensors and 50/50 PNGs on A142 in airplane mode. Max absolute logit error 8.583069e-6. |
+| I3 Advisory on device | passed | 30/30 on-device synthetic advisory prompts accepted and safety checks 5/5. |
+| I4 End to end offline | smoke verified | Camera shutter retake and local-photo advisory verified. 20-photo field exit check remains open. |
+| I5 Voice and clarifications | in progress | English and Hindi offline audio verified. Telugu voice absent and ambiguous field cases pending. |
+| I6 Freeze and polish | in progress | Local release APK verified. Cold prepared-photo median 4283 ms and field demo gates remain open. |
 
 ## Requests to other tracks (open)
 
@@ -28,6 +28,44 @@
 - Handled request from Track A: Received `labels.json` and standard normalization spec (mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]). Configured in app preprocessing.
 
 ## Session log (newest first)
+
+### Session 2026-11-21 15:50 | agent: codex | branch: track-c/offline-demo
+Task IDs: C6, C7, C8, C9, C11, C12, C13
+
+**Summary**
+CameraX capture, local photo import, on-device self-test, grounded advice, offline voices, and benchmark reporting are in the release candidate.
+
+**Done**
+- A142 (Android API 36), airplane mode enabled, Wi-Fi off | Device self-test -> tensor and PNG vision parity 50/50 each, max logit difference 8.583069e-6 against 1e-4 | safety 5/5 | Llama 30/30 approved action tokens with 30/30 nonempty generation runs.
+- Device self-test -> 10 cold image-to-advisory trials across 7 qualifying images; 10 accepted model selections; median 4283 ms total, 3438 ms first token, 15.38 decode tokens/s for short selections, max process high-water RSS 1198632 KiB. CSV in benchmarks/results.csv.
+- Camera shutter reached the retake flow on a poor-quality frame. A locally imported reference leaf reached the expected diagnosis and advisory in airplane mode.
+- English and Hindi speech reached an unmuted Android AudioTrack with radios off; Telugu text and missing-voice guidance worked. No Telugu offline voice was installed.
+- Gradle testDebugUnitTest and assembleRelease -> nine JVM tests passed, including the 22-case parity suite. apksigner verify and aapt dump permissions confirmed the APK signature and absence of INTERNET.
+
+**Next steps**
+1. Run the 20 distinct field-photo exit check, validate the camera-size preprocessing and severity estimate, and measure real capture-to-advisory latency.
+2. Provision an offline Telugu voice and verify playback on A142.
+3. Reconcile confidence and clarification settings before the five ambiguous-photo exit check.
+
+**Decisions made**
+- The demo renders sourced IPM actions and localized text. Llama selects a bounded action index. Invalid selections fall back to the first approved action.
+- A device probe reproduced extra JSON fields. The model now receives a number-only prompt, with a fresh context and an explicit beginning-of-sequence token for each request.
+
+**Files touched**
+- app_android/app/src/main, app_android/.gitattributes and AdvisoryChoiceTest.kt
+- benchmarks/DEVICE_SELF_TEST.md and benchmarks/results.csv
+
+**How to verify**
+- In app_android run .\gradlew.bat --offline --console=plain --max-workers=2 "-Dorg.gradle.jvmargs=-Xmx1536m -XX:ActiveProcessorCount=4" "-Pkotlin.compiler.execution.strategy=in-process" "-Dorg.gradle.parallel=false" testDebugUnitTest assembleRelease
+- Push device_vectors.zip, run Device self-test in the release APK, then adb pull /sdcard/Android/data/com.offlinecrop.assistant/files/self-test.csv benchmarks/results.csv.
+
+**Blockers**
+- I4 field-photo exit check and I5 ambiguous-photo exit check remain open. Median cold benchmark exceeds the 3-second target.
+- The vision confidence gate (0.8226) and clarification gap (<0.15) leave no overlap for ordinary softmax scores.
+
+**Requests to other tracks**
+- To Track A: validate full-size Android preprocessing and lesion estimates against field samples, and review the confidence gate | CONTRACTS.md section 2 | I4/I5 | status: open.
+- To Track B: reconcile curated clarification option IDs with Contract 2 and review Hindi/Telugu advisory wording | CONTRACTS.md sections 3–4 | I5 | status: open.
 
 ### Session 2026-11-21 07:13 | agent: claude | branch: integration
 Task IDs: C7, C8 (Asset path fix and honest I2/I3 assessment)
