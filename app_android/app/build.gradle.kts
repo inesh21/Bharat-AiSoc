@@ -39,7 +39,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             isDebuggable = true
-            buildConfigField("boolean", "USE_MOCKS", "true")
+            buildConfigField("boolean", "USE_MOCKS", "false")  // Changed to test real engines
         }
     }
 

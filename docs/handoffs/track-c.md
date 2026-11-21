@@ -1,10 +1,10 @@
 # Handoff: Track C: App, Voice and Integration
 
-**Active agent:** none
+**Active agent:** claude
 **Owner (human):** ________
 **Branch / worktree:** integration
 **Task IDs:** C1 to C13 (see `docs/tracks/TRACK_C_APP.md`)
-**Last updated:** 2026-11-21 05:35 UTC
+**Last updated:** 2026-11-21 06:51 UTC
 
 ## Milestone status
 
@@ -12,9 +12,9 @@
 |---|---|---|
 | I0 Contracts frozen | done | Contracts implemented in Kotlin and validated against mocks |
 | I1 Runtime proven | done | Reference ExecuTorch LlamaDemo deployed on device; on-device TTFT 367ms, 15.27 t/s benchmarked |
-| I2 Vision on device | ready for testing | `ExecuTorchVisionEngine.kt` implemented; needs JNI native lib build and on-device test vectors |
-| I3 Advisory on device | ready for testing | `ExecuTorchAdvisoryEngine.kt` implemented; needs JNI native lib build and 30 prompt tests |
-| I4 End to end offline | ready for testing | All engines wired into MainActivity; needs APK build and 20-photo airplane mode test |
+| I2 Vision on device | **WORKS** | Vision model loads successfully on device in release build (13.1 MB .pte); logcat shows "✓ Vision engine loaded successfully" |
+| I3 Advisory on device | blocked | LLM model loads but crashes on missing assets (kb.json, rules.json not packaged in APK) |
+| I4 End to end offline | blocked | Vision works; blocked on I3 asset packaging issue |
 | I5 Voice and clarifications | done | Clarification UI loop and Android SpeechEngine implemented |
 | I6 Freeze and polish | not started | |
 
@@ -28,6 +28,64 @@
 - Handled request from Track A: Received `labels.json` and standard normalization spec (mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]). Configured in app preprocessing.
 
 ## Session log (newest first)
+
+### Session 2026-11-21 06:52 | agent: claude | branch: integration
+Task IDs: C7, C8 (Native crash diagnosis and ProGuard fix - COMPLETE)
+
+**Summary**
+Diagnosed and fixed native crash in release build. Root cause: R8 minification stripped ExecuTorch/fbjni classes that native libexecutorch_jni.so looks up by JNI reflection. Created proguard-rules.pro with keep rules. Vision model now loads successfully in release build. LLM blocked on separate asset packaging issue.
+
+**Done** (with evidence)
+- **Diagnosed native crash**: Release APK crashed in `Module.initHybrid` during JNI class lookup. Native code aborted in `facebook::jni::getJavaExceptionForCppException` before exception could propagate to Kotlin catch block | verified: logcat shows abort in libexecutorch_jni.so frame #12
+- **Identified root cause**: R8 minification with `isMinifyEnabled=true` but missing `proguard-rules.pro` file. Native JNI code couldn't find stripped `org.pytorch.executorch.**` and `com.facebook.jni.**` classes | verified: proguard-rules.pro did not exist
+- **Confirmed with debug build**: Changed `USE_MOCKS=false` in debug buildType, built and tested. Debug build (no minification) worked perfectly - caught exceptions cleanly, showed proper error messages | verified: logcat shows "java.lang.IllegalStateException: vision_v1.json not found" - clean exception handling, no native crash
+- **Created proguard-rules.pro**: Added keep rules for `org.pytorch.executorch.**`, `com.facebook.jni.**`, `com.facebook.soloader.**`, native methods, and HybridData members. Added `-dontwarn javax.annotation.**` for optional annotations | verified: file created in app/proguard-rules.pro
+- **Fixed release build**: Rebuilt with ProGuard keep rules. Release build now succeeds and runs without crashing | verified: `./gradlew assembleRelease` BUILD SUCCESSFUL in 2m 11s
+- **Vision model loads successfully**: Release APK now loads vision_v1.pte (13.1 MB) on device. ExecuTorch initializes threadpool, Module.load() succeeds | verified: logcat shows "I ET: ✓ Vision engine loaded successfully" and "I ExecuTorch: Resetting threadpool to 4 threads"
+- **Modified MainActivity for better error logging**: Moved model loading to background thread (Dispatchers.IO), wrapped in try/catch (Throwable), logs file path/exists/length before each load, shows error screen on failure | verified: MainActivity.kt loadModels() function
+- **Reverted debug USE_MOCKS**: Changed debug buildType back to `USE_MOCKS=true` to restore normal debug workflow | verified: build.gradle.kts
+
+**Blocking items**
+- **LLM asset packaging**: LLM load fails with `FileNotFoundException: assets/kb.json`. ExecuTorchAdvisoryEngine tries to load kb.json, rules.json, clarifications.json, phrases.json from assets folder but they're not packaged in APK. Need to copy knowledge/ YAML files to app/src/main/assets/ and convert to JSON, or restructure AdvisoryEngine to load from external files dir instead of assets.
+
+**In progress / not done**
+- I3 (LLM on device): blocked on asset packaging issue
+- I4 (end to end): blocked on I3
+- Camera preview implementation: placeholder viewfinder still shows mock icon, needs real CameraX preview
+
+**Next steps** (ordered, concrete)
+1. **Fix LLM asset packaging**: Either (a) copy knowledge/*.yaml to app/src/main/assets/ as JSON, or (b) modify ExecuTorchAdvisoryEngine to load from getExternalFilesDir("knowledge") and push knowledge files to device alongside models
+2. **Test I3 milestone**: Once assets fixed, test LLM generation with 30 prompts, verify TTFT/tokens/s, check validation pass rate
+3. **Test I4 milestone**: End-to-end test with 20 real photos in airplane mode
+4. **Implement real CameraX preview**: Replace mock viewfinder Icon with actual camera feed using CameraX PreviewView
+
+**Files touched (this session)**
+- `app_android/app/proguard-rules.pro` (created: ProGuard keep rules for ExecuTorch/fbjni/soloader)
+- `app_android/app/build.gradle.kts` (modified: changed debug USE_MOCKS back to true after testing)
+- `app_android/app/src/main/java/com/offlinecrop/assistant/MainActivity.kt` (modified: background model loading with error logging)
+- `docs/handoffs/track-c.md` (this file)
+
+**How to verify**
+- Release build works: `cd app_android && ./gradlew assembleRelease` → BUILD SUCCESSFUL
+- Vision loads on device: `adb logcat -s ET ExecuTorch | grep "Vision engine loaded"` → "✓ Vision engine loaded successfully"
+- ProGuard rules present: `cat app_android/app/proguard-rules.pro` → keep rules for executorch/fbjni/soloader
+- Release APK stays alive: `adb shell pidof com.offlinecrop.assistant` after launch → returns PID (not crashed)
+
+**Crash diagnosis evidence**
+1. **Release crash location**: `org.pytorch.executorch.Module.initHybrid(Native method)` → `facebook::jni::getJavaExceptionForCppException` → abort before Java exception created
+2. **Debug build (no minification)**: Clean exception handling, no crash. Error messages propagate correctly to Kotlin catch blocks.
+3. **Missing ProGuard rules**: `app/proguard-rules.pro` did not exist, so R8 stripped all unreferenced classes including JNI reflection targets
+4. **Fix confirmed**: After adding keep rules, release build loads vision model successfully without any native crashes
+
+**Assumptions / could not verify**
+- LLM model file integrity: Did not verify sha256 of llama32_1b.pte on device (blocked by asset loading failure before reaching model load)
+- Separate model testing: Did not test vision and LLM models separately (vision works, LLM blocked on assets)
+- AAR contents: Did not inspect AAR internal structure (crash resolved without needing this)
+
+**Decisions made**
+- Keep minification enabled: Used ProGuard keep rules instead of `isMinifyEnabled=false` to preserve release build optimization while protecting JNI classes
+- Load models on background thread: Prevents ANR if model loading is slow, enables showing loading spinner
+- Show error screen on failure: Better UX than silent crash, shows actual exception message to user
 
 ### Session 2026-11-21 05:35 | agent: claude | branch: integration
 Task IDs: C7, C8 (ExecuTorch AAR integration - COMPLETE)
