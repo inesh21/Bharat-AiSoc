@@ -31,30 +31,33 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Get model directory (app's external files dir)
+        val modelDir = getExternalFilesDir("models") ?: throw IllegalStateException("External files dir not available")
+
         // Initialize engines based on build config
         visionEngine = if (BuildConfig.USE_MOCKS) {
-            Log.i("MainActivity", "Using MOCK vision engine")
+            Log.i("MainActivity", "⚠️ MOCK MODE - Using mock vision engine")
             MockVisionEngine()
         } else {
-            Log.i("MainActivity", "Using REAL ExecuTorch vision engine")
+            Log.i("MainActivity", "Using REAL ExecuTorch vision engine from $modelDir")
             try {
-                ExecuTorchVisionEngine(this)
+                ExecuTorchVisionEngine(this, modelDir)
             } catch (e: Exception) {
-                Log.e("MainActivity", "Failed to load ExecuTorch vision, falling back to mock: ${e.message}")
-                MockVisionEngine()
+                Log.e("MainActivity", "❌ Failed to load ExecuTorch vision: ${e.message}", e)
+                throw RuntimeException("Vision model load failed. Check logcat and ensure models are pushed.", e)
             }
         }
 
         advisoryEngine = if (BuildConfig.USE_MOCKS) {
-            Log.i("MainActivity", "Using MOCK advisory engine")
+            Log.i("MainActivity", "⚠️ MOCK MODE - Using mock advisory engine")
             MockAdvisoryEngine()
         } else {
-            Log.i("MainActivity", "Using REAL ExecuTorch advisory engine")
+            Log.i("MainActivity", "Using REAL ExecuTorch advisory engine from $modelDir")
             try {
-                ExecuTorchAdvisoryEngine(this)
+                ExecuTorchAdvisoryEngine(this, modelDir)
             } catch (e: Exception) {
-                Log.e("MainActivity", "Failed to load ExecuTorch advisory, falling back to mock: ${e.message}")
-                MockAdvisoryEngine()
+                Log.e("MainActivity", "❌ Failed to load ExecuTorch advisory: ${e.message}", e)
+                throw RuntimeException("Advisory model load failed. Check logcat and ensure models are pushed.", e)
             }
         }
 
