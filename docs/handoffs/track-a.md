@@ -2,9 +2,9 @@
 
 **Active agent:** none
 **Owner (human):** ________
-**Branch / worktree:** track-a/main  ->  ../crop-wt/track-a
+**Branch / worktree:** track-a/device-vectors
 **Task IDs:** A1 to A14 (see `docs/tracks/TRACK_A_VISION.md`)
-**Last updated:** 2026-11-21 04:39 UTC
+**Last updated:** 2026-11-21 09:11 UTC
 
 ## Milestone status
 
@@ -12,7 +12,7 @@
 |---|---|---|
 | I0 Contracts frozen | done | `labels.json` and Contract 1 pipeline implemented |
 | I1 Runtime proven | done | torch 2.15.0.dev20261005+cpu + executorch 1.6.0 confirmed working |
-| I2 Vision on device | ready for verification | `models/vision_v1.pte` exported; parity max_abs_diff=6e-6; Track C has ExecuTorchVisionEngine.kt; needs on-device test |
+| I2 Vision on device | passed | A142 release APK in airplane mode: 50/50 tensors and 50/50 PNGs; max absolute logit error 8.583069e-6 (tolerance 1e-4). |
 | I3 Advisory on device | not started | |
 | I4 End to end offline | not started | |
 | I5 Voice and clarifications | not started | |
@@ -28,6 +28,30 @@
 - (none)
 
 ## Session log (newest first)
+
+### Session 2026-11-21 | agent: codex | branch: track-a/device-vectors
+Task ID: A13
+
+**Summary**
+Generated 50 Android parity cases from the processed test manifest using seed 42.
+
+**Done**
+- Host PyTorch vs ExecuTorch 1.6.0 | run from integration checkout: .\.venv-et\Scripts\python.exe -I "$env:TEMP\AiSoc-track-work\track-a\vision\make_device_vectors.py" --root . | 50/50 top predictions match, max absolute error 6.68e-06, recorded tolerance 1e-4.
+- The gitignored test_vectors/vision/device_vectors.zip contains lossless model-size PNGs, little-endian NCHW float32 tensors, and reference logits. Cases include all five crop groups and eight unknowns.
+
+**Next steps**
+1. Track C ran Device self-test on A142 with airplane mode on and Wi-Fi disabled. Both 50-case comparisons passed. See its device CSV for individual results.
+
+**Decisions made**
+- Used the training evaluation resize and saved lossless images so JPEG recompression cannot change the reference input.
+- The model sidecar has no verification object. The generator uses the existing parity JSON tolerance as a fallback.
+- Keep the vector archive out of Git because it contains dataset images.
+
+**Files touched**
+- vision/make_device_vectors.py
+
+**Requests to other tracks**
+- To Track C: Record device logits against the generated bundle | CONTRACTS.md section 7 | I2 | status: done
 
 ### Session 2026-11-21 00:21 | agent: antigravity | branch: integration
 Task IDs: A5 (data pipeline), A6 (training), A7 (evaluation), A8 (calibration), A9 (export), A10 (parity test)
