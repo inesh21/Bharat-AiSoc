@@ -36,3 +36,20 @@ PNGs match the model input dimensions. They measure inference parity and
 cannot establish field accuracy or end-to-end camera coverage. The target
 hardware, field photos, offline playback, and ambiguous-photo checks
 belong in the corresponding milestone evidence.
+
+## Demo smoke test
+
+Keep airplane mode on and Wi-Fi off. Choose English or Hindi and open
+the camera. Confirm the preview and shutter work. A dark or blurred
+frame should offer a retake without starting Llama.
+
+For a repeatable positive case, extract device/img_010.png from the
+generated bundle and place it in the phone's Downloads folder. Choose
+that local photo in the app and open the treatment advisory. The A142
+showed cotton bacterial blight and played the sourced advisory offline
+in English and Hindi. Telugu text worked and the phone prompted for an
+offline Telugu voice.
+
+This check covers a known reference photo and a camera rejection path.
+The 20-photo field exit check, capture-to-advisory latency and the five
+ambiguous-photo checks still require separate device evidence.
