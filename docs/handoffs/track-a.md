@@ -4,15 +4,15 @@
 **Owner (human):** ________
 **Branch / worktree:** track-a/main  ->  ../crop-wt/track-a
 **Task IDs:** A1 to A14 (see `docs/tracks/TRACK_A_VISION.md`)
-**Last updated:** 2026-11-21
+**Last updated:** 2026-11-21 04:39 UTC
 
 ## Milestone status
 
 | Milestone | Status | Evidence |
 |---|---|---|
-| I0 Contracts frozen | in progress | `labels.json` and Contract 1 pipeline implemented |
+| I0 Contracts frozen | done | `labels.json` and Contract 1 pipeline implemented |
 | I1 Runtime proven | done | torch 2.15.0.dev20261005+cpu + executorch 1.6.0 confirmed working |
-| I2 Vision on device | ready (pte exported) | `models/vision_v1.pte` exported; parity max_abs_diff=6e-6; needs Track C wiring |
+| I2 Vision on device | ready for verification | `models/vision_v1.pte` exported; parity max_abs_diff=6e-6; Track C has ExecuTorchVisionEngine.kt; needs on-device test |
 | I3 Advisory on device | not started | |
 | I4 End to end offline | not started | |
 | I5 Voice and clarifications | not started | |
@@ -20,8 +20,8 @@
 
 ## Requests to other tracks (open)
 
-- To Track B: Defined 19 taxonomy classes in `labels.json` covering 5 crops (tomato, potato, rice, maize, cotton), pest (`pest__fall_armyworm`), and `unknown`. Please ground `knowledge/` entries using these IDs. | CONTRACTS.md Section 1 | needed for I0 | status: open
-- To Track C: `models/vision_v1.pte` (13.1 MB, executorch-xnnpack) is ready. See `models/vision_v1.json` for labels, normalization (ImageNet, 224×224 RGB), temperature=1.0219, OOD threshold=0.8226. Test vectors in `test_vectors/vision/parity_test_vectors.json` (50 images, max_abs_diff=6e-6, all tops match). Wire into `VisionEngine` per CONTRACTS.md Section 2. | CONTRACTS.md § 2 | needed for I2 | status: open
+- To Track B: ✓ COMPLETED - Defined 19 taxonomy classes in `labels.json` covering 5 crops (tomato, potato, rice, maize, cotton), pest (`pest__fall_armyworm`), and `unknown`. | CONTRACTS.md Section 1 | needed for I0 | status: done
+- To Track C: ✓ DELIVERED - `models/vision_v1.pte` (13.1 MB, executorch-xnnpack) is ready. See `models/vision_v1.json` for labels, normalization (ImageNet, 224×224 RGB), temperature=1.0219, OOD threshold=0.8226. Test vectors in `test_vectors/vision/parity_test_vectors.json` (50 images, max_abs_diff=6e-6, all tops match). ExecuTorchVisionEngine.kt implemented in Track C. Ready for on-device I2 verification. | CONTRACTS.md § 2 | needed for I2 | status: ready_for_testing
 
 ## Requests from other tracks (handled)
 

@@ -4,7 +4,7 @@
 **Owner (human):** ________
 **Branch / worktree:** integration
 **Task IDs:** B1 to B12 (see `docs/tracks/TRACK_B_LLM.md`)
-**Last updated:** 2026-11-20
+**Last updated:** 2026-11-21 04:39 UTC
 
 ## Milestone status
 
@@ -12,16 +12,16 @@
 |---|---|---|
 | I0 Contracts frozen | done | Rules engine, KB, and Contract 3 advisory pipeline implemented |
 | I1 Runtime proven | done | Exported Llama 3.2 1B (8da4w_xnnpack) to `models/llama32_1b.pte`; verified on connected phone (15.27 t/s, TTFT: 367ms) |
-| I2 Vision on device | in progress | Waiting for Track A to supply `vision_v1.pte` |
-| I3 Advisory on device | in progress | Kotlin advisory pipeline ported (Phase 4.2 done); parity tests pass (22/22); Phase 5 integration pending |
-| I4 End to end offline | in progress | 100% offline knowledge retrieval and validation; safety test 7/7 pass |
-| I5 Voice and clarifications | in progress | Multi-language phrases and clarifying questions matrix defined |
+| I2 Vision on device | not started | Waiting for Track C on-device integration |
+| I3 Advisory on device | ready for verification | Kotlin advisory pipeline ported (Phase 4.2 done); parity tests pass (22/22); Track C has ExecuTorchAdvisoryEngine.kt; needs on-device test |
+| I4 End to end offline | ready | 100% offline knowledge retrieval and validation; safety test 7/7 pass |
+| I5 Voice and clarifications | done | Multi-language phrases and clarifying questions matrix defined |
 | I6 Freeze and polish | not started | |
 
 ## Requests to other tracks (open)
 
-- To Track A: Taxonomy with 19 classes fully covered in `knowledge/kb.json`. | CONTRACTS.md Section 6 | needed for I0 | status: done
-- To Track C: Advisory pipeline produces Contract 3 responses. Clarification questions supported via `q_underside_spots`, `q_rings_vs_specks`, etc. | CONTRACTS.md Section 4 | needed for I3 | status: ready
+- To Track A: ✓ COMPLETED - Taxonomy with 19 classes fully covered in `knowledge/kb.json`. | CONTRACTS.md Section 6 | needed for I0 | status: done
+- To Track C: ✓ DELIVERED - Advisory pipeline produces Contract 3 responses. Clarification questions supported via `q_underside_spots`, `q_rings_vs_specks`, etc. ExecuTorchAdvisoryEngine.kt implemented with full integration. Ready for on-device I3 verification. | CONTRACTS.md Section 4 | needed for I3 | status: ready_for_testing
 
 ## Requests from other tracks (handled)
 

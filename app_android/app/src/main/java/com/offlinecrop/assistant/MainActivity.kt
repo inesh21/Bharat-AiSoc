@@ -1,6 +1,7 @@
 package com.offlinecrop.assistant
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.offlinecrop.assistant.engine.*
+import com.offlinecrop.assistant.engine.executorch.ExecuTorchAdvisoryEngine
+import com.offlinecrop.assistant.engine.executorch.ExecuTorchVisionEngine
 import com.offlinecrop.assistant.engine.mock.MockAdvisoryEngine
 import com.offlinecrop.assistant.engine.mock.MockVisionEngine
 import com.offlinecrop.assistant.engine.speech.AndroidSpeechEngine
@@ -21,15 +24,40 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var visionEngine: MockVisionEngine
-    private lateinit var advisoryEngine: MockAdvisoryEngine
+    private lateinit var visionEngine: VisionEngine
+    private lateinit var advisoryEngine: AdvisoryEngine
     private lateinit var speechEngine: AndroidSpeechEngine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        visionEngine = MockVisionEngine()
-        advisoryEngine = MockAdvisoryEngine()
+        // Initialize engines based on build config
+        visionEngine = if (BuildConfig.USE_MOCKS) {
+            Log.i("MainActivity", "Using MOCK vision engine")
+            MockVisionEngine()
+        } else {
+            Log.i("MainActivity", "Using REAL ExecuTorch vision engine")
+            try {
+                ExecuTorchVisionEngine(this)
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Failed to load ExecuTorch vision, falling back to mock: ${e.message}")
+                MockVisionEngine()
+            }
+        }
+
+        advisoryEngine = if (BuildConfig.USE_MOCKS) {
+            Log.i("MainActivity", "Using MOCK advisory engine")
+            MockAdvisoryEngine()
+        } else {
+            Log.i("MainActivity", "Using REAL ExecuTorch advisory engine")
+            try {
+                ExecuTorchAdvisoryEngine(this)
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Failed to load ExecuTorch advisory, falling back to mock: ${e.message}")
+                MockAdvisoryEngine()
+            }
+        }
+
         speechEngine = AndroidSpeechEngine(this)
 
         setContent {
@@ -59,13 +87,27 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Camera.route) {
                             CameraScreen(
                                 onSimulateScan = { scenario ->
-                                    visionEngine.simulatedScenario = scenario
+                                    // For mock engines only
+                                    if (visionEngine is MockVisionEngine) {
+                                        (visionEngine as MockVisionEngine).simulatedScenario = scenario
+                                    }
                                     lifecycleScope.launch {
                                         // Bitmap placeholder for mock analysis
                                         val dummyBitmap = android.graphics.Bitmap.createBitmap(224, 224, android.graphics.Bitmap.Config.ARGB_8888)
                                         val result = visionEngine.analyze(dummyBitmap)
                                         currentVisionResult = result
-                                        navController.navigate(Screen.Result.route)
+
+                                        // Handle quality issues
+                                        if (!result.quality.ok) {
+                                            Log.w("MainActivity", "Image quality issues: ${result.quality.issues}")
+                                            // Show quality issues and allow retake
+                                            navController.navigate(Screen.Result.route)
+                                        } else if (result.unknown) {
+                                            Log.w("MainActivity", "Unknown/OOD detection")
+                                            navController.navigate(Screen.Result.route)
+                                        } else {
+                                            navController.navigate(Screen.Result.route)
+                                        }
                                     }
                                 },
                                 onNavigateHistory = { /* Open history */ }
@@ -109,14 +151,24 @@ class MainActivity : ComponentActivity() {
                                 isSpeaking = isSpeaking,
                                 onAnswerClarification = { answer ->
                                     val vis = currentVisionResult
+                                    val questionId = currentAdvisoryResponse?.clarification?.questionId ?: ""
                                     if (vis != null) {
                                         val req = AdvisoryRequest(
                                             vision = vis,
                                             language = selectedLanguage,
-                                            answers = listOf(ClarificationAnswer("q_underside_spots", answer))
+                                            answers = listOf(ClarificationAnswer(questionId, answer))
                                         )
-                                        val updatedAdv = advisoryEngine.advise(req) {}
-                                        currentAdvisoryResponse = updatedAdv
+                                        lifecycleScope.launch {
+                                            val updatedAdv = advisoryEngine.advise(req) { token ->
+                                                // Token streaming callback - UI will update automatically
+                                            }
+                                            currentAdvisoryResponse = updatedAdv
+
+                                            // Handle validation failures
+                                            if (updatedAdv.usedFallback) {
+                                                Log.w("MainActivity", "Advisory validation failed, using fallback")
+                                            }
+                                        }
                                     }
                                 },
                                 onFinish = {
@@ -136,6 +188,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Release ExecuTorch resources
+        if (visionEngine is ExecuTorchVisionEngine) {
+            (visionEngine as ExecuTorchVisionEngine).release()
+        }
+        if (advisoryEngine is ExecuTorchAdvisoryEngine) {
+            (advisoryEngine as ExecuTorchAdvisoryEngine).release()
+        }
+
         speechEngine.shutdown()
     }
 }

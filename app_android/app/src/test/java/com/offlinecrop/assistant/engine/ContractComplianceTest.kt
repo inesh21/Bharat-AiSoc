@@ -24,7 +24,7 @@ class ContractComplianceTest {
     @Test
     fun testContract1VisionResultStructure() = runBlocking {
         visionEngine.simulatedScenario = MockVisionEngine.Scenario.TOMATO_EARLY_BLIGHT
-        val dummyBitmap = android.graphics.Bitmap.createBitmap(10, 10, android.graphics.Bitmap.Config.ARGB_8888)
+        val dummyBitmap = org.mockito.Mockito.mock(android.graphics.Bitmap::class.java)
         val result = visionEngine.analyze(dummyBitmap)
 
         assertEquals("1.0", result.schemaVersion)
@@ -40,7 +40,7 @@ class ContractComplianceTest {
     @Test
     fun testContract1QualityIssueFlow() = runBlocking {
         visionEngine.simulatedScenario = MockVisionEngine.Scenario.BLURRY_POOR_QUALITY
-        val dummyBitmap = android.graphics.Bitmap.createBitmap(10, 10, android.graphics.Bitmap.Config.ARGB_8888)
+        val dummyBitmap = org.mockito.Mockito.mock(android.graphics.Bitmap::class.java)
         val result = visionEngine.analyze(dummyBitmap)
 
         assertFalse(result.quality.ok)
