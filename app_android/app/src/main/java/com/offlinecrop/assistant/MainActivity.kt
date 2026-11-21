@@ -1,278 +1,259 @@
 package com.offlinecrop.assistant
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.offlinecrop.assistant.engine.*
+import com.offlinecrop.assistant.engine.AdvisoryRequest
+import com.offlinecrop.assistant.engine.AdvisoryResponse
+import com.offlinecrop.assistant.engine.ClarificationAnswer
+import com.offlinecrop.assistant.engine.VisionResult
+import com.offlinecrop.assistant.engine.decodePhoto
 import com.offlinecrop.assistant.engine.executorch.ExecuTorchAdvisoryEngine
 import com.offlinecrop.assistant.engine.executorch.ExecuTorchVisionEngine
+import com.offlinecrop.assistant.engine.executorch.runDeviceSelfTest
 import com.offlinecrop.assistant.engine.mock.MockAdvisoryEngine
 import com.offlinecrop.assistant.engine.mock.MockVisionEngine
 import com.offlinecrop.assistant.engine.speech.AndroidSpeechEngine
-import com.offlinecrop.assistant.ui.screens.*
+import com.offlinecrop.assistant.ui.screens.AdvisoryScreen
+import com.offlinecrop.assistant.ui.screens.CameraScreen
+import com.offlinecrop.assistant.ui.screens.LanguageScreen
+import com.offlinecrop.assistant.ui.screens.LiveCameraScreen
+import com.offlinecrop.assistant.ui.screens.ResultScreen
+import com.offlinecrop.assistant.ui.screens.Screen
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 class MainActivity : ComponentActivity() {
-
-    private var visionEngine: VisionEngine? = null
-    private var advisoryEngine: AdvisoryEngine? = null
-    private lateinit var speechEngine: AndroidSpeechEngine
-
-    private var loadError: String? = null
-    private var isLoading = true
+    private lateinit var speech: AndroidSpeechEngine
+    private val mockVision by lazy { MockVisionEngine() }
+    private val mockAdvisory by lazy { MockAdvisoryEngine() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        speechEngine = AndroidSpeechEngine(this)
-
-        // Load models off main thread
-        lifecycleScope.launch(Dispatchers.IO) {
-            loadModels()
-        }
-
+        speech = AndroidSpeechEngine(this)
         setContent {
             MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    if (isLoading) {
-                        LoadingScreen()
-                    } else if (loadError != null) {
-                        ErrorScreen(loadError!!)
-                    } else {
-                        AppContent()
-                    }
+                Surface(Modifier.fillMaxSize().systemBarsPadding()) {
+                    AppContent()
                 }
             }
         }
     }
 
-    private suspend fun loadModels() {
-        try {
-            val modelDir = getExternalFilesDir("models")
-            if (modelDir == null) {
-                loadError = "External files directory not available"
-                isLoading = false
-                return
-            }
-
-            if (BuildConfig.USE_MOCKS) {
-                Log.i("ET", "⚠️ MOCK MODE - Using mock engines")
-                visionEngine = MockVisionEngine()
-                advisoryEngine = MockAdvisoryEngine()
-                isLoading = false
-                return
-            }
-
-            // Load Vision Model
-            val visionFile = File(modelDir, "vision_v1.pte")
-            val visionJsonFile = File(modelDir, "vision_v1.json")
-
-            Log.i("ET", "Vision model path: ${visionFile.absolutePath}")
-            Log.i("ET", "Vision model exists: ${visionFile.exists()}, length: ${if (visionFile.exists()) visionFile.length() else 0}")
-            Log.i("ET", "Vision JSON exists: ${visionJsonFile.exists()}, length: ${if (visionJsonFile.exists()) visionJsonFile.length() else 0}")
-
-            try {
-                visionEngine = ExecuTorchVisionEngine(this@MainActivity, modelDir)
-                Log.i("ET", "✓ Vision engine loaded successfully")
-            } catch (t: Throwable) {
-                val msg = "Vision load failed for ${visionFile.absolutePath}: ${t.javaClass.name}: ${t.message}"
-                Log.e("ET", msg, t)
-                loadError = msg
-                isLoading = false
-                return
-            }
-
-            // Load LLM Model
-            val llmFile = File(modelDir, "llama32_1b.pte")
-            val tokenizerFile = File(modelDir, "tokenizer.model")
-
-            Log.i("ET", "LLM model path: ${llmFile.absolutePath}")
-            Log.i("ET", "LLM model exists: ${llmFile.exists()}, length: ${if (llmFile.exists()) llmFile.length() else 0}")
-            Log.i("ET", "Tokenizer exists: ${tokenizerFile.exists()}, length: ${if (tokenizerFile.exists()) tokenizerFile.length() else 0}")
-
-            try {
-                advisoryEngine = ExecuTorchAdvisoryEngine(this@MainActivity, modelDir)
-                Log.i("ET", "✓ Advisory engine loaded successfully")
-            } catch (t: Throwable) {
-                val msg = "LLM load failed for ${llmFile.absolutePath}: ${t.javaClass.name}: ${t.message}"
-                Log.e("ET", msg, t)
-                loadError = msg
-                isLoading = false
-                return
-            }
-
-            isLoading = false
-            Log.i("ET", "✓ All models loaded successfully")
-
-        } catch (t: Throwable) {
-            val msg = "Model loading failed: ${t.javaClass.name}: ${t.message}"
-            Log.e("ET", msg, t)
-            loadError = msg
-            isLoading = false
-        }
+    override fun onStop() {
+        speech.stopSpeaking()
+        super.onStop()
     }
 
-    @Composable
-    private fun LoadingScreen() {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator()
-                Spacer(modifier = Modifier.height(16.dp))
-                Text("Loading models...")
-            }
-        }
+    override fun onDestroy() {
+        speech.shutdown()
+        super.onDestroy()
     }
 
-    @Composable
-    private fun ErrorScreen(error: String) {
-        Box(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "Model Load Failed",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.error
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = error,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
+    private fun modelDir(): File = checkNotNull(getExternalFilesDir("models")) {
+        "The app's model folder is unavailable."
     }
 
     @Composable
     private fun AppContent() {
-        val navController = rememberNavController()
-
-        var selectedLanguage by remember { mutableStateOf("en") }
-        var currentVisionResult by remember { mutableStateOf<VisionResult?>(null) }
-        var currentAdvisoryResponse by remember { mutableStateOf<AdvisoryResponse?>(null) }
-        var isSpeaking by remember { mutableStateOf(false) }
-
-        NavHost(navController = navController, startDestination = Screen.Language.route) {
-            // 1. Language Screen
-            composable(Screen.Language.route) {
-                LanguageScreen(
-                    currentLanguage = selectedLanguage,
-                    onLanguageSelected = { selectedLanguage = it },
-                    onNavigateNext = { navController.navigate(Screen.Camera.route) }
-                )
+        val nav = rememberNavController()
+        var language by rememberSaveable { mutableStateOf("en") }
+        var vision by remember { mutableStateOf<VisionResult?>(null) }
+        var advisory by remember { mutableStateOf<AdvisoryResponse?>(null) }
+        var busy by remember { mutableStateOf(false) }
+        var progress by remember { mutableStateOf("") }
+        var error by remember { mutableStateOf<String?>(null) }
+        var speaking by remember { mutableStateOf(false) }
+        var report by remember { mutableStateOf<String?>(null) }
+        val selfTestRoute = "self_test"
+        DisposableEffect(Unit) {
+            speech.observeStatus { playing, message ->
+                speaking = playing
+                if (message != null) error = message
             }
+            onDispose { speech.observeStatus { _, _ -> } }
+        }
 
-            // 2. Camera Screen
-            composable(Screen.Camera.route) {
-                CameraScreen(
-                    onSimulateScan = { scenario ->
-                        // For mock engines only
-                        if (visionEngine is MockVisionEngine) {
-                            (visionEngine as MockVisionEngine).simulatedScenario = scenario
-                        }
-                        lifecycleScope.launch {
-                            // Bitmap placeholder for mock analysis
-                            val dummyBitmap = android.graphics.Bitmap.createBitmap(224, 224, android.graphics.Bitmap.Config.ARGB_8888)
-                            val result = visionEngine!!.analyze(dummyBitmap)
-                            currentVisionResult = result
-
-                            // Handle quality issues
-                            if (!result.quality.ok) {
-                                Log.w("MainActivity", "Image quality issues: ${result.quality.issues}")
-                                navController.navigate(Screen.Result.route)
-                            } else if (result.unknown) {
-                                Log.w("MainActivity", "Unknown/OOD detection")
-                                navController.navigate(Screen.Result.route)
-                            } else {
-                                navController.navigate(Screen.Result.route)
-                            }
-                        }
-                    },
-                    onNavigateHistory = { /* Open history */ }
-                )
+        fun runTask(label: String, task: suspend () -> Unit) {
+            if (busy) return
+            busy = true
+            progress = label
+            error = null
+            lifecycleScope.launch {
+                try {
+                    task()
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: OutOfMemoryError) {
+                    Log.e("CropAssistant", label, e)
+                    error = "The phone ran out of memory. Close other apps and retry."
+                } catch (e: Exception) {
+                    Log.e("CropAssistant", label, e)
+                    error = e.message ?: "Operation failed. Please try again."
+                } finally {
+                    busy = false
+                }
             }
+        }
 
-            // 3. Result Screen
-            composable(Screen.Result.route) {
-                ResultScreen(
-                    visionResult = currentVisionResult,
-                    onProceedAdvisory = {
-                        if (currentVisionResult != null && currentVisionResult!!.quality.ok && !currentVisionResult!!.unknown) {
-                            lifecycleScope.launch {
-                                val req = AdvisoryRequest(
-                                    vision = currentVisionResult!!,
-                                    language = selectedLanguage
-                                )
-                                val advisory = advisoryEngine!!.advise(req) { /* token callback */ }
-                                currentAdvisoryResponse = advisory
-                                navController.navigate(Screen.Advisory.route)
-                            }
-                        }
-                    },
-                    onRetake = { navController.navigate(Screen.Camera.route) }
-                )
+        fun analyzePhoto(uri: Uri, temporary: File?) {
+            if (isDestroyed || busy || nav.currentDestination?.route != Screen.Camera.route) {
+                temporary?.delete()
+                return
             }
-
-            // 4. Advisory Screen
-            composable(Screen.Advisory.route) {
-                AdvisoryScreen(
-                    advisoryResponse = currentAdvisoryResponse,
-                    onSpeak = { text ->
-                        speechEngine.speak(text, selectedLanguage)
-                        isSpeaking = true
-                    },
-                    onStopSpeak = {
-                        speechEngine.stopSpeaking()
-                        isSpeaking = false
-                    },
-                    isSpeaking = isSpeaking,
-                    onAnswerClarification = { answer ->
-                        val vis = currentVisionResult
-                        val questionId = currentAdvisoryResponse?.clarification?.questionId ?: ""
-                        if (vis != null) {
-                            val req = AdvisoryRequest(
-                                vision = vis,
-                                language = selectedLanguage,
-                                answers = listOf(ClarificationAnswer(questionId, answer))
-                            )
-                            lifecycleScope.launch {
-                                val updatedAdv = advisoryEngine!!.advise(req) { /* token callback */ }
-                                currentAdvisoryResponse = updatedAdv
-
-                                if (updatedAdv.usedFallback) {
-                                    Log.w("MainActivity", "Advisory validation failed, using fallback")
-                                }
-                            }
-                        }
-                    },
-                    onFinish = {
-                        speechEngine.stopSpeaking()
-                        isSpeaking = false
-                        navController.navigate(Screen.Camera.route) {
-                            popUpTo(Screen.Camera.route) { inclusive = true }
+            runTask("Analyzing photo") {
+                try {
+                    vision = withContext(Dispatchers.IO) {
+                        val bitmap = decodePhoto(contentResolver, uri)
+                        try {
+                            ExecuTorchVisionEngine(modelDir()).use { it.analyze(bitmap) }
+                        } finally {
+                            bitmap.recycle()
                         }
                     }
-                )
+                } finally {
+                    temporary?.delete()
+                }
+                advisory = null
+                nav.navigate(Screen.Result.route)
+            }
+        }
+
+        fun requestAdvisory(answer: ClarificationAnswer? = null) {
+            val result = vision ?: return
+            if (!result.quality.ok || result.unknown || result.predictions.isEmpty()) return
+            speech.stopSpeaking()
+            val request = AdvisoryRequest(
+                vision = result, language = language, answers = listOfNotNull(answer),
+            )
+            runTask("Preparing advisory") {
+                advisory = withContext(Dispatchers.Default) {
+                    if (BuildConfig.USE_MOCKS) {
+                        mockAdvisory.advise(request) {}
+                    } else {
+                        ExecuTorchAdvisoryEngine(this@MainActivity, modelDir()).use {
+                            it.advise(request) {}
+                        }
+                    }
+                }
+                if (nav.currentDestination?.route != Screen.Advisory.route) {
+                    nav.navigate(Screen.Advisory.route)
+                }
+            }
+        }
+
+        fun retake() {
+            if (busy) return
+            speech.stopSpeaking()
+            error = null
+            vision = null
+            advisory = null
+            if (!nav.popBackStack(Screen.Camera.route, false)) {
+                nav.navigate(Screen.Camera.route) { launchSingleTop = true }
+            }
+        }
+
+        BackHandler(busy) {}
+        Column(Modifier.fillMaxSize()) {
+            if (busy) {
+                LinearProgressIndicator(Modifier.fillMaxWidth())
+                Text(progress, Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+            }
+            error?.let {
+                Text(it, Modifier.padding(16.dp), color = MaterialTheme.colorScheme.error)
+            }
+            NavHost(nav, startDestination = Screen.Language.route, modifier = Modifier.weight(1f)) {
+                composable(Screen.Language.route) {
+                    LanguageScreen(
+                        currentLanguage = language,
+                        onLanguageSelected = { language = it },
+                        onNavigateNext = {
+                            error = null
+                            nav.navigate(Screen.Camera.route)
+                        },
+                        onSelfTest = if (BuildConfig.USE_MOCKS) null else {
+                            { error = null; nav.navigate(selfTestRoute) }
+                        },
+                    )
+                }
+                composable(Screen.Camera.route) {
+                    if (BuildConfig.USE_MOCKS) {
+                        CameraScreen(
+                            onSimulateScan = { scenario ->
+                                runTask("Analyzing test image") {
+                                    mockVision.simulatedScenario = scenario
+                                    val bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+                                    try {
+                                        vision = mockVision.analyze(bitmap)
+                                    } finally {
+                                        bitmap.recycle()
+                                    }
+                                    nav.navigate(Screen.Result.route)
+                                }
+                            },
+                            onNavigateHistory = {},
+                        )
+                    } else {
+                        LiveCameraScreen(busy, ::analyzePhoto)
+                    }
+                }
+                composable(Screen.Result.route) {
+                    ResultScreen(vision, { requestAdvisory() }, ::retake)
+                }
+                composable(Screen.Advisory.route) {
+                    DisposableEffect(Unit) { onDispose { speech.stopSpeaking() } }
+                    AdvisoryScreen(
+                        advisoryResponse = advisory,
+                        onSpeak = { if (!busy) speech.speak(it, language) },
+                        onStopSpeak = speech::stopSpeaking,
+                        isSpeaking = speaking,
+                        onAnswerClarification = { answer ->
+                            advisory?.clarification?.let {
+                                requestAdvisory(ClarificationAnswer(it.questionId, answer))
+                            }
+                        },
+                        onFinish = ::retake,
+                    )
+                }
+                composable(selfTestRoute) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text("Device self-test", style = MaterialTheme.typography.headlineSmall)
+                        Text("Runs vision parity, Llama generation, safety checks and device benchmarks.")
+                        Button(enabled = !busy, onClick = {
+                            report = null
+                            val voices = speech.voiceAvailability().toString()
+                            runTask("Starting device self-test") {
+                                val result = withContext(Dispatchers.Default) {
+                                    runDeviceSelfTest(this@MainActivity, modelDir()) { step ->
+                                        withContext(Dispatchers.Main) { progress = step }
+                                    }
+                                }
+                                report = "$result\nOffline voices $voices"
+                                Log.i("CropSelfTest", "Offline voices $voices")
+                            }
+                        }) {
+                            Text("Run checks")
+                        }
+                        report?.let { Text(it) }
+                    }
+                }
             }
         }
     }

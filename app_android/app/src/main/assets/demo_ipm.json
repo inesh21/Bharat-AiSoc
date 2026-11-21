@@ -1,0 +1,425 @@
+{
+  "tomato__early_blight": {
+    "en": {
+      "diagnosis": "Tomato early blight",
+      "actions": [
+        "Prune and destroy infected lower foliage immediately.",
+        "Rake and remove all fallen diseased leaves to stop sporulation."
+      ],
+      "prevention": "Mulch soil around plants to prevent soil-splash pathogen transmission."
+    },
+    "hi": {
+      "diagnosis": "टमाटर का अगेती झुलसा रोग",
+      "actions": [
+        "संक्रमित निचली पत्तियों को तुरंत काटकर नष्ट करें।",
+        "बीजाणुओं का प्रसार रोकने के लिए गिरी हुई रोगग्रस्त पत्तियाँ समेटकर हटाएँ।"
+      ],
+      "prevention": "मिट्टी के छींटों से रोग फैलने से रोकने के लिए पौधों के आसपास मल्च बिछाएँ।"
+    },
+    "te": {
+      "diagnosis": "టమాటా ముందస్తు ఎండు తెగులు",
+      "actions": [
+        "సోకిన కింది ఆకులను వెంటనే కత్తిరించి నాశనం చేయండి.",
+        "బీజాంశాల వ్యాప్తిని ఆపడానికి రాలిన రోగగ్రస్త ఆకులను ఏరి తొలగించండి."
+      ],
+      "prevention": "మట్టి చినుకులతో తెగులు వ్యాపించకుండా మొక్కల చుట్టూ మల్చ్ వేయండి."
+    }
+  },
+  "tomato__late_blight": {
+    "en": {
+      "diagnosis": "Tomato late blight",
+      "actions": [
+        "Isolate infected plants and rogue out initial foci of infection.",
+        "Reduce irrigation frequency to limit canopy moisture."
+      ],
+      "prevention": "Avoid planting adjacent to potato fields."
+    },
+    "hi": {
+      "diagnosis": "टमाटर का पछेती झुलसा रोग",
+      "actions": [
+        "संक्रमित पौधों को अलग करें और संक्रमण के शुरुआती केंद्रों वाले पौधे उखाड़ें।",
+        "पत्तियों में नमी कम रखने के लिए सिंचाई की आवृत्ति घटाएँ।"
+      ],
+      "prevention": "आलू के खेतों के पास टमाटर न लगाएँ।"
+    },
+    "te": {
+      "diagnosis": "టమాటా ఆలస్యపు ఎండు తెగులు",
+      "actions": [
+        "సోకిన మొక్కలను వేరుచేసి మొదట తెగులు కనిపించిన మొక్కలను తొలగించండి.",
+        "ఆకుల్లో తేమ తగ్గించడానికి నీరు పెట్టే సార్లు తగ్గించండి."
+      ],
+      "prevention": "బంగాళాదుంప పొలాల పక్కన టమాటా నాటవద్దు."
+    }
+  },
+  "tomato__septoria_leaf_spot": {
+    "en": {
+      "diagnosis": "Tomato Septoria leaf spot",
+      "actions": [
+        "Mulch bed with clean paddy straw to prevent rain-splash."
+      ],
+      "prevention": "Use clean disease-free certified seeds."
+    },
+    "hi": {
+      "diagnosis": "टमाटर का सेप्टोरिया पत्ती धब्बा रोग",
+      "actions": [
+        "बारिश के छींटे रोकने के लिए क्यारी में साफ धान का पुआल बिछाएँ।"
+      ],
+      "prevention": "साफ, रोगमुक्त प्रमाणित बीज इस्तेमाल करें।"
+    },
+    "te": {
+      "diagnosis": "టమాటా సెప్టోరియా ఆకుమచ్చ తెగులు",
+      "actions": [
+        "వాన చినుకులు ఎగరకుండా మడిపై శుభ్రమైన వరి గడ్డిని పరచండి."
+      ],
+      "prevention": "శుభ్రమైన, తెగులు లేని ధృవీకరించిన విత్తనాలను వాడండి."
+    }
+  },
+  "tomato__bacterial_spot": {
+    "en": {
+      "diagnosis": "Tomato bacterial spot",
+      "actions": [
+        "Avoid touching or cultivating plants while foliage is wet."
+      ],
+      "prevention": "Avoid overhead sprinkler irrigation."
+    },
+    "hi": {
+      "diagnosis": "टमाटर का जीवाणु धब्बा रोग",
+      "actions": [
+        "पत्तियाँ गीली हों तो पौधों को छूने या उनमें काम करने से बचें।"
+      ],
+      "prevention": "ऊपर से फव्वारे वाली सिंचाई से बचें।"
+    },
+    "te": {
+      "diagnosis": "టమాటా బ్యాక్టీరియా మచ్చ తెగులు",
+      "actions": [
+        "ఆకులు తడిగా ఉన్నప్పుడు మొక్కలను తాకడం లేదా వాటి దగ్గర సాగు పనులు చేయడం నివారించండి."
+      ],
+      "prevention": "పై నుంచి స్ప్రింక్లర్ నీటిపారుదల నివారించండి."
+    }
+  },
+  "tomato__healthy": {
+    "en": {
+      "diagnosis": "Healthy tomato",
+      "actions": [
+        "Maintain routine fertilization and drip irrigation schedule."
+      ],
+      "prevention": "Continue regular crop scouting twice a week."
+    },
+    "hi": {
+      "diagnosis": "स्वस्थ टमाटर",
+      "actions": [
+        "खाद देने और टपक सिंचाई का नियमित समय बनाए रखें।"
+      ],
+      "prevention": "सप्ताह में दो बार फसल की नियमित जाँच जारी रखें।"
+    },
+    "te": {
+      "diagnosis": "ఆరోగ్యకరమైన టమాటా",
+      "actions": [
+        "ఎరువుల వాడకం, బిందు సేద్యం యొక్క సాధారణ సమయ పట్టికను కొనసాగించండి."
+      ],
+      "prevention": "వారానికి రెండుసార్లు పంటను పరిశీలించడం కొనసాగించండి."
+    }
+  },
+  "potato__healthy": {
+    "en": {
+      "diagnosis": "Healthy potato",
+      "actions": [
+        "No intervention necessary. Maintain uniform earthing up."
+      ],
+      "prevention": "Maintain adequate soil moisture during tuber formation."
+    },
+    "hi": {
+      "diagnosis": "स्वस्थ आलू",
+      "actions": [
+        "अलग उपचार की जरूरत नहीं है। पौधों पर समान रूप से मिट्टी चढ़ाते रहें।"
+      ],
+      "prevention": "कंद बनने के दौरान मिट्टी में पर्याप्त नमी बनाए रखें।"
+    },
+    "te": {
+      "diagnosis": "ఆరోగ్యకరమైన బంగాళాదుంప",
+      "actions": [
+        "ప్రత్యేక చర్య అవసరం లేదు. మొక్కల చుట్టూ సమానంగా మట్టి ఎగదోయండి."
+      ],
+      "prevention": "దుంపలు ఏర్పడే సమయంలో మట్టిలో తగిన తేమను ఉంచండి."
+    }
+  },
+  "potato__early_blight": {
+    "en": {
+      "diagnosis": "Potato early blight",
+      "actions": [
+        "Maintain steady soil moisture to reduce plant stress."
+      ],
+      "prevention": "Use healthy certified seed tubers."
+    },
+    "hi": {
+      "diagnosis": "आलू का अगेती झुलसा रोग",
+      "actions": [
+        "पौधों का तनाव कम करने के लिए मिट्टी की नमी स्थिर रखें।"
+      ],
+      "prevention": "स्वस्थ प्रमाणित बीज कंद लगाएँ।"
+    },
+    "te": {
+      "diagnosis": "బంగాళాదుంప ముందస్తు ఎండు తెగులు",
+      "actions": [
+        "మొక్కల ఒత్తిడి తగ్గించడానికి నేల తేమను స్థిరంగా ఉంచండి."
+      ],
+      "prevention": "ఆరోగ్యకరమైన ధృవీకరించిన విత్తన దుంపలను వాడండి."
+    }
+  },
+  "potato__late_blight": {
+    "en": {
+      "diagnosis": "Potato late blight",
+      "actions": [
+        "Monitor fields daily; halt furrow irrigation."
+      ],
+      "prevention": "Always use certified disease-free seed tubers."
+    },
+    "hi": {
+      "diagnosis": "आलू का पछेती झुलसा रोग",
+      "actions": [
+        "खेत की रोज जाँच करें और नालियों से सिंचाई रोकें।"
+      ],
+      "prevention": "हमेशा प्रमाणित रोगमुक्त बीज कंद लगाएँ।"
+    },
+    "te": {
+      "diagnosis": "బంగాళాదుంప ఆలస్యపు ఎండు తెగులు",
+      "actions": [
+        "పొలాన్ని రోజూ పరిశీలించండి. కాలువల ద్వారా నీరు పెట్టడం ఆపండి."
+      ],
+      "prevention": "ఎల్లప్పుడూ ధృవీకరించిన తెగులు లేని విత్తన దుంపలను వాడండి."
+    }
+  },
+  "rice__healthy": {
+    "en": {
+      "diagnosis": "Healthy rice",
+      "actions": [
+        "Continue standard water regime and recommended N-P-K splits."
+      ],
+      "prevention": "Scout leaf collars and nodes weekly for early blast symptoms."
+    },
+    "hi": {
+      "diagnosis": "स्वस्थ धान",
+      "actions": [
+        "पानी का सामान्य प्रबंधन और नाइट्रोजन, फॉस्फोरस व पोटाश की अनुशंसित किस्तें जारी रखें।"
+      ],
+      "prevention": "झोंका रोग के शुरुआती लक्षणों के लिए पत्तियों के जोड़ और गाँठें हर सप्ताह देखें।"
+    },
+    "te": {
+      "diagnosis": "ఆరోగ్యకరమైన వరి",
+      "actions": [
+        "సాధారణ నీటి నిర్వహణను మరియు సిఫార్సు చేసిన నత్రజని, భాస్వరం, పొటాష్ విడతలను కొనసాగించండి."
+      ],
+      "prevention": "అగ్గి తెగులు తొలి లక్షణాల కోసం ఆకుల కాడల కలయికల్ని, కణుపుల్ని వారానికి ఒకసారి చూడండి."
+    }
+  },
+  "rice__blast": {
+    "en": {
+      "diagnosis": "Rice blast",
+      "actions": [
+        "Avoid further top-dressing of nitrogen fertilizer."
+      ],
+      "prevention": "Use blast resistant varieties (e.g. Swarna Sub1, IR64, CR Dhan series)."
+    },
+    "hi": {
+      "diagnosis": "धान का झोंका रोग",
+      "actions": [
+        "अभी और नाइट्रोजन खाद ऊपर से न दें।"
+      ],
+      "prevention": "झोंका रोग प्रतिरोधी किस्में लगाएँ, जैसे स्वर्णा सब-1, आईआर64 या सीआर धान शृंखला।"
+    },
+    "te": {
+      "diagnosis": "వరి అగ్గి తెగులు",
+      "actions": [
+        "ప్రస్తుతం పైపాటుగా మరింత నత్రజని ఎరువు వేయవద్దు."
+      ],
+      "prevention": "అగ్గి తెగులును తట్టుకునే స్వర్ణ సబ్-1, ఐఆర్64 లేదా సీఆర్ ధాన్ శ్రేణి వంటి రకాలను వాడండి."
+    }
+  },
+  "rice__brown_spot": {
+    "en": {
+      "diagnosis": "Rice brown spot",
+      "actions": [
+        "Improve drainage and correct micronutrient deficiency."
+      ],
+      "prevention": "Deep summer ploughing to destroy stubble and volunteer hosts."
+    },
+    "hi": {
+      "diagnosis": "धान का भूरा धब्बा रोग",
+      "actions": [
+        "जल निकासी सुधारें और सूक्ष्म पोषक तत्वों की कमी दूर करें।"
+      ],
+      "prevention": "गर्मियों में गहरी जुताई करके ठूँठ और अपने आप उगे पोषक पौधे नष्ट करें।"
+    },
+    "te": {
+      "diagnosis": "వరి గోధుమరంగు మచ్చ తెగులు",
+      "actions": [
+        "నీటి పారుదల మెరుగుపరచి సూక్ష్మ పోషకాల లోపాన్ని సరిచేయండి."
+      ],
+      "prevention": "మిగిలిన మొక్కల దుబ్బులు, వాటంతట అవే పెరిగిన ఆశ్రయ మొక్కలు పోవడానికి వేసవిలో లోతుగా దున్నండి."
+    }
+  },
+  "rice__bacterial_blight": {
+    "en": {
+      "diagnosis": "Rice bacterial blight",
+      "actions": [
+        "Consult local Krishi Vigyan Kendra (KVK) extension officer."
+      ],
+      "prevention": "Avoid clipping seedling tips during transplanting."
+    },
+    "hi": {
+      "diagnosis": "धान का जीवाणु झुलसा रोग",
+      "actions": [
+        "स्थानीय कृषि विज्ञान केंद्र के कृषि विस्तार अधिकारी से संपर्क करें।"
+      ],
+      "prevention": "रोपाई के समय पौध के सिरे न काटें।"
+    },
+    "te": {
+      "diagnosis": "వరి బ్యాక్టీరియా ఎండు తెగులు",
+      "actions": [
+        "స్థానిక కృషి విజ్ఞాన కేంద్రం వ్యవసాయ విస్తరణ అధికారిని సంప్రదించండి."
+      ],
+      "prevention": "నాట్లు వేసేటప్పుడు వరి నారు కొనలను కత్తిరించవద్దు."
+    }
+  },
+  "maize__healthy": {
+    "en": {
+      "diagnosis": "Healthy maize",
+      "actions": [
+        "Continue balanced soil nutrition and regular moisture monitoring."
+      ],
+      "prevention": "Scout leaf whorls weekly for fall armyworm eggs or early instars."
+    },
+    "hi": {
+      "diagnosis": "स्वस्थ मक्का",
+      "actions": [
+        "मिट्टी में संतुलित पोषण बनाए रखें और नमी नियमित जाँचें।"
+      ],
+      "prevention": "फॉल आर्मीवर्म के अंडे या छोटी सूँडियाँ देखने के लिए हर सप्ताह पत्तियों का गुच्छा जाँचें।"
+    },
+    "te": {
+      "diagnosis": "ఆరోగ్యకరమైన మొక్కజొన్న",
+      "actions": [
+        "నేలలో సమతుల్య పోషణను కొనసాగించి తేమను క్రమం తప్పకుండా పరిశీలించండి."
+      ],
+      "prevention": "ఫాల్ ఆర్మీవార్మ్ గుడ్లు లేదా చిన్న లార్వాల కోసం ఆకుల సుడులను వారానికి ఒకసారి పరిశీలించండి."
+    }
+  },
+  "maize__common_rust": {
+    "en": {
+      "diagnosis": "Maize common rust",
+      "actions": [
+        "Monitor disease progression; if pustules remain confined to lower leaves, no spray is needed.",
+        "Maintain balanced fertilization."
+      ],
+      "prevention": "Plant rust-resistant commercial maize hybrids."
+    },
+    "hi": {
+      "diagnosis": "मक्का का सामान्य रतुआ रोग",
+      "actions": [
+        "रोग का फैलाव देखें। यदि फफोले निचली पत्तियों तक सीमित हैं तो छिड़काव की जरूरत नहीं है।",
+        "खाद का संतुलित उपयोग करें।"
+      ],
+      "prevention": "रतुआ प्रतिरोधी संकर मक्का लगाएँ।"
+    },
+    "te": {
+      "diagnosis": "మొక్కజొన్న సాధారణ తుప్పు తెగులు",
+      "actions": [
+        "తెగులు వ్యాప్తిని గమనించండి. పొక్కులు కింది ఆకులకే పరిమితమైతే పిచికారీ అవసరం లేదు.",
+        "ఎరువులను సమతుల్యంగా వాడండి."
+      ],
+      "prevention": "తుప్పు తెగులును తట్టుకునే సంకర మొక్కజొన్న రకాలను నాటండి."
+    }
+  },
+  "maize__northern_leaf_blight": {
+    "en": {
+      "diagnosis": "Maize northern leaf blight",
+      "actions": [
+        "Ensure field is not over-irrigated."
+      ],
+      "prevention": "Rotate with non-grass crops such as soybean, groundnut, or chickpea."
+    },
+    "hi": {
+      "diagnosis": "मक्का का उत्तरी पत्ती झुलसा रोग",
+      "actions": [
+        "खेत में जरूरत से ज्यादा सिंचाई न करें।"
+      ],
+      "prevention": "सोयाबीन, मूँगफली या चने जैसी गैर-घास फसलों के साथ फसल चक्र अपनाएँ।"
+    },
+    "te": {
+      "diagnosis": "మొక్కజొన్న ఉత్తర ఆకు ఎండు తెగులు",
+      "actions": [
+        "పొలానికి అవసరానికి మించి నీరు పెట్టవద్దు."
+      ],
+      "prevention": "సోయాబీన్, వేరుశనగ లేదా శనగ వంటి గడ్డి జాతికి చెందని పంటలతో పంట మార్పిడి చేయండి."
+    }
+  },
+  "cotton__healthy": {
+    "en": {
+      "diagnosis": "Healthy cotton",
+      "actions": [
+        "Continue regular scouting and balanced fertilizer application."
+      ],
+      "prevention": "Scout leaf undersides and squares twice weekly for pests and bacterial spots."
+    },
+    "hi": {
+      "diagnosis": "स्वस्थ कपास",
+      "actions": [
+        "नियमित फसल निरीक्षण और संतुलित खाद देना जारी रखें।"
+      ],
+      "prevention": "कीटों और जीवाणु धब्बों के लिए पत्तियों के नीचे और फूल की कलियों को सप्ताह में दो बार देखें।"
+    },
+    "te": {
+      "diagnosis": "ఆరోగ్యకరమైన పత్తి",
+      "actions": [
+        "పంటను క్రమంగా పరిశీలిస్తూ ఎరువులను సమతుల్యంగా వాడండి."
+      ],
+      "prevention": "పురుగులు, బ్యాక్టీరియా మచ్చల కోసం ఆకుల కింది భాగాలు, పూల మొగ్గలను వారానికి రెండుసార్లు చూడండి."
+    }
+  },
+  "cotton__bacterial_blight": {
+    "en": {
+      "diagnosis": "Cotton bacterial blight",
+      "actions": [
+        "Avoid mechanical operations when plants are wet to prevent spreading bacteria."
+      ],
+      "prevention": "Eradicate infected crop residues after harvest."
+    },
+    "hi": {
+      "diagnosis": "कपास का जीवाणु झुलसा रोग",
+      "actions": [
+        "जीवाणु फैलने से रोकने के लिए गीले पौधों पर यांत्रिक काम न करें।"
+      ],
+      "prevention": "कटाई के बाद संक्रमित फसल अवशेष हटाएँ।"
+    },
+    "te": {
+      "diagnosis": "పత్తి బ్యాక్టీరియా ఎండు తెగులు",
+      "actions": [
+        "బ్యాక్టీరియా వ్యాప్తి ఆపడానికి మొక్కలు తడిగా ఉన్నప్పుడు యంత్రాలతో పనులు చేయవద్దు."
+      ],
+      "prevention": "కోత తర్వాత తెగులు సోకిన పంట అవశేషాలను తొలగించండి."
+    }
+  },
+  "pest__fall_armyworm": {
+    "en": {
+      "diagnosis": "Fall armyworm",
+      "actions": [
+        "Handpick egg masses and visible young larvae in small holdings."
+      ],
+      "prevention": "Synchronize planting dates within the farming community."
+    },
+    "hi": {
+      "diagnosis": "फॉल आर्मीवर्म",
+      "actions": [
+        "छोटे खेतों में अंडों के गुच्छे और दिखने वाली छोटी सूँडियाँ हाथ से चुनकर हटाएँ।"
+      ],
+      "prevention": "आसपास के किसानों के साथ बुवाई का समय एक रखें।"
+    },
+    "te": {
+      "diagnosis": "ఫాల్ ఆర్మీవార్మ్",
+      "actions": [
+        "చిన్న పొలాల్లో గుడ్ల గుంపులను, కనిపించే చిన్న లార్వాలను చేతితో ఏరి తొలగించండి."
+      ],
+      "prevention": "చుట్టుపక్కల రైతులతో కలిసి ఒకే సమయంలో విత్తేలా చూసుకోండి."
+    }
+  }
+}
