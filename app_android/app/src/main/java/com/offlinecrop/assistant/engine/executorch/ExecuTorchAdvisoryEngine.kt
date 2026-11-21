@@ -84,7 +84,7 @@ internal class ExecuTorchAdvisoryEngine(
             "Condition: " + english.getString("diagnosis") + "\nSeverity: " +
                 (req.vision.severity?.band ?: "unavailable") + "\nApproved actions:\n" + choices,
         )
-        val selected = generateChoice(prompt, actions.length(), onToken)
+        val selected = generateChoice(prompt + ACTION_PREFIX, actions.length())
         val displayActions = display.getJSONArray("actions")
         val primary = selected ?: 0
         val ordered = (listOf(primary) + (0 until displayActions.length()).filter { it != primary })
@@ -96,6 +96,7 @@ internal class ExecuTorchAdvisoryEngine(
             languageLayer.phrase(req.language, "actions_prefix") + " " + ordered.joinToString(" "),
             languageLayer.phrase(req.language, "prevention_prefix") + " " + prevention,
         ).joinToString(" ")
+        onToken(text)
         return AdvisoryResponse(
             diagnosis = diagnosis,
             severityBand = req.vision.severity?.band ?: "none",
@@ -108,7 +109,7 @@ internal class ExecuTorchAdvisoryEngine(
         )
     }
 
-    private fun generateChoice(prompt: String, actionCount: Int, onToken: (String) -> Unit): Int? {
+    private fun generateChoice(prompt: String, actionCount: Int): Int? {
         val started = SystemClock.elapsedRealtime()
         val raw = StringBuilder()
         var callbacks = 0
@@ -121,7 +122,11 @@ internal class ExecuTorchAdvisoryEngine(
                 if (ttft == null) ttft = SystemClock.elapsedRealtime() - started
                 callbacks++
                 raw.append(token)
-                onToken(token)
+                if (parseActionChoice(ACTION_PREFIX + raw, actionCount) != null ||
+                    callbacks >= MAX_RESPONSE_CALLBACKS
+                ) {
+                    native?.stop()
+                }
             }
 
             override fun onStats(statsJson: String) {
@@ -141,6 +146,7 @@ internal class ExecuTorchAdvisoryEngine(
                 File(modelDir, "tokenizer.model").absolutePath,
                 0f,
             ).also { native = it }
+            runtime.resetContext()
             runtime.generate(prompt, MAX_SEQUENCE_LENGTH, callback, false)
         } catch (e: Exception) {
             failed = true
@@ -151,7 +157,7 @@ internal class ExecuTorchAdvisoryEngine(
             Log.e(TAG, "Insufficient memory for Llama. Using grounded template.", e)
             close()
         }
-        val selected = if (failed) null else parseActionChoice(raw.toString(), actionCount)
+        val selected = if (failed) null else parseActionChoice(ACTION_PREFIX + raw, actionCount)
         lastGeneration = GenerationMetrics(
             callbacks, ttft, tokensPerSecond, SystemClock.elapsedRealtime() - started, selected != null,
         )
@@ -166,6 +172,8 @@ internal class ExecuTorchAdvisoryEngine(
     private companion object {
         const val TAG = "ExecuTorchAdvisory"
         const val MAX_SEQUENCE_LENGTH = 192
+        const val MAX_RESPONSE_CALLBACKS = 12
+        const val ACTION_PREFIX = "{\"action\":"
     }
 }
 
