@@ -170,7 +170,7 @@ internal class ExecuTorchAdvisoryEngine(
     }
 }
 
-private val ACTION_CHOICE = Regex("""\{\s*"action"\s*:\s*(0|[1-9]\d*)\s*}""")
+private val ACTION_CHOICE = Regex("""\{\s*"action"\s*:\s*(0|[1-9]\d*)\s*\}""")
 
 internal fun parseActionChoice(generation: String, actionCount: Int): Int? {
     val body = generation.trim().removeSuffix("<|eot_id|>").trim()
