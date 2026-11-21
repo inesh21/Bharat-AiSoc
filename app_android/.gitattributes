@@ -1,0 +1,2 @@
+# The parity suite checks the exact bytes of the generated assets.
+app/src/main/assets/*.json text eol=lf

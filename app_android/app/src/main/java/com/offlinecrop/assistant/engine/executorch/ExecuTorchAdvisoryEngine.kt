@@ -1,319 +1,179 @@
 package com.offlinecrop.assistant.engine.executorch
 
 import android.content.Context
+import android.os.SystemClock
 import android.util.Log
-import com.offlinecrop.assistant.engine.*
-import com.offlinecrop.assistant.logic.*
+import com.google.gson.GsonBuilder
+import com.offlinecrop.assistant.engine.AdvisoryEngine
+import com.offlinecrop.assistant.engine.AdvisoryRequest
+import com.offlinecrop.assistant.engine.AdvisoryResponse
+import com.offlinecrop.assistant.engine.ClarificationQuestion
+import com.offlinecrop.assistant.logic.AdvisoryPipeline
+import com.offlinecrop.assistant.logic.LanguageLayer
+import com.offlinecrop.assistant.logic.PromptBuilder
 import org.json.JSONObject
 import org.pytorch.executorch.extension.llm.LlmCallback
 import org.pytorch.executorch.extension.llm.LlmModule
 import java.io.File
-import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicReference
 
-/**
- * ExecuTorch-based advisory engine using Llama 3.2 1B Instruct.
- *
- * Uses org.pytorch.executorch.extension.llm.LlmModule from the prebuilt AAR.
- * Integrates with AdvisoryPipeline (Kotlin logic) for knowledge retrieval,
- * validation, and language layer.
- *
- * Contract: Implements AdvisoryEngine per CONTRACTS.md Section 4
- * Model: Llama-3.2-1B-Instruct, 8da4w quantization, max_seq_length 1024
- */
-class ExecuTorchAdvisoryEngine(
-    private val context: Context,
-    private val modelDir: File
-) : AdvisoryEngine {
+internal data class GenerationMetrics(
+    val callbacks: Int,
+    val wallTtftMs: Long?,
+    val decodeTokensPerSecond: Double?,
+    val elapsedMs: Long,
+    val accepted: Boolean,
+)
 
-    private val TAG = "ExecuTorchAdvisory"
+internal class ExecuTorchAdvisoryEngine(
+    context: Context,
+    private val modelDir: File,
+) : AdvisoryEngine, AutoCloseable {
+    private val assets = context.applicationContext.assets
+    private fun readAsset(name: String) =
+        assets.open(name).bufferedReader().use { it.readText() }
 
-    // Advisory pipeline (Kotlin logic)
-    private val advisoryPipeline: AdvisoryPipeline
-    private val validator: AdvisoryValidator
-
-    private var llmModule: LlmModule? = null
-    private val stopRequested = AtomicBoolean(false)
-
-    init {
-        // Load advisory logic components by reading JSON assets
-        // AssetManager.open() already looks in the assets/ directory, so no prefix needed
-        val kbJson = context.assets.open("kb.json").bufferedReader().use { it.readText() }
-        val rulesJson = context.assets.open("rules.json").bufferedReader().use { it.readText() }
-        val clarificationsJson = context.assets.open("clarifications.json").bufferedReader().use { it.readText() }
-        val phrasesJson = context.assets.open("phrases.json").bufferedReader().use { it.readText() }
-
-        advisoryPipeline = AdvisoryPipeline(
-            kbJson = kbJson,
-            rulesJson = rulesJson,
-            clarificationsJson = clarificationsJson,
-            phrasesJson = phrasesJson,
-            llmGenerate = null // We'll use AdvisoryPipeline for non-LLM logic only
-        )
-
-        validator = AdvisoryValidator(rulesJson)
-
-        loadModel()
-    }
-
-    private fun loadModel() {
-        try {
-            val modelPath = File(modelDir, "llama32_1b.pte").absolutePath
-            val tokenizerPath = File(modelDir, "tokenizer.model").absolutePath
-
-            if (!File(modelPath).exists()) {
-                throw IllegalStateException("Llama model not found: $modelPath")
-            }
-            if (!File(tokenizerPath).exists()) {
-                throw IllegalStateException("Tokenizer not found: $tokenizerPath")
-            }
-
-            // Create LlmModule - loads in constructor, no separate load() call needed
-            // Constructor: LlmModule(modelPath: String, tokenizerPath: String, temperature: Float)
-            llmModule = LlmModule(modelPath, tokenizerPath, 0.3f)
-
-            Log.i(TAG, "Llama module loaded successfully from $modelPath")
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Model load failed: ${e.message}", e)
-            throw e
-        }
-    }
+    private val gson = GsonBuilder().serializeNulls().create()
+    private val curated = JSONObject(readAsset("demo_ipm.json"))
+    private val phrases = readAsset("phrases.json")
+    private val languageLayer = LanguageLayer(phrases)
+    private val pipeline = AdvisoryPipeline(
+        readAsset("kb.json"),
+        readAsset("rules.json"),
+        readAsset("clarifications.json"),
+        phrases,
+    )
+    private var native: LlmModule? = null
+    var lastGeneration: GenerationMetrics? = null
+        private set
 
     override fun advise(req: AdvisoryRequest, onToken: (String) -> Unit): AdvisoryResponse {
-        return try {
-            // Convert request to JSONObject for pipeline processing
-            val requestJson = convertRequestToJson(req)
-
-            // Check if clarification is needed (pipeline handles this)
-            val clarificationCheck = advisoryPipeline.advise(requestJson, null)
-            if (clarificationCheck.status == "needs_clarification") {
-                return convertResponseFromJson(clarificationCheck)
-            }
-
-            // Build prompt using Llama 3.2 chat format
-            val prompt = buildLlama32Prompt(req)
-
-            // Check prompt length (our model has max_seq_length 1024)
-            // Rough estimate: ~4 chars per token, keep prompt + output within 1024
-            if (prompt.length > 2000) {  // ~500 tokens
-                Log.w(TAG, "Prompt too long: ${prompt.length} chars. May truncate output.")
-            }
-
-            // Reset context before each scan
-            llmModule?.resetNative()
-            stopRequested.set(false)
-
-            // Generate response using LLM
-            val generatedText = AtomicReference<String>("")
-            val stats = AtomicReference<String>("")
-            val error = AtomicReference<String?>(null)
-
-            val callback = object : LlmCallback {
-                override fun onResult(token: String) {
-                    generatedText.set(generatedText.get() + token)
-                    onToken(token)
-                }
-
-                override fun onStats(statsJson: String) {
-                    stats.set(statsJson)
-                    // Parse and log TTFT and tokens/s
-                    try {
-                        val statsObj = JSONObject(statsJson)
-                        val ttft = statsObj.optDouble("time_to_first_token_ms", -1.0)
-                        val tokensPerSec = statsObj.optDouble("tokens_per_second", -1.0)
-                        Log.i(TAG, "LLM Stats: TTFT=${ttft}ms, tokens/s=$tokensPerSec")
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Failed to parse stats: ${e.message}")
-                    }
-                }
-
-                override fun onError(errorCode: Int, errorMsg: String) {
-                    error.set("[$errorCode] $errorMsg")
-                    Log.e(TAG, "LLM error: code=$errorCode, msg=$errorMsg")
-                }
-            }
-
-            // Run generation - this is synchronous and blocks until complete
-            llmModule?.generate(prompt, callback)
-
-            // Check for errors
-            error.get()?.let {
-                throw RuntimeException("LLM generation error: $it")
-            }
-
-            val rawText = generatedText.get()
-
-            // Validate output
-            val topLabel = req.vision.predictions.firstOrNull()?.label ?: "unknown"
-            val severityBand = req.vision.severity?.band ?: "moderate"
-            val validationResult = validator.validate(rawText, topLabel, severityBand)
-
-            if (!validationResult.isValid) {
-                Log.w(TAG, "Validation failed: ${validationResult.rejectionReasons}. Using fallback.")
-                // Use template fallback from pipeline
-                return useFallbackTemplate(req)
-            }
-
-            // Parse validated JSON response
-            val parsed = validationResult.parsed!!
-            val actionsArr = parsed.optJSONArray("actions_now")
-            val actionsNow = if (actionsArr != null) {
-                (0 until actionsArr.length()).map { actionsArr.getString(it) }
-            } else emptyList()
-
-            val prevArr = parsed.optJSONArray("prevention")
-            val prevention = if (prevArr != null) {
-                (0 until prevArr.length()).map { prevArr.getString(it) }
-            } else emptyList()
-
-            AdvisoryResponse(
-                status = "final",
-                diagnosis = parsed.optString("diagnosis", "Unknown condition"),
-                severityBand = severityBand,
-                actionsNow = actionsNow,
-                prevention = prevention,
-                seekHelp = parsed.optBoolean("seek_help", false),
-                sourceIds = listOf("kb:$topLabel"),
-                usedFallback = false,
+        lastGeneration = null
+        val prepared = pipeline.advise(JSONObject(gson.toJson(req)))
+        val question = prepared.clarification
+        if (question != null) {
+            return AdvisoryResponse(
+                status = prepared.status,
+                clarification = ClarificationQuestion(question.questionId, question.text, question.options),
                 language = req.language,
-                text = parsed.optString("summary_text", rawText)
+                text = question.text,
+                sourceIds = prepared.sourceIds,
+                severityBand = prepared.severityBand,
             )
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Advisory generation failed: ${e.message}", e)
-            useFallbackTemplate(req)
         }
-    }
+        val source = prepared.sourceIds.singleOrNull()
+        val condition = source?.removePrefix("kb:")
+        val facts = condition?.let { curated.optJSONObject(it) }
+        if (facts == null || prepared.seekHelp || req.answers.any { it.answer == "not_sure" }) {
+            return AdvisoryResponse(
 
-    private fun buildLlama32Prompt(req: AdvisoryRequest): String {
-        // Llama 3.2 chat format (omit <|begin_of_text|> to avoid double BOS)
-        // Format: <|start_header_id|>system<|end_header_id|>
-        //         {system}<|eot_id|><|start_header_id|>user<|end_header_id|>
-        //         {user}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-
-        val systemPrompt = """You are an agricultural advisor. Provide practical advice for crop disease management.
-Focus on:
-1. Immediate actions (cultural/organic methods first)
-2. Prevention strategies
-3. When to seek professional help
-
-Output as JSON with fields: diagnosis, actions_now (array), prevention (array), seek_help (boolean), summary_text."""
-
-        val userContent = buildUserContent(req)
-
-        val prompt = """<|start_header_id|>system<|end_header_id|>
-$systemPrompt<|eot_id|><|start_header_id|>user<|end_header_id|>
-$userContent<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-"""
-
-        return prompt
-    }
-
-    private fun buildUserContent(req: AdvisoryRequest): String {
-        val vision = req.vision
-        val topPred = vision.predictions.firstOrNull()
-        val label = topPred?.label ?: "unknown"
-        val confidence = topPred?.confidence ?: 0f
-        val severity = vision.severity?.band ?: "none"
-
-        return """Crop: ${vision.crop}
-Condition: $label (confidence: ${confidence * 100}%)
-Severity: $severity
-
-Provide immediate actions and prevention strategies as JSON."""
-    }
-
-    private fun useFallbackTemplate(req: AdvisoryRequest): AdvisoryResponse {
-        // Use pipeline's fallback template
-        val requestJson = convertRequestToJson(req)
-        val fallback = advisoryPipeline.advise(requestJson, null)
-        return convertResponseFromJson(fallback).copy(usedFallback = true)
-    }
-
-    private fun convertRequestToJson(req: AdvisoryRequest): JSONObject {
-        val json = JSONObject()
-        json.put("schema_version", req.schemaVersion)
-        json.put("language", req.language)
-        json.put("region", req.region)
-        json.put("growth_stage", req.growthStage)
-
-        // Vision object
-        val visionJson = JSONObject()
-        visionJson.put("schema_version", req.vision.schemaVersion)
-        visionJson.put("image_id", req.vision.imageId)
-        visionJson.put("model_version", req.vision.modelVersion)
-        visionJson.put("unknown", req.vision.unknown)
-        visionJson.put("crop", req.vision.crop)
-
-        // Quality
-        val qualityJson = JSONObject()
-        qualityJson.put("ok", req.vision.quality.ok)
-        qualityJson.put("issues", org.json.JSONArray(req.vision.quality.issues))
-        visionJson.put("quality", qualityJson)
-
-        // Predictions
-        val predictionsArray = org.json.JSONArray()
-        req.vision.predictions.forEach { pred ->
-            val predJson = JSONObject()
-            predJson.put("label", pred.label)
-            predJson.put("type", pred.type)
-            predJson.put("confidence", pred.confidence)
-            predictionsArray.put(predJson)
-        }
-        visionJson.put("predictions", predictionsArray)
-
-        // Severity
-        req.vision.severity?.let { sev ->
-            val sevJson = JSONObject()
-            sevJson.put("percent", sev.percent)
-            sevJson.put("band", sev.band)
-            visionJson.put("severity", sevJson)
+                seekHelp = true,
+                sourceIds = listOf("kb:unknown"),
+                usedFallback = true,
+                language = req.language,
+                text = languageLayer.phrase(req.language, "unknown_warning"),
+            )
         }
 
-        json.put("vision", visionJson)
-
-        // Answers
-        if (req.answers.isNotEmpty()) {
-            val answersArray = org.json.JSONArray()
-            req.answers.forEach { ans ->
-                val ansJson = JSONObject()
-                ansJson.put("question_id", ans.questionId)
-                ansJson.put("answer", ans.answer)
-                answersArray.put(ansJson)
-            }
-            json.put("answers", answersArray)
-        }
-
-        return json
-    }
-
-    private fun convertResponseFromJson(response: AdvisoryResponseData): AdvisoryResponse {
+        val english = facts.getJSONObject("en")
+        val display = facts.optJSONObject(req.language) ?: english
+        val actions = english.getJSONArray("actions")
+        val choices = (0 until actions.length()).joinToString("\n") { "$it. " + actions.getString(it) }
+        val system = "Select the most useful first action from this approved list. " +
+            "Return only a JSON object with an integer action index, for example {\"action\":0}."
+        val prompt = PromptBuilder.buildChatPrompt(
+            system,
+            "Condition: " + english.getString("diagnosis") + "\nSeverity: " +
+                (req.vision.severity?.band ?: "unavailable") + "\nApproved actions:\n" + choices,
+        )
+        val selected = generateChoice(prompt, actions.length(), onToken)
+        val displayActions = display.getJSONArray("actions")
+        val primary = selected ?: 0
+        val ordered = (listOf(primary) + (0 until displayActions.length()).filter { it != primary })
+            .map(displayActions::getString)
+        val diagnosis = display.getString("diagnosis")
+        val prevention = display.getString("prevention")
+        val text = listOf(
+            languageLayer.phrase(req.language, "diagnosis_prefix") + " " + diagnosis + ".",
+            languageLayer.phrase(req.language, "actions_prefix") + " " + ordered.joinToString(" "),
+            languageLayer.phrase(req.language, "prevention_prefix") + " " + prevention,
+        ).joinToString(" ")
         return AdvisoryResponse(
-            schemaVersion = response.schemaVersion,
-            status = response.status,
-            clarification = response.clarification?.let { clar ->
-                ClarificationQuestion(
-                    questionId = clar.questionId,
-                    text = clar.text,
-                    options = clar.options
-                )
-            },
-            diagnosis = response.diagnosis,
-            severityBand = response.severityBand,
-            actionsNow = response.actionsNow,
-            prevention = response.prevention,
-            seekHelp = response.seekHelp,
-            sourceIds = response.sourceIds,
-            usedFallback = response.usedFallback,
-            language = response.language,
-            text = response.text
+            diagnosis = diagnosis,
+            severityBand = req.vision.severity?.band ?: "none",
+            actionsNow = ordered,
+            prevention = listOf(prevention),
+            sourceIds = listOf("kb:$condition"),
+            usedFallback = selected == null,
+            language = req.language,
+            text = text,
         )
     }
 
-    fun release() {
-        llmModule?.close()  // Use close() not destroy()
-        llmModule = null
-        Log.i(TAG, "Llama module released")
+    private fun generateChoice(prompt: String, actionCount: Int, onToken: (String) -> Unit): Int? {
+        val started = SystemClock.elapsedRealtime()
+        val raw = StringBuilder()
+        var callbacks = 0
+        var ttft: Long? = null
+        var tokensPerSecond: Double? = null
+        var failed = false
+        val callback = object : LlmCallback {
+            override fun onResult(token: String) {
+                if (token.isEmpty()) return
+                if (ttft == null) ttft = SystemClock.elapsedRealtime() - started
+                callbacks++
+                raw.append(token)
+                onToken(token)
+            }
+
+            override fun onStats(statsJson: String) {
+                tokensPerSecond = runCatching {
+                    JSONObject(statsJson).optDouble("decode_token_per_sec").takeIf(Double::isFinite)
+                }.getOrNull()
+            }
+
+            override fun onError(errorCode: Int, errorMsg: String) {
+                failed = true
+                Log.e(TAG, "ExecuTorch generation error $errorCode: $errorMsg")
+            }
+        }
+        try {
+            val runtime = native ?: LlmModule(
+                File(modelDir, "llama32_1b.pte").absolutePath,
+                File(modelDir, "tokenizer.model").absolutePath,
+                0f,
+            ).also { native = it }
+            runtime.generate(prompt, MAX_SEQUENCE_LENGTH, callback, false)
+        } catch (e: Exception) {
+            failed = true
+            Log.e(TAG, "Llama unavailable. Using grounded template.", e)
+            close()
+        } catch (e: OutOfMemoryError) {
+            failed = true
+            Log.e(TAG, "Insufficient memory for Llama. Using grounded template.", e)
+            close()
+        }
+        val selected = if (failed) null else parseActionChoice(raw.toString(), actionCount)
+        lastGeneration = GenerationMetrics(
+            callbacks, ttft, tokensPerSecond, SystemClock.elapsedRealtime() - started, selected != null,
+        )
+        return selected
     }
+
+    override fun close() {
+        native?.close()
+        native = null
+    }
+
+    private companion object {
+        const val TAG = "ExecuTorchAdvisory"
+        const val MAX_SEQUENCE_LENGTH = 192
+    }
+}
+
+private val ACTION_CHOICE = Regex("""\{\s*"action"\s*:\s*(0|[1-9]\d*)\s*}""")
+
+internal fun parseActionChoice(generation: String, actionCount: Int): Int? {
+    val body = generation.trim().removeSuffix("<|eot_id|>").trim()
+    return ACTION_CHOICE.matchEntire(body)?.groupValues?.get(1)?.toIntOrNull()
+        ?.takeIf { it in 0 until actionCount }
 }

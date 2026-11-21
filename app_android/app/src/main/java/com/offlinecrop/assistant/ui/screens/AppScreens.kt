@@ -36,15 +36,13 @@ sealed class Screen(val route: String) {
 fun LanguageScreen(
     currentLanguage: String,
     onLanguageSelected: (String) -> Unit,
-    onNavigateNext: () -> Unit
+    onNavigateNext: () -> Unit,
+    onSelfTest: (() -> Unit)? = null
 ) {
     val languages = listOf(
         Triple("English", "en", "English"),
         Triple("हिन्दी", "hi", "Hindi"),
-        Triple("తెలుగు", "te", "Telugu"),
-        Triple("தமிழ்", "ta", "Tamil"),
-        Triple("ಕನ್ನಡ", "kn", "Kannada"),
-        Triple("मराठी", "mr", "Marathi")
+        Triple("తెలుగు", "te", "Telugu")
     )
 
     Column(
@@ -116,6 +114,9 @@ fun LanguageScreen(
             shape = RoundedCornerShape(12.dp)
         ) {
             Text(text = "Proceed to Camera / आगे बढ़ें", fontSize = 16.sp)
+        }
+        if (onSelfTest != null) {
+            TextButton(onClick = onSelfTest) { Text("Device self-test") }
         }
     }
 }
@@ -325,42 +326,44 @@ fun ResultScreen(
             }
         }
 
-        // Predictions List
-        item {
-            Text(text = "Top Diagnoses (Calibrated)", fontWeight = FontWeight.SemiBold, modifier = Modifier.fillMaxWidth())
-            Spacer(modifier = Modifier.height(8.dp))
-        }
+        if (!isQualityIssue && !isUnknown) {
+            // Predictions List
+            item {
+                Text(text = "Top Diagnoses (Calibrated)", fontWeight = FontWeight.SemiBold, modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(8.dp))
+            }
 
-        items(visionResult.predictions) { pred ->
-            val confidencePct = (pred.confidence * 100).toInt()
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                shape = RoundedCornerShape(10.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(14.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+            items(visionResult.predictions) { pred ->
+                val confidencePct = (pred.confidence * 100).toInt()
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
-                    Column {
-                        Text(text = pred.label.replace("__", " - ").replace("_", " "), fontWeight = FontWeight.Bold)
-                        Text(text = "Type: ${pred.type}", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    Surface(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = RoundedCornerShape(8.dp)
+                    Row(
+                        modifier = Modifier.padding(14.dp).fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "$confidencePct%",
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
+                        Column {
+                            Text(text = pred.label.replace("__", " - ").replace("_", " "), fontWeight = FontWeight.Bold)
+                            Text(text = "Type: ${pred.type}", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Surface(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(
+                                text = "$confidencePct%",
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
                     }
                 }
             }
-        }
 
+        }
         // Severity Card
         if (visionResult.severity != null) {
             item {
@@ -382,7 +385,7 @@ fun ResultScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column {
-                            Text(text = "Severity Grade", fontWeight = FontWeight.Bold)
+                            Text(text = "Estimated Severity", fontWeight = FontWeight.Bold)
                             Text(text = "Lesion Area: ${visionResult.severity.percent}%")
                         }
                         Text(
@@ -510,7 +513,7 @@ fun AdvisoryScreen(
             if (advisoryResponse.actionsNow.isNotEmpty()) {
                 item {
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text(text = "Immediate Actions (Organic & Safe Chemical)", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+                    Text(text = "Immediate Actions", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.height(6.dp))
                 }
                 items(advisoryResponse.actionsNow) { action ->

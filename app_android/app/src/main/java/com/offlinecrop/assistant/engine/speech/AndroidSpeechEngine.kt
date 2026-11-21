@@ -1,84 +1,92 @@
 package com.offlinecrop.assistant.engine.speech
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import android.util.Log
 import com.offlinecrop.assistant.engine.SpeechEngine
-import java.util.*
+import java.util.Locale
+import java.util.UUID
 
-/**
- * On-device SpeechEngine implementing offline Text-To-Speech (TTS) (Task C9).
- * Utilizes local on-device Android TTS engine with voices for English, Hindi, and regional Indic languages.
- * Operates strictly with zero cloud calls / offline.
- */
-class AndroidSpeechEngine(private val context: Context) : SpeechEngine, TextToSpeech.OnInitListener {
-
+class AndroidSpeechEngine(context: Context) : SpeechEngine {
+    private val main = Handler(Looper.getMainLooper())
+    private var ready = false
+    private var currentUtterance: String? = null
+    private var onStatus: (Boolean, String?) -> Unit = { _, _ -> }
     private var tts: TextToSpeech? = null
-    private var isInitialized = false
-
-    companion object {
-        private const val TAG = "AndroidSpeechEngine"
-    }
 
     init {
-        tts = TextToSpeech(context, this)
+        tts = TextToSpeech(context.applicationContext) { status ->
+            main.post { ready = tts != null && status == TextToSpeech.SUCCESS }
+        }
+        tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String) = Unit
+            override fun onDone(utteranceId: String) = complete(utteranceId, null)
+            @Deprecated("Android invokes the error-code overload on supported platforms")
+            override fun onError(utteranceId: String) = complete(utteranceId, "Playback failed.")
+            override fun onError(utteranceId: String, errorCode: Int) =
+                complete(utteranceId, "Playback failed.")
+        })
     }
 
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            isInitialized = true
-            Log.d(TAG, "Offline TTS successfully initialized.")
-        } else {
-            Log.e(TAG, "Failed to initialize Android TextToSpeech, status: $status")
+    private fun complete(id: String, error: String?) {
+        main.post {
+            if (currentUtterance == id) {
+                currentUtterance = null
+                onStatus(false, error)
+            }
         }
     }
 
-    private fun resolveLocale(lang: String): Locale {
-        return when (lang.lowercase()) {
-            "hi" -> Locale("hi", "IN")
-            "te" -> Locale("te", "IN")
-            "ta" -> Locale("ta", "IN")
-            "kn" -> Locale("kn", "IN")
-            "mr" -> Locale("mr", "IN")
-            "bn" -> Locale("bn", "IN")
-            else -> Locale.ENGLISH
-        }
+    fun observeStatus(listener: (Boolean, String?) -> Unit) {
+        onStatus = listener
     }
+
+    private fun offlineVoice(lang: String) = tts?.voices.orEmpty()
+        .filter { it.locale.language == lang && !it.isNetworkConnectionRequired &&
+            TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED !in it.features.orEmpty() }
+        .maxByOrNull { it.quality }
+
+    fun voiceAvailability(): Map<String, String?> =
+        listOf("en", "hi", "te").associateWith { if (ready) offlineVoice(it)?.name else null }
 
     override fun speak(text: String, lang: String) {
-        if (!isInitialized || tts == null) {
-            Log.w(TAG, "TTS not ready yet.")
+        val engine = tts
+        if (!ready || engine == null) {
+            onStatus(false, "Text to speech is unavailable.")
             return
         }
-
-        val locale = resolveLocale(lang)
-        val result = tts?.setLanguage(locale)
-        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            Log.w(TAG, "Language $locale not fully supported or missing data, falling back to default locale.")
-            tts?.language = Locale.getDefault()
+        val voice = offlineVoice(lang)
+        if (voice == null || engine.setVoice(voice) != TextToSpeech.SUCCESS) {
+            val language = Locale.forLanguageTag(lang).getDisplayLanguage(Locale.ENGLISH)
+            onStatus(false, "Install an offline $language voice in Android text-to-speech settings.")
+            return
         }
-
-        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "CropUtterance_${System.currentTimeMillis()}")
+        val id = UUID.randomUUID().toString()
+        currentUtterance = id
+        if (engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) == TextToSpeech.SUCCESS) {
+            onStatus(true, null)
+        } else {
+            currentUtterance = null
+            onStatus(false, "Playback failed.")
+        }
     }
 
-    override fun listen(lang: String): String {
-        // Voice recognition hook - in offline mode, vosk / whisper.cpp or on-device RecognizerIntent is invoked.
-        // Returns recognized text
-        return ""
-    }
+    override fun listen(lang: String): String = ""
 
     override fun stopSpeaking() {
+        currentUtterance = null
         tts?.stop()
+        onStatus(false, null)
     }
 
-    override fun isSpeaking(): Boolean {
-        return tts?.isSpeaking ?: false
-    }
+    override fun isSpeaking(): Boolean = currentUtterance != null
 
     fun shutdown() {
-        tts?.stop()
+        stopSpeaking()
         tts?.shutdown()
         tts = null
+        ready = false
     }
 }
