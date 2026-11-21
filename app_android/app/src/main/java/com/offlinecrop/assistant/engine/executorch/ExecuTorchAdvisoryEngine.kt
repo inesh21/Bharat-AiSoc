@@ -77,14 +77,13 @@ internal class ExecuTorchAdvisoryEngine(
         val display = facts.optJSONObject(req.language) ?: english
         val actions = english.getJSONArray("actions")
         val choices = (0 until actions.length()).joinToString("\n") { "$it. " + actions.getString(it) }
-        val system = "Select the most useful first action from this approved list. " +
-            "Return only a JSON object with an integer action index, for example {\"action\":0}."
+        val system = "Choose one action. Reply with its number only."
         val prompt = PromptBuilder.buildChatPrompt(
             system,
             "Condition: " + english.getString("diagnosis") + "\nSeverity: " +
                 (req.vision.severity?.band ?: "unavailable") + "\nApproved actions:\n" + choices,
         )
-        val selected = generateChoice(prompt + ACTION_PREFIX, actions.length())
+        val selected = generateChoice(prompt + "The action number is ", actions.length())
         val displayActions = display.getJSONArray("actions")
         val primary = selected ?: 0
         val ordered = (listOf(primary) + (0 until displayActions.length()).filter { it != primary })
@@ -111,7 +110,7 @@ internal class ExecuTorchAdvisoryEngine(
 
     private fun generateChoice(prompt: String, actionCount: Int): Int? {
         val started = SystemClock.elapsedRealtime()
-        val raw = StringBuilder()
+        var choiceToken: String? = null
         var callbacks = 0
         var ttft: Long? = null
         var tokensPerSecond: Double? = null
@@ -121,10 +120,8 @@ internal class ExecuTorchAdvisoryEngine(
                 if (token.isEmpty()) return
                 if (ttft == null) ttft = SystemClock.elapsedRealtime() - started
                 callbacks++
-                raw.append(token)
-                if (parseActionChoice(ACTION_PREFIX + raw, actionCount) != null ||
-                    callbacks >= MAX_RESPONSE_CALLBACKS
-                ) {
+                if (choiceToken == null && token.isNotBlank()) choiceToken = token
+                if (choiceToken != null || callbacks >= MAX_RESPONSE_CALLBACKS) {
                     native?.stop()
                 }
             }
@@ -147,7 +144,7 @@ internal class ExecuTorchAdvisoryEngine(
                 0f,
             ).also { native = it }
             runtime.resetContext()
-            runtime.generate(prompt, MAX_SEQUENCE_LENGTH, callback, false)
+            runtime.generate(prompt, MAX_SEQUENCE_LENGTH, callback, false, 0f, 1, 0)
         } catch (e: Exception) {
             failed = true
             Log.e(TAG, "Llama unavailable. Using grounded template.", e)
@@ -157,7 +154,7 @@ internal class ExecuTorchAdvisoryEngine(
             Log.e(TAG, "Insufficient memory for Llama. Using grounded template.", e)
             close()
         }
-        val selected = if (failed) null else parseActionChoice(ACTION_PREFIX + raw, actionCount)
+        val selected = if (failed) null else choiceToken?.let { parseActionChoice(it, actionCount) }
         lastGeneration = GenerationMetrics(
             callbacks, ttft, tokensPerSecond, SystemClock.elapsedRealtime() - started, selected != null,
         )
@@ -173,16 +170,13 @@ internal class ExecuTorchAdvisoryEngine(
         const val TAG = "ExecuTorchAdvisory"
         const val MAX_SEQUENCE_LENGTH = 192
         const val MAX_RESPONSE_CALLBACKS = 12
-        const val ACTION_PREFIX = "{\"action\":"
     }
 }
 
-private val ACTION_CHOICE = Regex("""\{\s*"action"\s*:\s*(0|[1-9]\d*)\s*\}""")
-
 internal fun parseActionChoice(generation: String, actionCount: Int): Int? {
-    val body = generation.trim().removeSuffix("<|eot_id|>").trim()
-    return ACTION_CHOICE.matchEntire(body)?.groupValues?.get(1)?.toIntOrNull()
-        ?.takeIf { it in 0 until actionCount }
+    val token = generation.trim()
+    if (token.length != 1 || token[0] !in '0'..'9') return null
+    return (token[0] - '0').takeIf { it in 0 until actionCount }
 }
 
 private fun AdvisoryRequest.toContractJson() = JSONObject().apply {

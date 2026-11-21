@@ -8,9 +8,11 @@ import org.junit.Test
 class AdvisoryChoiceTest {
     @Test
     fun acceptsOnlyAListedActionIndex() {
-        assertEquals(1, parseActionChoice("""{ "action": 1 } <|eot_id|>""", 2))
+        assertEquals(1, parseActionChoice(" 1 ", 2))
         for (output in listOf(
-            """{"action":2}""",
+            "2",
+            "01",
+            "0 Treatment text",
             """{"action":-1}""",
             """{"action":"0"}""",
             """{"action":0,"action":1}""",
