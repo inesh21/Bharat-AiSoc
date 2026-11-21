@@ -3,7 +3,6 @@ package com.offlinecrop.assistant.engine.executorch
 import android.content.Context
 import android.os.SystemClock
 import android.util.Log
-import com.google.gson.GsonBuilder
 import com.offlinecrop.assistant.engine.AdvisoryEngine
 import com.offlinecrop.assistant.engine.AdvisoryRequest
 import com.offlinecrop.assistant.engine.AdvisoryResponse
@@ -11,6 +10,7 @@ import com.offlinecrop.assistant.engine.ClarificationQuestion
 import com.offlinecrop.assistant.logic.AdvisoryPipeline
 import com.offlinecrop.assistant.logic.LanguageLayer
 import com.offlinecrop.assistant.logic.PromptBuilder
+import org.json.JSONArray
 import org.json.JSONObject
 import org.pytorch.executorch.extension.llm.LlmCallback
 import org.pytorch.executorch.extension.llm.LlmModule
@@ -32,7 +32,6 @@ internal class ExecuTorchAdvisoryEngine(
     private fun readAsset(name: String) =
         assets.open(name).bufferedReader().use { it.readText() }
 
-    private val gson = GsonBuilder().serializeNulls().create()
     private val curated = JSONObject(readAsset("demo_ipm.json"))
     private val phrases = readAsset("phrases.json")
     private val languageLayer = LanguageLayer(phrases)
@@ -48,7 +47,7 @@ internal class ExecuTorchAdvisoryEngine(
 
     override fun advise(req: AdvisoryRequest, onToken: (String) -> Unit): AdvisoryResponse {
         lastGeneration = null
-        val prepared = pipeline.advise(JSONObject(gson.toJson(req)))
+        val prepared = pipeline.advise(req.toContractJson())
         val question = prepared.clarification
         if (question != null) {
             return AdvisoryResponse(
@@ -176,4 +175,32 @@ internal fun parseActionChoice(generation: String, actionCount: Int): Int? {
     val body = generation.trim().removeSuffix("<|eot_id|>").trim()
     return ACTION_CHOICE.matchEntire(body)?.groupValues?.get(1)?.toIntOrNull()
         ?.takeIf { it in 0 until actionCount }
+}
+
+private fun AdvisoryRequest.toContractJson() = JSONObject().apply {
+    put("schema_version", schemaVersion)
+    put("language", language)
+    put("region", region)
+    put("growth_stage", growthStage)
+    put("answers", JSONArray(answers.map { answer ->
+        JSONObject().put("question_id", answer.questionId).put("answer", answer.answer)
+    }))
+    put("vision", JSONObject().apply {
+        put("schema_version", vision.schemaVersion)
+        put("image_id", vision.imageId)
+        put("model_version", vision.modelVersion)
+        put("crop", vision.crop)
+        put("unknown", vision.unknown)
+        put("quality", JSONObject()
+            .put("ok", vision.quality.ok)
+            .put("issues", JSONArray(vision.quality.issues)))
+        put("predictions", JSONArray(vision.predictions.map { prediction ->
+            JSONObject().put("label", prediction.label)
+                .put("type", prediction.type)
+                .put("confidence", prediction.confidence.toDouble())
+        }))
+        put("severity", vision.severity?.let {
+            JSONObject().put("percent", it.percent.toDouble()).put("band", it.band)
+        } ?: JSONObject.NULL)
+    })
 }
